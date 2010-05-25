@@ -1,0 +1,11 @@
+syntax: glob
+.bzr
+.project
+.pydevproject
+.settings
+*.kpf
+log
+bin-debug
+bin
+.metadata
+*.pyc
