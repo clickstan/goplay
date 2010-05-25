@@ -63,7 +63,7 @@ package comm.protocol
 				return
 			}
 			
-			var args:Array = new Array();
+			var args:Array = new Array(conn);
 			
 			for each (var requirement:String in client_commands[command].requires) {
 				if (msg.hasOwnProperty(requirement)) {
