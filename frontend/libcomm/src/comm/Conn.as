@@ -66,26 +66,29 @@ package comm
 		}
 		
 		private function event_socketData(event:ProgressEvent):void {
-			var object:Object = socket.readObject();
-			trace("comm.Conn - event - SocketData", ObjectUtil.toString(object));
-			
-			var command:String = null;
-			var trans:int = -1;
-			
-			if (object.hasOwnProperty("command"))
-				command = object.command;
-			
-			if (object.hasOwnProperty("trans"))
-				trans = object.trans;
-			
-			if (command != null)
-				ClientProtocol.process(this, object);
-			else if (trans >= 0)
-				if (response_handlers.hasOwnProperty(trans)) {
-					for each (var handler:Function in response_handlers[trans])
-						handler(object);
-					delete response_handlers[trans]
-				}
+			while (socket.bytesAvailable > 0) {
+				var object:Object = socket.readObject();
+				
+				trace("comm.Conn - event - SocketData", ObjectUtil.toString(object));
+				
+				var command:String = null;
+				var trans:int = -1;
+				
+				if (object.hasOwnProperty("command"))
+					command = object.command;
+				
+				if (object.hasOwnProperty("trans"))
+					trans = object.trans;
+				
+				if (command != null)
+					ClientProtocol.process(this, object);
+				else if (trans >= 0)
+					if (response_handlers.hasOwnProperty(trans)) {
+						for each (var handler:Function in response_handlers[trans])
+							handler(object);
+						delete response_handlers[trans]
+					}
+			}
 		}
 
 		// -- public methods
