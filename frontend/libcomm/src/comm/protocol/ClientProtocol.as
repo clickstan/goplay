@@ -63,14 +63,31 @@ package comm.protocol
 				return
 			}
 			
-			for each (var requirement:String in client_commands[command]) {
-				// TODO: ver que estan todas las propiedades requeridas
+			var args:Array = new Array();
+			
+			for each (var requirement:String in client_commands[command].requires) {
+				if (msg.hasOwnProperty(requirement)) {
+					args.push(msg[requirement]);
+				} else {
+					trace("comm.protocol.ClientProtocol", "process(...)", "missing arg: " + requirement);
+					return
+				}
 			}
 			
+			last_command = command;
+			
+			client_commands[command].handler.apply(NaN, args);
 		}
 		
-		private static function null_handler():void {
-			trace("comm.protocol.ClientProtocol", "null_handler called", last_command);
+		private static function null_handler(...args):void {
+			trace("comm.protocol.ClientProtocol", "null_handler called", last_command, args.toString());
+		}
+		
+		public static function setCommandHandler(command:String, handler:Function):void {
+			if (client_commands.hasOwnProperty(command))
+				client_commands[command].handler = handler;
+			else
+				trace("comm.protocol.ClientProtocol", "setCommanHandler(...)", "unknown command");
 		}
 	}
 }
