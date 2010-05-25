@@ -1,0 +1,14 @@
+server:
+  max connections: 50
+  port: 7777
+  
+protocol:
+  #serialization: json
+  serialization: amf3
+  
+
+game-engine:
+    engine: gnugo
+    path: X:\\sp1\\gnugo-3.8
+    executable: gnugo.exe
+    params: [--mode, gtp, --level, "5", --japanese-rules]
