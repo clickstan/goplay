@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="480" height="200">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Panel x="0" y="0" width="480" height="202" id="chat_panel" title="Chat">
+		<s:TextArea x="14" y="-7" width="444" height="117"/>
+		<s:TextInput x="13" y="120" width="375" height="37"/>
+		<s:Button x="396" y="127" label="Send" width="67" id="send_btn"/>
+	</s:Panel>
+</s:Group>
