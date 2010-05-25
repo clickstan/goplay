@@ -1,6 +1,5 @@
 syntax: glob
 .bzr
-.project
 .pydevproject
 .settings
 *.kpf
