@@ -5,6 +5,7 @@
 	<fx:Script>
 		<![CDATA[
 			import comm.Conn;
+			import comm.protocol.server.User;
 			
 			import mx.controls.Alert;
 			
@@ -12,7 +13,6 @@
 			
 			public function connect():void {
 				conn = new Conn();
-				
 				conn.addEventHandler(Event.CONNECT, event_connected);
 				conn.addEventHandler(Event.CLOSE, event_disconnected);
 				
@@ -21,6 +21,9 @@
 			
 			public function event_connected(event:Event):void {
 				trace("nos conectamos");
+				var obj:Object = User.login("player","player");
+				//conn.addResponseHandler(test,obj.trans);
+				conn.send(obj);
 			}
 
 			private function event_disconnected(event:Event):void {
