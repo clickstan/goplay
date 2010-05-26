@@ -233,7 +233,7 @@ def start_game(conn, username, color, size=None, trans=None):
     sender = conn.data['user']
 
     if sender is user:
-        conn.send(GameError.startgame_cannot_play_with_yourself(), trans)
+        conn.send(UserError.startgame_cannot_play_with_yourself(), trans)
         return
     
     if user is None:

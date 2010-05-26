@@ -1,6 +1,6 @@
 // ActionScript file
 public function tabNavigatorCreated():void {
-	createRoom("Main");
+	createRoom("main");
 }
 
 
@@ -10,6 +10,7 @@ public function createRoom(name:String):void {
 	nc.name = name;
 	nc.label = name;
 	var rc:RoomComponent = new RoomComponent();
+	rc.init(name);
 	nc.addElement(rc);
 	chatRoomNavigator.addChild(nc);
 }

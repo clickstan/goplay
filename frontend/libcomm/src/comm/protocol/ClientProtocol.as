@@ -14,44 +14,36 @@ package comm.protocol
 		
 		// -- chat commands
 		
-		client_commands['chat.call_into'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('chat_id', 'sender');
+		client_commands['chat.call_into'] = {'handler' : null_handler,
+											 'requires' : new Array('chat_id', 'sender')};
 		
-		client_commands['chat.broadcast'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('chat_id', 'sender', 'msg');
+		client_commands['chat.broadcast'] = {'handler' : null_handler,
+											 'requires' : new Array('chat_id', 'sender', 'msg')};
 		
 		// -- game commands
 		
-		client_commands['game.call_into'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('game_id', 'sender');
+		client_commands['game.call_into'] = {'handler' : null_handler,
+											 'requires' : new Array('game_id', 'sender')};
 		
-		client_commands['game.initialize'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('game_id', 'chat_id', 'sender',
-											 'black', 'white', 'size', 'komi', 'handicap',
-											 'timed_game', 'main_time', 'byo_yomi',
-											 'moves_handicap', 'moves_all', 'resigned', 'score');
+		client_commands['game.initialize'] = {'handler' : null_handler,
+											  'requires' : new Array('game_id', 'chat_id', 'sender',
+												  					 'black', 'white', 'size', 'komi', 'handicap',
+												  					 'timed_game', 'main_time', 'byo_yomi',
+												  					 'moves_handicap', 'moves_all', 'resigned', 'score')};
 		
-		client_commands['game.play'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('game_id', 'color', 'move');
+		client_commands['game.play'] = {'handler' : null_handler,
+										'requires' : new Array('game_id', 'color', 'move')};
 		
-		client_commands['game.final_score'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('game_id', 'score');
+		client_commands['game.final_score'] = {'handler' : null_handler,
+											   'requires' : new Array('game_id', 'score')};
 		
 		// -- room commands
 		
-		client_commands['room.adduser'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('room', 'user');
+		client_commands['room.adduser'] = {'handler' : null_handler,
+										   'requires' : new Array('room', 'user')};
 		
-		client_commands['room.removeuser'] = new Object();
-		client_commands.handler = null_handler;
-		client_commands.requires = new Array('room', 'user');
+		client_commands['room.removeuser'] = {'handler' : null_handler,
+											  'requires' : new Array('room', 'user')};
 		
 		// -- commands end
 		
@@ -65,10 +57,10 @@ package comm.protocol
 			if (msg.hasOwnProperty("trans"))
 				trans = msg.trans;
 			
-			//delete msg.command;
+			delete msg.command;
 			
-			//if (trans >= 0)
-				//delete msg.trans;
+			if (trans >= 0)
+				delete msg.trans;
 			
 			if (!client_commands.hasOwnProperty(command)) {
 				trace("comm.protocol.ClientProtocol", "process(...)", "unknown command");
@@ -87,8 +79,6 @@ package comm.protocol
 			}
 			
 			last_command = command;
-			
-			trace(ObjectUtil.toString(client_commands[command]));
 			
 			client_commands[command].handler.apply(NaN, args);
 		}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*" creationComplete="init()">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*">
 
 	<fx:Script>
 		<![CDATA[
@@ -13,20 +13,35 @@
 			
 			import mx.utils.ObjectUtil;
 			
-			private function init():void {
-				//get players from main room
-				var obj2:Object = Room.getUsersFromRoom("main");
+			public static var rooms:Dictionary = new Dictionary();
+			public var roomname:String;
+			
+			public function init(name:String):void {
+				roomname = name;
+				rooms[roomname] = this;
+				
+				//get players
+				var obj2:Object = Room.getUsersFromRoom(roomname);
 				Main.conn.addResponseHandler(fillPlayersGrid,obj2.trans);
 				Main.conn.send(obj2);
 			}
 			
 			public function fillPlayersGrid(object:Object):void {
-				trace("filling player_grid, object=",ObjectUtil.toString(object));
+				trace("filling player_grid");
 				
 				player_grid.dataProvider = object.users;
 				
 				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
 				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
+			}
+			
+			public function addPlayer(name:String):void {
+				player_grid.dataProvider.addItem(name);
+			}
+			
+			public function removePlayer(name:String):void {
+				var users:Array = player_grid.dataProvider.toArray();
+				player_grid.dataProvider.removeItemAt(users.indexOf(name));
 			}
 			
 			protected function playRequestResponse(object:Object):void {
