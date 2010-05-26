@@ -87,7 +87,7 @@ package comm
 					delete response_handlers[trans]
 				}
 		}
-		
+
 		// -- public methods
 		
 		public function connect(hostname:String, port:uint):void {

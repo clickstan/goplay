@@ -5,12 +5,15 @@
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
-			import mx.core.mx_internal;
 			import comm.Conn;
+			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
+			
+			import mx.core.mx_internal;
 			public var conn:Conn;
 			//login function --> edit later for conection
 
+			
 			public function init():void {
 				conn = new Conn();
 				conn.addEventHandler(Event.CONNECT, event_connected);
@@ -22,7 +25,20 @@
 				signInMain_btn.enabled = true;
 				registerMain_btn.enabled = true;
 				connStatusLabel.visible = false;
+				
 			}
+			
+			public function fillRoomGrid(object:Object):void {
+				trace("filling roomsGrid");
+				roomsGrid.dataProvider = object.rooms;
+			}
+			
+			public function fillPlayersGrid(object:Object):void {
+				trace("filling player_grid");
+				roomComponent_main.player_grid.dataProvider = object.users;
+			}
+			
+			
 			
 			public function event_disconnected(event:Event):void {
 				
@@ -53,6 +69,18 @@
 					currentState = "mainRoom";
 					password_txt.text = "";
 					userName_txt.text = "";
+					
+					//get room list
+					var obj:Object = Room.get_all_rooms();
+					conn.addResponseHandler(fillRoomGrid,obj.trans);
+					conn.send(obj);
+					
+					//get players from main room
+				    var obj2:Object = Room.getUsersFromRoom("main");
+					conn.addResponseHandler(fillPlayersGrid,obj2.trans);
+					conn.send(obj2);
+
+					
 				} else {
 					error_lbl.text = "Error:\n "+response.detail;
 				}
@@ -123,7 +151,7 @@
 	</s:Panel>
 	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" verticalCenter="-12">
 		<s:NavigatorContent label="Main Room" width="100%" height="100%">
-			<ns1:RoomComponent x="6" y="10">
+			<ns1:RoomComponent id = "roomComponent_main" x="6" y="10">
 			</ns1:RoomComponent>
 		</s:NavigatorContent>
 	</mx:TabNavigator>
@@ -160,6 +188,11 @@
 	<s:Label includeIn="loginScreen" x="501" y="56" text="Login" id="login_lbl" fontWeight="bold" fontSize="23"/>
 	<s:Label includeIn="loginScreen,register" x="501" y="263" id="error_lbl" color="red" x.register="527" y.register="313"/>
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
+	<mx:DataGrid id="roomsGrid" x="870" y="109" includeIn="mainRoom" height="183">
+		<mx:columns >
+			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
+		</mx:columns>
+	</mx:DataGrid>
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>

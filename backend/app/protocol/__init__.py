@@ -3,7 +3,7 @@ from response import ProtocolError
 import cuser
 import chat
 import game
-
+import room
 
 server_commands =\
     {'user.login'      : {'handler'  : cuser.login,
@@ -34,6 +34,12 @@ server_commands =\
                           
      'game.resign'     : {'handler'  : game.resign,
                           'requires' : ['game_id']},
+                          
+    'room.get_all_rooms'      :{'handler'  : room.get_all_rooms,
+                              'requires'  : []},
+                              
+    'room.getUsersFromRoom'   : {'handler' : room.getUsersFromRoom,
+                             'requires'  : ['name']},
     }
 
 
