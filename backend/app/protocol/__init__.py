@@ -44,11 +44,12 @@ server_commands =\
                              'requires'  : ['name']}, 
      'room.openRoom'   : {'handler' : room.openRoom,
                              'requires'  : ['name']}, 
-                             
+     'room.getChatId'   : {'handler' : room.getChatId,
+                             'requires'  : ['roomName']},                             
     }
 
 
-
+#getChatId(conn, roomName, trans=None):
 def process(conn, message):
 
     trans = message.get('trans')

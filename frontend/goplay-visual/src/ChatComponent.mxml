@@ -2,12 +2,35 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="480" height="200">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import comm.protocol.server.Chat;
+			public var chatid:int;
+			
+			public function init(id:int):void
+			{
+				chatid = id;
+			}
+
+			protected function send_btn_clickHandler(event:MouseEvent):void
+			{
+				var msg:String = textInput.text; 
+				if(msg.length > 0) {
+					var obj:Object = Chat.broadcast(chatid, msg);
+					Main.conn.send(obj);
+					textInput.text = "";
+				}
+			}
+
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:Panel x="0" y="0" width="480" height="202" id="chat_panel" title="Chat">
-		<s:TextArea x="14" y="-7" width="444" height="117"/>
-		<s:TextInput x="13" y="120" width="375" height="37"/>
-		<s:Button x="396" y="127" label="Send" width="67" id="send_btn"/>
+		<s:TextInput x="13" y="120" width="375" height="37" id="textInput"/>
+		<s:Button x="396" y="127" label="Send" width="67" id="send_btn" click="send_btn_clickHandler(event)"/>
+		<s:TextArea x="13" y="-9" width="457" height="121"/>
 	</s:Panel>
 </s:Group>

@@ -14,8 +14,8 @@ class Room:
     def add(cls, room):
         if room.name not in cls.__rooms__:
             cls.__rooms__[room.name] = room
-        else:
-            raise ValueError("Room 'name' already in use")
+        #else:
+        #    raise ValueError("Room 'name' already in use")
 
     @classmethod
     def remove(cls, room):
@@ -74,3 +74,7 @@ def createRoom(conn, name, trans=None):
 def openRoom(conn, name, trans=None):
     user = conn.data['user']
     user.enterRoom(Room.__rooms__.get(name))
+    
+def getChatId(conn, roomName, trans=None):
+    thisRoom = Room.__rooms__.get(roomName)
+    conn.send({'id':thisRoom.chat.id}, trans)
