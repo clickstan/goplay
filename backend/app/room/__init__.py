@@ -1,5 +1,9 @@
 from chat import Chat
 
+from protocol.client import ClientRoomCommand
+
+from helper.threads import to_thread
+
 
 class Room:
     __rooms__ = {}  # {'name' : room_instance}
@@ -28,14 +32,28 @@ class Room:
     def destroy(self):
         Room.remove(self)
 
+    @to_thread()
     def addUser(self, user):
-        self.users[user.db_tuple.name] = user
+        username = user.db_tuple.name
+        
+        self.users[username] = user
+        
+        for user_in_room in self.users:
+            reactor.callFromThread(user_in_room.conn.send,
+                                   ClientRoomCommand.adduser(self.id, username))
 
+    @to_thread()
     def removeUser(self, user):
+        username = user.db_tuple.name
+        
         try:
-            del self.users[user.db_tuple.name]
+            del self.users[username]
         except KeyError:
             pass
+        
+        for user_in_room in self.users:
+            reactor.callFromThread(user_in_room.conn.send,
+                                   ClientRoomCommand.removeuser(self.id, username))
 
 def get_all_rooms(conn, trans=None):
     conn.send({'rooms':Room.__rooms__.keys()}, trans)

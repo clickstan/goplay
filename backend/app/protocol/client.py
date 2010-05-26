@@ -1,6 +1,25 @@
 from helper.protocol import addtrans
 
 
+class Room:
+    
+    @staticmethod
+    def adduser(room_id, username):
+        """Notifies the client a new user entered the room.
+        All users already in the room should receive this notificacion"""
+        return {'command' : 'room.adduser',
+                'room_id' : room_id,
+                'user' : username}
+        
+    @staticmethod
+    def removeuser(room_id, username):
+        """Notifies the client a new user left the room.
+        All users in the room should receive this notificacion"""
+        return {'command' : 'room.removeuser',
+                'room_id' : room_id,
+                'user' : username}
+
+
 class Chat:
 
     @staticmethod

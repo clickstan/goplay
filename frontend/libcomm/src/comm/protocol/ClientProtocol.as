@@ -76,9 +76,7 @@ package comm.protocol
 			
 			last_command = command;
 			
-			
 			//client_commands[command].handler.apply(NaN, args);
-			
 		}
 		
 		private static function null_handler(...args):void {
