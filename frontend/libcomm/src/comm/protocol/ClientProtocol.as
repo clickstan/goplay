@@ -39,6 +39,12 @@ package comm.protocol
 		
 		// -- room commands
 		
+		client_commands['room.created'] = {'handler' : null_handler,
+										   'requires' : new Array('room')};
+		
+		client_commands['room.destroyed'] = {'handler' : null_handler,
+											 'requires' : new Array('room')};
+		
 		client_commands['room.adduser'] = {'handler' : null_handler,
 										   'requires' : new Array('room', 'user')};
 		
