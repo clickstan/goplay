@@ -3,7 +3,7 @@ from chat import Chat
 
 class Room:
     __rooms__ = {}  # {'name' : room_instance}
-
+    
     @classmethod
     def add(cls, room):
         if room.name not in cls.__rooms__:
@@ -36,3 +36,15 @@ class Room:
             del self.users[user.db_tuple.name]
         except KeyError:
             pass
+
+def get_all_rooms(conn, trans=None):
+    conn.send({'rooms':Room.__rooms__.keys()}, trans)
+
+def getUsersFromRoom(conn, name, trans=None):
+    print trans
+    room = Room.__rooms__.get(name)
+    if room:
+        response = room.users.keys()
+    else:
+        response = []
+    conn.send({'users':response}, trans)
