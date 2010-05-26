@@ -72,6 +72,5 @@ package comm.protocol.server
 				'game_id'  : game_id,
 				'trans'    : Util.nextTrans()};
 		}
-		
 	}
 }
