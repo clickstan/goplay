@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" minWidth.mainRoom="1024" minHeight.mainRoom="720" initialize="init()">
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" minWidth.mainRoom="1024" minHeight.mainRoom="720" creationComplete="init()">
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
@@ -10,7 +10,9 @@
 			import comm.protocol.server.User;
 			
 			import mx.core.mx_internal;
-			public var conn:Conn;
+			import mx.utils.ObjectUtil;
+			public static var conn:Conn;
+			public static var currentUser:String;
 			//login function --> edit later for conection
 
 			
@@ -34,8 +36,13 @@
 			}
 			
 			public function fillPlayersGrid(object:Object):void {
-				trace("filling player_grid");
+				trace("filling player_grid, object=",ObjectUtil.toString(object));
+				if(roomComponent_main == null)
+					trace("roomComponent es nul");
+				if(roomComponent_main.player_grid == null)
+					trace("roomCom...,.player_grid es null")
 				roomComponent_main.player_grid.dataProvider = object.users;
+				
 			}
 			
 			
@@ -81,10 +88,15 @@
 					conn.send(obj2);
 
 					
+					
 				} else {
+					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;
 				}
 			}
+			
+			
+			
 			
 			public function login():void{
 				if(userName_txt.text.length >= 4 && password_txt.text.length >= 4){
@@ -92,7 +104,7 @@
 					var obj:Object = User.login(userName_txt.text, password_txt.text);
 					conn.addResponseHandler(loginResponse,obj.trans);
 					conn.send(obj);
-					
+					currentUser = userName_txt.text;
 				}else{
 					error_lbl.text ="";
 					if(userName_txt.text.length < 4){
