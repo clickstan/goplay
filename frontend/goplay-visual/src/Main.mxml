@@ -242,10 +242,12 @@
 		<mx:LinkButton includeIn="mainRoom" x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
-	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" verticalCenter="-12">
+	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="chatRoomNavigator.removeChildAt(chatRoomNavigator.selectedIndex)">
 		<s:NavigatorContent label="Main Room" width="100%" height="100%">
 			<ns1:RoomComponent id = "roomComponent_main" x="6" y="10">
 			</ns1:RoomComponent>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="test2" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 
