@@ -10,9 +10,12 @@
 			import comm.protocol.server.User;
 			
 			import mx.core.mx_internal;
+			public var conn:Conn;
+			//public var user_name:String;
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
 			public static var currentUser:String;
+
 			//login function --> edit later for conection
 
 			
@@ -23,7 +26,27 @@
 				conn.connect("127.0.0.1", 7777);
 			}
 			
+			public function register_init():void{
+				conn = new Conn();
+				conn.addEventHandler(Event.CONNECT, registerConn_connected);
+				conn.addEventHandler(Event.CLOSE, registerConn_disconnected);
+				conn.connect("127.0.0.1", 7777);
+			}
+
+			public function registerConn_connected(event:Event):void{
+				goTo_login();
+			}
+			
+			public function registerConn_disconnected(event:Event):void {
+				currentState = "welcomeScreen";
+				signInMain_btn.enabled = false;
+				registerMain_btn.enabled = false;
+				connStatusLabel.visible = true;
+				connStatusLabel.text = "Disconected from game server";
+			}
+			
 			public function event_connected(event:Event):void {
+				currentState = "welcomeScreen";
 				signInMain_btn.enabled = true;
 				registerMain_btn.enabled = true;
 				connStatusLabel.visible = false;
@@ -48,7 +71,11 @@
 			
 			
 			public function event_disconnected(event:Event):void {
-				
+				currentState = "welcomeScreen";
+				signInMain_btn.enabled = false;
+				registerMain_btn.enabled = false;
+				connStatusLabel.visible = true;
+				connStatusLabel.text = "Disconected from game server";
 			}
 			
 			public function goTo_login():void{
@@ -59,7 +86,7 @@
 			}
 			
 			public function goTo_register():void{
-				currentState = 'register';'' 
+				currentState = 'register';
 				error_lbl.text = "";
 				userName_txt.text = "";
 				name_txt.text = "";
@@ -72,10 +99,14 @@
 				
 				if(response.code == 300) {
 					trace("logged in");
+					currentUser = userName_txt.text;
 					error_lbl.text = "";
-					currentState = "mainRoom";
 					password_txt.text = "";
 					userName_txt.text = "";
+
+					currentState = "mainRoom";
+					userWelcome_lbl.text = "Welcome, " + currentUser;
+
 					
 					//get room list
 					var obj:Object = Room.get_all_rooms();
@@ -87,8 +118,6 @@
 					conn.addResponseHandler(fillPlayersGrid,obj2.trans);
 					conn.send(obj2);
 
-					
-					
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;
@@ -121,8 +150,12 @@
 			public function register():void{
 				if((userName_txt.text.length >= 4 && password_txt.text.length >= 4 
 					&& confirm_txt.text.length >= 4 && name_txt.text.length>= 4) && (confirm_txt.text=password_txt.text)){
-					trace("registered");
-					goTo_login();
+					
+					var obj:Object = User.login('registrador', 'registrador');
+					conn.addResponseHandler(loginRegisterResponse,obj.trans);
+					conn.send(obj);
+					
+					
 					//login_lbl.text = "logged in";
 				}else{
 					error_lbl.text ="";
@@ -132,7 +165,7 @@
 					if(password_txt.text.length < 4){
 						error_lbl.text = error_lbl.text + "Error:\n *The password must be of 4 to 20 characters.\n";
 					}
-					if(name_txt.text.length < 4){
+					if(name_txt.text.length < 4){  
 						error_lbl.text = error_lbl.text + "Error:\n *The name must be of 4 to 20 characters.\n";
 					}
 					if(confirm_txt.text.length < 4){
@@ -144,6 +177,52 @@
 					
 				}
 			}
+			
+			public function loginRegisterResponse(response:Object):void{
+				if(response.code == 300){
+					var obj:Object = User.register(userName_txt.text, password_txt.text, name_txt.text, "player");
+					conn.addResponseHandler(registerResponse, obj.trans);
+					conn.send(obj);
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+			public function registerResponse(response:Object):void{
+				if(response.code == 301){
+					trace("registered");
+					var obj:Object = User.logout();
+					conn.addResponseHandler(logoutRegisterResponse,obj.trans);
+					conn.send(obj);
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+			public function logoutRegisterResponse(response:Object):void{
+				if(response.code == 302){
+					trace("logout");
+					register_init(); 
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+			
+			public function userLogOut():void{
+				var obj:Object = User.logout();
+				conn.addResponseHandler(userLogOutResponse,obj.trans);
+				conn.send(obj);
+			}
+			
+			public function userLogOutResponse(response:Object):void{
+				if(response.code == 302){
+					trace("logout");
+					init(); 
+				}
+			}
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -160,13 +239,16 @@
 	
 	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom">
 		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
+		<mx:LinkButton includeIn="mainRoom" x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
+
 	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" verticalCenter="-12">
 		<s:NavigatorContent label="Main Room" width="100%" height="100%">
 			<ns1:RoomComponent id = "roomComponent_main" x="6" y="10">
 			</ns1:RoomComponent>
 		</s:NavigatorContent>
 	</mx:TabNavigator>
+
 	
 									<!--Welcome Screen State components-->
 	<s:Label includeIn="welcomeScreen" x="101" y="76" text="Welcome to GoPlay.com" width="462" height="28" id="welcome_lbl" fontSize="28" fontWeight="bold"/>
@@ -200,11 +282,14 @@
 	<s:Label includeIn="loginScreen" x="501" y="56" text="Login" id="login_lbl" fontWeight="bold" fontSize="23"/>
 	<s:Label includeIn="loginScreen,register" x="501" y="263" id="error_lbl" color="red" x.register="527" y.register="313"/>
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
+
+	<s:Label includeIn="mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
 	<mx:DataGrid id="roomsGrid" x="870" y="109" includeIn="mainRoom" height="183">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
 	</mx:DataGrid>
+
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>
@@ -233,6 +318,14 @@
 				
 			</s:Sequence>
 		</s:Transition>   
+		
+		<s:Transition toState="mainRoom" autoReverse="true">    
+			<s:Sequence>  
+				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
+						targets="{[ctrl_panel, userWelcome_lbl, chatRoomNavigator]}"/>                
+				
+			</s:Sequence>
+		</s:Transition> 
 	</s:transitions>
 	
 	
