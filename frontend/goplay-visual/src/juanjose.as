@@ -33,6 +33,7 @@ public function createRoomNavigatorContent(name:String):void {
 	nc.name = name;
 	nc.label = name;
 	var rc:RoomComponent = new RoomComponent();
+	rc.init(name);
 	nc.addElement(rc);
 	chatRoomNavigator.addChild(nc);
 }
