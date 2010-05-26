@@ -39,7 +39,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine(
-            "postgresql+psycopg2://netto:netto@localhost:5432/goplay",
+            "postgresql+psycopg2://netto:netto@127.0.0.1:5432/goplay",
             echo=False)
 
 Session = sessionmaker(bind=engine)
