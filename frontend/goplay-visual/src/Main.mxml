@@ -241,6 +241,7 @@
 
 	
 	
+	
 									<!--Welcome Screen State components-->
 	<s:Label includeIn="welcomeScreen" x="101" y="76" text="Welcome to GoPlay.com" width="462" height="28" id="welcome_lbl" fontSize="28" fontWeight="bold"/>
 	<s:Label includeIn="welcomeScreen" id="welcome_txt" x="101" y="123" text="GoPlay.com is a community for playing the Go board game online. In order to use all the features you must Register of if you have an Account only sign in. Have fun :)!&#xd;&#xd;" height="116" width="518" fontSize="23"/>
