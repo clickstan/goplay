@@ -31,7 +31,7 @@ class Chat:
             _sender = None
 
         for user in self.broadcast_to.copy():
-            if (user != sender) and (user not in exclude):
+            if user not in exclude:
                 reactor.callFromThread(user.conn.send,
                                        ClientChatCommand.broadcast(_sender, self.id, msg))
 
