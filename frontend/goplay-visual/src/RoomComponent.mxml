@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="478" >
+		<mx:columns>
+			<mx:DataGridColumn headerText="Players" dataField="col1"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<ns1:ChatComponent x="10" y="288">
+	</ns1:ChatComponent>
+	<mx:DataGrid x="10" y="10" width="476" height="269">
+		<mx:columns>
+			<mx:DataGridColumn headerText="White" dataField="white_plyr"/>
+			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
+			<mx:DataGridColumn headerText="Game Status" dataField="game_stat"/>
+			<mx:DataGridColumn headerText="View Game" dataField="game_btnCol">
+				
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+</s:Group>
