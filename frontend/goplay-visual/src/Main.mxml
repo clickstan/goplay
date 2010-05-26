@@ -9,6 +9,7 @@
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
+			include "juanjose.as";
 			
 			import mx.core.mx_internal;
 			//public var user_name:String;
@@ -24,6 +25,10 @@
 				conn.addEventHandler(Event.CONNECT, event_connected);
 				conn.addEventHandler(Event.CLOSE, event_disconnected);
 				conn.connect("127.0.0.1", 7777);
+				
+				
+				
+				
 			}
 			
 			public function register_init():void{
@@ -173,6 +178,8 @@
 				}
 			}
 			
+
+			
 			public function registerResponse(response:Object):void{
 				if(response.code == 301){
 					trace("registered");
@@ -227,11 +234,7 @@
 		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
-	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="kill_tabs()">
-		<s:NavigatorContent label="Main Room" width="100%" height="100%">
-			<ns1:RoomComponent id = "roomComponent_main" x="6" y="10">
-			</ns1:RoomComponent>
-		</s:NavigatorContent>
+	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="kill_tabs()" creationComplete="tabNavigatorCreated()">
 	</mx:TabNavigator>
 
 	
