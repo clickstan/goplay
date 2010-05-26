@@ -1,0 +1,17 @@
+TODO SOMETIME
+=============
+
+- usar config.yaml para la configuracion de la base de datos
+- script/db_console.py ???
+
+
+TODO NOW
+========
+
+- game
+- game persistence
+- add persistence and move# to game chats ???
+
+- permitir multiples logins de usuarios privilegiados (para el registro)
+- lista de usuarios
+- lista de juegos (room)

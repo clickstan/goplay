@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="306" height="230">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Panel x="1" y="0" width="304" height="232" id="login_win" title="Members Login" fontSize="14">
+		<s:Label x="133" y="10" text="Login" id="login_lbl"/>
+		<s:TextInput x="76" y="32" width="152" fontSize="13"/>
+		<s:Label x="119" y="63" text="Password" id="pass_lbl"/>
+		<s:TextInput x="74" y="85" width="152" toolTip="Only letters a.. z  before numbers 0.. 9" displayAsPassword="true" fontSize="13"/>
+		<s:Button x="119" y="114" label="Log In"/>
+		<mx:LinkButton x="104" y="160" label="New Account"/>
+	</s:Panel>
+</s:Group>
