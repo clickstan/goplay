@@ -29,5 +29,11 @@ package comm.protocol.server {
 				'name'		: name,
 				'trans'	  : Util.nextTrans()};
 		}
+		
+		public static function getChatId(roomName:String):Object{
+			return {'command' : 'room.getRoomId',
+				'roomName'		: roomName,
+				'trans'	  : Util.nextTrans()};
+		}
 	}
 }

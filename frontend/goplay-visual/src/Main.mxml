@@ -231,7 +231,7 @@
 		<s:State name = "gameRoom"/>
 	</s:states>
 	
-	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom">
+	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom" x.mainRoom="13" y.mainRoom="73">
 		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
 		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
@@ -240,7 +240,7 @@
 	</mx:TabNavigator>
 
 	
-	
+
 	
 									<!--Welcome Screen State components-->
 	<s:Label includeIn="welcomeScreen" x="101" y="76" text="Welcome to GoPlay.com" width="462" height="28" id="welcome_lbl" fontSize="28" fontWeight="bold"/>
@@ -276,7 +276,7 @@
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
 	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
-	<mx:DataGrid id="roomsGrid" x="32" y="397" includeIn="mainRoom" height="183" width="120" itemDoubleClick="openRoom()" itemClick="openRoom()">
+	<mx:DataGrid id="roomsGrid" x="10" y="325" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
@@ -285,8 +285,8 @@
 		<s:NavigatorContent label="Game 1" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
-	<s:Button includeIn="mainRoom" x="28" y="586" label="Create" id="createRoomB"  click="createRoomBtn()"/>
-	<s:TextInput includeIn="mainRoom" x="40" y="618" id="createRoomTxt" text="new room" enabled="true" visible="false"/>
+	<s:Button includeIn="mainRoom" x="10" y="571" label="Create" id="createRoomB"  click="createRoomBtn()"/>
+	<s:TextInput includeIn="mainRoom" x="10" y="599" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
 
 	
 					<!--Transitions for the components on each state-->

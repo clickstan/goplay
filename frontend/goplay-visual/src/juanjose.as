@@ -19,6 +19,7 @@ public function createRoomBtn():void {
 } 
 
 
+
 public function openRoom():void {
 	var name:String = roomsGrid.selectedItem.toString();
 	var openedNV:Object = chatRoomNavigator.getChildByName(name);

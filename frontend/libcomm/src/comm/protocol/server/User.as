@@ -52,25 +52,6 @@ package comm.protocol.server
 				'game_id'  : game_id,
 				'trans'    : Util.nextTrans()};
 		}
-		
-		public static function broadcast(chat_id:int, msg:String):Object {
-			return {'command'  : 'user.broadcast',
-				'chat_id' : chat_id,
-				'msg'     : msg,
-				'trans'   : Util.nextTrans()};
-		}
-		
-		public static function play(game_id:int, move:String):Object {
-			return {'command'  : 'user.play',
-				'game_id' : game_id,
-				'move'    : move,
-				'trans'   : Util.nextTrans()};
-		}
-		
-		public static function resign(game_id:int):Object {
-			return {'command'  : 'user.resign',
-				'game_id'  : game_id,
-				'trans'    : Util.nextTrans()};
-		}
+
 	}
 }
