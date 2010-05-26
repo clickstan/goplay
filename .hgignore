@@ -8,3 +8,4 @@ bin-debug
 bin
 .metadata
 *.pyc
+libcomm.swc

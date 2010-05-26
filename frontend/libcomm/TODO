@@ -1,3 +1,1 @@
-- keep working on ClientProtocol
-
-- null_handler, add varargs
+ClientProtocol handler apply doesnt work

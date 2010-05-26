@@ -6,11 +6,11 @@
 	<fx:Script>
 		<![CDATA[
 			import comm.Conn;
+			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
 			
 			import mx.core.mx_internal;
-			public var conn:Conn;
 			//public var user_name:String;
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
@@ -50,25 +50,12 @@
 				signInMain_btn.enabled = true;
 				registerMain_btn.enabled = true;
 				connStatusLabel.visible = false;
-				
 			}
 			
 			public function fillRoomGrid(object:Object):void {
 				trace("filling roomsGrid");
 				roomsGrid.dataProvider = object.rooms;
 			}
-			
-			public function fillPlayersGrid(object:Object):void {
-				trace("filling player_grid, object=",ObjectUtil.toString(object));
-				if(roomComponent_main == null)
-					trace("roomComponent es nul");
-				if(roomComponent_main.player_grid == null)
-					trace("roomCom...,.player_grid es null")
-				roomComponent_main.player_grid.dataProvider = object.users;
-				
-			}
-			
-			
 			
 			public function event_disconnected(event:Event):void {
 				currentState = "welcomeScreen";
@@ -107,17 +94,11 @@
 					currentState = "mainRoom";
 					userWelcome_lbl.text = "Welcome, " + currentUser;
 
-					
 					//get room list
 					var obj:Object = Room.get_all_rooms();
 					conn.addResponseHandler(fillRoomGrid,obj.trans);
 					conn.send(obj);
 					
-					//get players from main room
-				    var obj2:Object = Room.getUsersFromRoom("main");
-					conn.addResponseHandler(fillPlayersGrid,obj2.trans);
-					conn.send(obj2);
-
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;

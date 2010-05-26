@@ -3,6 +3,8 @@ package comm.protocol
 	import comm.Conn;
 	
 	import flash.utils.Dictionary;
+	
+	import mx.utils.ObjectUtil;
 
 	public class ClientProtocol
 	{
@@ -41,6 +43,16 @@ package comm.protocol
 		client_commands.handler = null_handler;
 		client_commands.requires = new Array('game_id', 'score');
 		
+		// -- room commands
+		
+		client_commands['room.adduser'] = new Object();
+		client_commands.handler = null_handler;
+		client_commands.requires = new Array('room', 'user');
+		
+		client_commands['room.removeuser'] = new Object();
+		client_commands.handler = null_handler;
+		client_commands.requires = new Array('room', 'user');
+		
 		// -- commands end
 		
 		public static function process(conn:Conn, msg:Object):void {
@@ -53,10 +65,10 @@ package comm.protocol
 			if (msg.hasOwnProperty("trans"))
 				trans = msg.trans;
 			
-			delete msg.command;
+			//delete msg.command;
 			
-			if (trans >= 0)
-				delete msg.trans;
+			//if (trans >= 0)
+				//delete msg.trans;
 			
 			if (!client_commands.hasOwnProperty(command)) {
 				trace("comm.protocol.ClientProtocol", "process(...)", "unknown command");
@@ -76,11 +88,13 @@ package comm.protocol
 			
 			last_command = command;
 			
-			//client_commands[command].handler.apply(NaN, args);
+			trace(ObjectUtil.toString(client_commands[command]));
+			
+			client_commands[command].handler.apply(NaN, args);
 		}
 		
 		private static function null_handler(...args):void {
-			trace("comm.protocol.ClientProtocol", "null_handler called", last_command, args.toString());
+			trace("comm.protocol.ClientProtocol", "null_handler called", last_command, args);
 		}
 		
 		public static function setCommandHandler(command:String, handler:Function):void {

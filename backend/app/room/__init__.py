@@ -1,6 +1,8 @@
+from twisted.internet import reactor
+
 from chat import Chat
 
-from protocol.client import ClientRoomCommand
+from protocol.client import Room as ClientRoomCommand
 
 from helper.threads import to_thread
 
@@ -36,11 +38,11 @@ class Room:
     def addUser(self, user):
         username = user.db_tuple.name
         
-        self.users[username] = user
-        
-        for user_in_room in self.users:
+        for user_in_room in self.users.itervalues():
             reactor.callFromThread(user_in_room.conn.send,
-                                   ClientRoomCommand.adduser(self.id, username))
+                                   ClientRoomCommand.adduser(self.name, username))
+            
+        self.users[username] = user
 
     @to_thread()
     def removeUser(self, user):
@@ -51,9 +53,9 @@ class Room:
         except KeyError:
             pass
         
-        for user_in_room in self.users:
+        for user_in_room in self.users.itervalues():
             reactor.callFromThread(user_in_room.conn.send,
-                                   ClientRoomCommand.removeuser(self.id, username))
+                                   ClientRoomCommand.removeuser(self.name, username))
 
 def get_all_rooms(conn, trans=None):
     conn.send({'rooms':Room.__rooms__.keys()}, trans)

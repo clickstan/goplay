@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*" creationComplete="init()">
 
 	<fx:Script>
 		<![CDATA[
-
-
+			include "command_handler/room.as";
+			
+			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
+			
+			import mx.utils.ObjectUtil;
+			
+			private function init():void {
+				//get players from main room
+				var obj2:Object = Room.getUsersFromRoom("main");
+				Main.conn.addResponseHandler(fillPlayersGrid,obj2.trans);
+				Main.conn.send(obj2);
+			}
+			
+			public function fillPlayersGrid(object:Object):void {
+				trace("filling player_grid, object=",ObjectUtil.toString(object));
+				
+				player_grid.dataProvider = object.users;
+				
+				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
+				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
+			}
 			
 			protected function playRequestResponse(object:Object):void {
 				trace("playRequestResponse");

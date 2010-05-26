@@ -38,15 +38,17 @@ def setDefaults(session):
     session.add(privileged_user1)
 
     # ---
+    
     privileged_user2 = user.User(
                         'registrador',
                         hashlib.sha256('registrador').hexdigest(),
-                        'el que que registra a la mara')
+                        'el que registra a la mara')
 
     privileged_user2.role = privileged_client_role
 
     session.add(privileged_user2)
     
+    # ---    
 
     session.commit()
     

@@ -8,8 +8,12 @@
 			import mx.controls.Alert;
 			protected function button1_clickHandler(event:MouseEvent):void
 			{
-				Alert.show("hola")
-				panel1.visible = !panel1.visible
+				panel1.visible = !panel1.visible;
+				heo.apply(NaN, [1,2,3]);
+			}
+			
+			public function heo(...args):void {
+				trace(args);
 			}
 		]]>
 	</fx:Script>
