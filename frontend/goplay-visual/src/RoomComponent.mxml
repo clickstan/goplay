@@ -5,11 +5,12 @@
 
 	<fx:Script>
 		<![CDATA[
+			include "command_handler/room_RoomComponent.as";
+			include "RoomChat.as";
+			
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
-			include "command_handler/room.as";
-			include "RoomChat.as";
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectUtil;
 			
@@ -37,7 +38,9 @@
 			}
 			
 			public function addPlayer(name:String):void {
-				player_grid.dataProvider.addItem(name);
+				var users:Array = player_grid.dataProvider.toArray();
+				if (users.indexOf(name) == -1)
+					player_grid.dataProvider.addItem(name);
 			}
 			
 			public function removePlayer(name:String):void {

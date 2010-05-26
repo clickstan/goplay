@@ -4,6 +4,16 @@ from helper.protocol import addtrans
 class Room:
     
     @staticmethod
+    def created(roomname):
+        return {'command' : 'room.created',
+                'room' : roomname}
+        
+    @staticmethod
+    def destroyed(roomname):
+        return {'command' : 'room.destroyed',
+                'room' : roomname}
+    
+    @staticmethod
     def adduser(roomname, username):
         """Notifies the client a new user entered the room.
         All users already in the room should receive this notificacion"""

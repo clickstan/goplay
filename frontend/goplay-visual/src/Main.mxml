@@ -5,11 +5,13 @@
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
+			include "command_handler/room_Main.as";
+			include "juanjose.as";
+			
 			import comm.Conn;
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
-			include "juanjose.as";
 			import mx.core.mx_internal;
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
@@ -23,10 +25,6 @@
 				conn.addEventHandler(Event.CONNECT, event_connected);
 				conn.addEventHandler(Event.CLOSE, event_disconnected);
 				conn.connect("127.0.0.1", 7777);
-				
-				
-				
-				
 			}
 			
 			public function register_init():void{
@@ -102,6 +100,8 @@
 					conn.addResponseHandler(fillRoomGrid,obj.trans);
 					conn.send(obj);
 					
+					ClientProtocol.setCommandHandler('room.created', roomCHandler_created);
+					ClientProtocol.setCommandHandler('room.destroyed', roomCHandler_destroyed);
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;

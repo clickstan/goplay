@@ -2,6 +2,8 @@ from twisted.internet import reactor
 
 from chat import Chat
 
+from cuser import ConnectedUser
+
 from protocol.client import Room as ClientRoomCommand
 
 from helper.threads import to_thread
@@ -24,14 +26,24 @@ class Room:
         except KeyError:
             pass
 
+    @to_thread()
     def __init__(self, name):
         self.name = name
         Room.add(self)
 
         self.chat = Chat()
         self.users = {}     # {'name' : connected_user_instance}
+        
+        for cu in ConnectedUser.__users__.itervalues():
+            reactor.callFromThread(cu.conn.send,
+                                   ClientRoomCommand.created(self.name))
 
+    @to_thread()
     def destroy(self):
+        for cu in ConnectedUser.__users__.itervalues():
+            reactor.callFromThread(cu.conn.send,
+                                   ClientRoomCommand.destroyed(self.name))
+        
         Room.remove(self)
 
     @to_thread()
