@@ -124,7 +124,11 @@
 				}
 			}
 			
-			
+			public function kill_tabs():void{
+				if(chatRoomNavigator.getChildren().length >=2){
+					chatRoomNavigator.removeChildAt(chatRoomNavigator.selectedIndex);
+				}
+			}
 			
 			
 			public function login():void{
@@ -239,15 +243,13 @@
 	
 	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom">
 		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
-		<mx:LinkButton includeIn="mainRoom" x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
+		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
-	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="chatRoomNavigator.removeChildAt(chatRoomNavigator.selectedIndex)">
+	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="kill_tabs()">
 		<s:NavigatorContent label="Main Room" width="100%" height="100%">
 			<ns1:RoomComponent id = "roomComponent_main" x="6" y="10">
 			</ns1:RoomComponent>
-		</s:NavigatorContent>
-		<s:NavigatorContent label="test2" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
 
@@ -285,12 +287,16 @@
 	<s:Label includeIn="loginScreen,register" x="501" y="263" id="error_lbl" color="red" x.register="527" y.register="313"/>
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
-	<s:Label includeIn="mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
+	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
 	<mx:DataGrid id="roomsGrid" x="870" y="109" includeIn="mainRoom" height="183">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
 	</mx:DataGrid>
+	<mx:TabNavigator includeIn="gameRoom" x="197" y="95" width="506" height="411" id="gameNav">
+		<s:NavigatorContent label="Game 1" width="100%" height="100%">
+		</s:NavigatorContent>
+	</mx:TabNavigator>
 
 	
 					<!--Transitions for the components on each state-->
