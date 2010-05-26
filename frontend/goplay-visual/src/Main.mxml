@@ -10,9 +10,7 @@
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
 			include "juanjose.as";
-			
 			import mx.core.mx_internal;
-			//public var user_name:String;
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
 			public static var currentUser:String;
@@ -108,6 +106,7 @@
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;
 				}
+				
 			}
 			
 			public function kill_tabs():void{
@@ -215,6 +214,9 @@
 			}
 			
 			
+
+		
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -237,6 +239,7 @@
 	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="kill_tabs()" creationComplete="tabNavigatorCreated()">
 	</mx:TabNavigator>
 
+	
 	
 									<!--Welcome Screen State components-->
 	<s:Label includeIn="welcomeScreen" x="101" y="76" text="Welcome to GoPlay.com" width="462" height="28" id="welcome_lbl" fontSize="28" fontWeight="bold"/>
@@ -272,7 +275,7 @@
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
 	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
-	<mx:DataGrid id="roomsGrid" x="870" y="109" includeIn="mainRoom" height="183">
+	<mx:DataGrid id="roomsGrid" x="32" y="397" includeIn="mainRoom" height="183" width="120" itemDoubleClick="openRoom()" itemClick="openRoom()">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
@@ -281,6 +284,8 @@
 		<s:NavigatorContent label="Game 1" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
+	<s:Button includeIn="mainRoom" x="28" y="586" label="Create" id="createRoomB"  click="createRoomBtn()"/>
+	<s:TextInput includeIn="mainRoom" x="40" y="618" id="createRoomTxt" text="new room" enabled="true" visible="false"/>
 
 	
 					<!--Transitions for the components on each state-->

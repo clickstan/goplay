@@ -17,5 +17,17 @@ package comm.protocol.server {
 				'name'		: name,
 				'trans'	  : Util.nextTrans()};
 		}
+		
+		public static function createRoom(name:String):Object {
+			return {'command' : 'room.createRoom',
+				'name'		: name,
+				'trans'	  : Util.nextTrans()};
+		}
+
+		public static function openRoom(name:String):Object {
+			return {'command' : 'room.openRoom',
+				'name'		: name,
+				'trans'	  : Util.nextTrans()};
+		}
 	}
 }

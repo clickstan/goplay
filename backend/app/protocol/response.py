@@ -82,6 +82,7 @@ class UserOk:
     def startgame_not_accepted():
         return ok(306, 'game not accepted')
 
+
 class UserError:
 
     @staticmethod

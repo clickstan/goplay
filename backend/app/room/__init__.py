@@ -61,10 +61,16 @@ def get_all_rooms(conn, trans=None):
     conn.send({'rooms':Room.__rooms__.keys()}, trans)
 
 def getUsersFromRoom(conn, name, trans=None):
-    print trans
     room = Room.__rooms__.get(name)
     if room:
         response = room.users.keys()
     else:
         response = []
     conn.send({'users':response}, trans)
+
+def createRoom(conn, name, trans=None):
+    Room(name)
+    
+def openRoom(conn, name, trans=None):
+    user = conn.data['user']
+    user.enterRoom(Room.__rooms__.get(name))

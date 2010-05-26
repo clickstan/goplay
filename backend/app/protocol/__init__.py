@@ -40,6 +40,11 @@ server_commands =\
                               
     'room.getUsersFromRoom'   : {'handler' : room.getUsersFromRoom,
                              'requires'  : ['name']},
+     'room.createRoom'   : {'handler' : room.createRoom,
+                             'requires'  : ['name']}, 
+     'room.openRoom'   : {'handler' : room.openRoom,
+                             'requires'  : ['name']}, 
+                             
     }
 
 
