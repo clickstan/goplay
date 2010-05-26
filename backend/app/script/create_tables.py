@@ -28,18 +28,30 @@ def setDefaults(session):
 
     # ---
 
-    privileged_user = user.User(
+    privileged_user1 = user.User(
                         'tgpof',
                         hashlib.sha256('#sp1-goplay').hexdigest(),
                         'The GoPlay Original Frontend')
 
-    privileged_user.role = privileged_client_role
+    privileged_user1.role = privileged_client_role
 
-    session.add(privileged_user)
+    session.add(privileged_user1)
 
     # ---
+    privileged_user2 = user.User(
+                        'registrador',
+                        hashlib.sha256('registrador').hexdigest(),
+                        'el que que registra a la mara')
+
+    privileged_user2.role = privileged_client_role
+
+    session.add(privileged_user2)
+    
 
     session.commit()
+    
+    
+    
 
 
 def main():
