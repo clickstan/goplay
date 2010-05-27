@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="106" creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.controls.Button;
+			
+			import notify.Notification;
+			
+			private var notifications:ArrayList = new ArrayList();
+			
+			private function init():void {
+				makeAllInvisible();
+			}
+			
+			private function makeAllInvisible():void {
+				label1.visible = false;
+				button1_1.visible = false;
+				button1_2.visible = false;
+				
+				label2.visible = false;
+				button2_1.visible = false;
+				button2_2.visible = false;
+				
+				label3.visible = false;
+				button3_1.visible = false;
+				button3_2.visible = false;
+			}
+			
+			public function addNotification(notification:Notification):void {
+				notifications.addItem(notification);
+				updateDisplay();
+			}
+			
+			public function removeNotification(notification:Notification):void {
+				notifications.removeItem(notification);
+				updateDisplay();
+			}
+			
+			private function updateDisplay():void {
+				makeAllInvisible();
+				
+				for each (var i:int in notifications) {
+					switch (i) {
+						case 0:
+							setProperties(i);
+							break;
+						case 1:
+							setProperties(i);
+							break;
+						case 2:
+							setProperties(i);
+							break;
+					}
+				}
+			}
+			
+			private function setProperties(i:int):void {
+				var options_labels:Array;
+				
+				var labels:Array = new Array(label1, label2, label3);
+				var buttons_1:Array = new Array(button1_1, button2_1, button3_1);
+				var buttons_2:Array = new Array(button1_2, button2_2, button3_2);
+				
+				var label:Label = labels[i];
+				var button_1:Button = buttons_1[i];
+				var button_2:Button = buttons_2[i];
+				
+				label.text = notifications[i].getMsg();
+				label.visible = true;
+				options_labels = notifications[i].getOptionsLabels();
+				for each (var j:int in options_labels) {
+					switch (j) {
+						case 0:
+							button_1.label = options_labels[i].label;
+							button_1.visible = true;
+							break;
+						case 1:
+							button_2.label = options_labels[i].label;
+							button_2.visible = true;
+							break;
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup x="0" y="0" width="600" height="106" id="tile" gap="1" requestedRowCount="3" rowHeight="33" variableRowHeight="false" paddingLeft="10" paddingTop="5" paddingBottom="5">
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label1" width="375" height="33"/>
+			<s:ToggleButton label="Toggle Button" id="button1_1"/>
+			<s:ToggleButton label="Toggle Button" id="button1_2"/>
+		</s:HGroup>
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label2" width="375" height="33"/>
+			<s:ToggleButton label="Toggle Button" id="button2_1"/>
+			<s:ToggleButton label="Toggle Button" id="button2_2"/>
+		</s:HGroup>
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label3" width="375" height="33"/>
+			<s:ToggleButton label="Toggle Button" id="button3_1"/>
+			<s:ToggleButton label="Toggle Button" id="button3_2"/>
+		</s:HGroup>
+	</s:VGroup>
+</s:Group>
