@@ -105,6 +105,8 @@ package comm
 			if (trans >= 0)
 				object.trans = trans;
 			
+			trace("comm.Conn - send", ObjectUtil.toString(object));
+			
 			socket.writeObject(object);
 			socket.flush();
 		}
