@@ -9,3 +9,4 @@ bin
 .metadata
 *.pyc
 libcomm.swc
+flexlib.swc
