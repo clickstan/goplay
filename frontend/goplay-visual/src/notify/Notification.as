@@ -26,7 +26,7 @@ package notify
 		public function getOptionsLabels():Array {
 			var result:Array = new Array();
 			for each (var option:Object in options) {
-				result.push(option.label)
+				result.push(option.label);
 			}
 			return result;
 		}
@@ -35,12 +35,12 @@ package notify
 			return new Array(options);
 		}
 		
-		public function is_used():Boolean {
+		public function isUsed():Boolean {
 			return used;
 		}
 		
 		public function callHandlerByLabel(label:String):void {
-			if (used) return;
+			if (isUsed()) return;
 			for each (var option:Object in options) {
 				if (option.label == label) {
 					var f:Function = option.handler.func;

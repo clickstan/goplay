@@ -1,7 +1,7 @@
 import comm.Conn;
 
 // ActionScript file
-protected function chatRecievedBroadCast(conn:Conn, chat_id:int, sender:String, msg:String):void {
+protected function chatRecievedBroadCast(conn:Conn, trans:int, chat_id:int, sender:String, msg:String):void {
 	
 	trace("chat broadcast recieved from ",sender," msg = ",msg);
 	

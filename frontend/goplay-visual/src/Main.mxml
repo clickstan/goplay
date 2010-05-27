@@ -6,6 +6,7 @@
 	<fx:Script>
 		<![CDATA[
 			include "command_handler/room_Main.as";
+			include "command_handler/chat_Main.as";
 			include "juanjose.as";
 			
 			import comm.Conn;
@@ -102,6 +103,8 @@
 					
 					ClientProtocol.setCommandHandler('room.created', roomCHandler_created);
 					ClientProtocol.setCommandHandler('room.destroyed', roomCHandler_destroyed);
+					
+					ClientProtocol.setCommandHandler('chat.call_into', chatCHandler_callInto);
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;
@@ -288,7 +291,7 @@
 	</mx:TabNavigator>
 	<s:Button includeIn="mainRoom" x="10" y="549" label="Create" id="createRoomB"  click="createRoomBtn()"/>
 	<s:TextInput includeIn="mainRoom" x="10" y="575" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
-	<notify:Notify includeIn="mainRoom" y="614" x="200">
+	<notify:Notify includeIn="mainRoom" y="614" x="200" id="notify_control">
 	</notify:Notify>
 
 	

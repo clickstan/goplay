@@ -6,7 +6,6 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayList;
-			import mx.controls.Button;
 			
 			import notify.Notification;
 			
@@ -43,17 +42,12 @@
 			private function updateDisplay():void {
 				makeAllInvisible();
 				
-				for each (var i:int in notifications) {
+				for (var i:int=0; i<notifications.length; i++) {
 					switch (i) {
 						case 0:
-							setProperties(i);
-							break;
 						case 1:
-							setProperties(i);
-							break;
 						case 2:
 							setProperties(i);
-							break;
 					}
 				}
 			}
@@ -69,22 +63,39 @@
 				var button_1:Button = buttons_1[i];
 				var button_2:Button = buttons_2[i];
 				
-				label.text = notifications[i].getMsg();
+				label.text = notifications.getItemAt(i).getMsg();
 				label.visible = true;
-				options_labels = notifications[i].getOptionsLabels();
-				for each (var j:int in options_labels) {
+				options_labels = notifications.getItemAt(i).getOptionsLabels();
+				for (var j:int=0; j<options_labels.length; j++) {
 					switch (j) {
 						case 0:
-							button_1.label = options_labels[i].label;
+							button_1.label = options_labels[j];
 							button_1.visible = true;
 							break;
 						case 1:
-							button_2.label = options_labels[i].label;
+							button_2.label = options_labels[j];
 							button_2.visible = true;
 							break;
 					}
 				}
 			}
+			
+			private function button_click_handler(btn:Button):void {
+				switch (btn) {
+					case button1_1:
+					case button1_2:
+						notifications.getItemAt(0).callHandlerByLabel(btn.label);
+						break;
+					case button2_1:
+					case button2_2:
+						notifications.getItemAt(1).callHandlerByLabel(btn.label);
+						break;
+					case button3_1:
+					case button3_2:
+						notifications.getItemAt(2).callHandlerByLabel(btn.label);
+						break;
+				}
+			} 
 		]]>
 	</fx:Script>
 	
@@ -94,18 +105,18 @@
 	<s:VGroup x="0" y="0" width="600" height="106" id="tile" gap="1" requestedRowCount="3" rowHeight="33" variableRowHeight="false" paddingLeft="10" paddingTop="5" paddingBottom="5">
 		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
 			<s:Label text="Label" id="label1" width="375" height="33"/>
-			<s:ToggleButton label="Toggle Button" id="button1_1"/>
-			<s:ToggleButton label="Toggle Button" id="button1_2"/>
+			<s:Button label="Button" id="button1_1" click="{button_click_handler(button1_1)}"/>
+			<s:Button label="Button" id="button1_2" click="{button_click_handler(button1_2)}"/>
 		</s:HGroup>
 		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
 			<s:Label text="Label" id="label2" width="375" height="33"/>
-			<s:ToggleButton label="Toggle Button" id="button2_1"/>
-			<s:ToggleButton label="Toggle Button" id="button2_2"/>
+			<s:Button label="Button" id="button2_1" click="{button_click_handler(button2_1)}"/>
+			<s:Button label="Button" id="button2_2" click="{button_click_handler(button2_2)}"/>
 		</s:HGroup>
 		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
 			<s:Label text="Label" id="label3" width="375" height="33"/>
-			<s:ToggleButton label="Toggle Button" id="button3_1"/>
-			<s:ToggleButton label="Toggle Button" id="button3_2"/>
+			<s:Button label="Button" id="button3_1" click="{button_click_handler(button3_1)}"/>
+			<s:Button label="Button" id="button3_2" click="{button_click_handler(button3_2)}"/>
 		</s:HGroup>
 	</s:VGroup>
 </s:Group>

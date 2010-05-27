@@ -78,7 +78,7 @@ package comm.protocol
 				return
 			}
 			
-			var args:Array = new Array(conn);
+			var args:Array = new Array(conn, trans);
 			
 			for each (var requirement:String in client_commands[command].requires) {
 				if (msg.hasOwnProperty(requirement)) {
@@ -102,7 +102,7 @@ package comm.protocol
 			if (client_commands.hasOwnProperty(command))
 				client_commands[command].handler = handler;
 			else
-				trace("comm.protocol.ClientProtocol", "setCommanHandler(...)", "unknown command");
+				trace("comm.protocol.ClientProtocol", "setCommanHandler(...)", "unknown command", command);
 		}
 	}
 }
