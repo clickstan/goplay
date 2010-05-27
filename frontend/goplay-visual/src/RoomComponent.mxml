@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="548" xmlns:ns1="*">
 
 	<fx:Script>
 		<![CDATA[
+			include "command_handler/chat_RoomComponent.as";
 			include "command_handler/room_RoomComponent.as";
 			include "RoomChat.as";
 			
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
-			include "command_handler/chat_RoomComponent.as";
-
+			
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectUtil;
 			
@@ -34,6 +34,7 @@
 				trace("filling player_grid");
 				
 				player_grid.dataProvider = object.users;
+				ClientProtocol.setCommandHandler('game.request_public_game', new_public_game_request);
 				ClientProtocol.setCommandHandler('chat.broadcast', chatRecievedBroadCast);
 				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
 				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
@@ -74,8 +75,18 @@
 				Main.conn.send(obj);
 			}
 
-
-
+			protected function requestGameB_clickHandler(event:MouseEvent):void
+			{
+				trace("Request a public game");
+				// TODO Auto-generated method stub
+				var obj:Object = Room.request_public_game(roomname,"black",9);
+				//Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+				Main.conn.send(obj);
+			}
+			
+			protected function new_public_game_request(obj:Object):void {
+				trace("new_public_game_requested");
+			}
 
 		]]>
 	</fx:Script>
@@ -93,7 +104,7 @@
 			<mx:DataGridColumn headerText="Players" dataField="col1"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<ns1:ChatComponent x="10" y="288" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)">
+	<ns1:ChatComponent x="11" y="321" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
 	</ns1:ChatComponent>
 	<mx:DataGrid x="10" y="10" width="476" height="269">
 		<mx:columns>
@@ -107,4 +118,5 @@
 	</mx:DataGrid>
 	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton"/>
 	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)"/>
+	<s:Button x="31" y="287" label="Button" id="requestGameB" click="requestGameB_clickHandler(event)"/>
 </s:Group>
