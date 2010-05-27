@@ -11,7 +11,7 @@ from helper.threads import to_thread
 
 class Room:
     __rooms__ = {}  # {'name' : room_instance}
-    
+
     @classmethod
     def add(cls, room):
         if room.name not in cls.__rooms__:
@@ -37,7 +37,8 @@ class Room:
         for cu in ConnectedUser.__users__.itervalues():
             reactor.callFromThread(cu.conn.send,
                                    ClientRoomCommand.created(self.name))
-
+        self.public_games = []
+        
     @to_thread()
     def destroy(self):
         for cu in ConnectedUser.__users__.itervalues():
@@ -82,11 +83,32 @@ def getUsersFromRoom(conn, name, trans=None):
 
 def createRoom(conn, name, trans=None):
     Room(name)
+    conn.send({'name':name},trans)
     
 def openRoom(conn, name, trans=None):
     user = conn.data['user']
     user.enterRoom(Room.__rooms__.get(name))
+    conn.send({'name':name},trans)
     
 def getChatId(conn, roomName, trans=None):
     thisRoom = Room.__rooms__.get(roomName)
     conn.send({'id':thisRoom.chat.id}, trans)
+    
+def request_public_game(conn,room, color, size=None, trans=None):
+    """Se le habisa a todos los players del room que alguien solicita un juego\
+    publico para que lo agreguen a su lista y se guarda en memoria del server"""
+    gameroom = Room.__rooms__.get(room)
+    for user in gameroom.users:
+        resp={'command':'game.new_public_game_request',
+              'username':conn.data['user'].db_tuple.name,
+              'color':color,
+              'size':size}
+        user.conn.send(resp,None)
+    
+    gameroom.public_games.append({
+                                  'username':conn.date['data'],
+                                  'color':color,
+                                  'size':size,
+                                  'trans':trans,
+                                  'game':None})
+    print gameroom.public_games

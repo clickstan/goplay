@@ -47,6 +47,8 @@ package comm.protocol.server
 				'trans'    : Util.nextTrans()};
 		}
 		
+
+		
 		public static function watch_game(game_id:int):Object {
 			return {'command'  : 'user.watch_game',
 				'game_id'  : game_id,
