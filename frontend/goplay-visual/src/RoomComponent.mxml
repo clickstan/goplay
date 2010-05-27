@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="498" xmlns:ns1="*">
+
+	<fx:Script>
+		<![CDATA[
+			include "command_handler/room_RoomComponent.as";
+			include "RoomChat.as";
+			
+			import comm.protocol.ClientProtocol;
+			import comm.protocol.server.Room;
+			import comm.protocol.server.User;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectUtil;
+			
+			public static var rooms:Dictionary = new Dictionary();
+			public var roomname:String;
+			public var chatid:int;
+			
+			public function init(name:String):void {
+				roomname = name;
+				rooms[roomname] = this;
+				
+				//get players
+				var obj2:Object = Room.getUsersFromRoom(roomname);
+				Main.conn.addResponseHandler(fillPlayersGrid,obj2.trans);
+				Main.conn.send(obj2);
+			}
+			
+			public function fillPlayersGrid(object:Object):void {
+				trace("filling player_grid");
+				
+				player_grid.dataProvider = object.users;
+				
+				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
+				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
+			}
+			
+			public function addPlayer(name:String):void {
+				var users:Array = player_grid.dataProvider.toArray();
+				if (users.indexOf(name) == -1)
+					player_grid.dataProvider.addItem(name);
+			}
+			
+			public function removePlayer(name:String):void {
+				var users:Array = player_grid.dataProvider.toArray();
+				player_grid.dataProvider.removeItemAt(users.indexOf(name));
+			}
+			
+			protected function playRequestResponse(object:Object):void {
+				trace("playRequestResponse");
+			}
+			
+			protected function playButton_clickHandler(event:MouseEvent):void
+			{
+				trace(Main.currentUser,"request game with:",player_grid.selectedItem)
+				var obj:Object = User.start_game(player_grid.selectedItem.toString(),"black");
+				Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+				Main.conn.send(obj);
+			}
+
+			protected function chatRequestResponse(object:Object):void {
+				trace("chatRequestResponse");
+			}
+			
+			protected function chatButton_clickHandler(event:MouseEvent):void
+			{
+				trace(Main.currentUser,"request chat with:",player_grid.selectedItem)
+				var obj:Object = User.start_chat(player_grid.selectedItem.toString());
+				Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+				Main.conn.send(obj);
+			}
+
+
+
+
+		]]>
+	</fx:Script>
+
+
+
+
+
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448" >
+		<mx:columns>
+			<mx:DataGridColumn headerText="Players" dataField="col1"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<ns1:ChatComponent x="10" y="288" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)">
+	</ns1:ChatComponent>
+	<mx:DataGrid x="10" y="10" width="476" height="269">
+		<mx:columns>
+			<mx:DataGridColumn headerText="White" dataField="white_plyr"/>
+			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
+			<mx:DataGridColumn headerText="Game Status" dataField="game_stat"/>
+			<mx:DataGridColumn headerText="View Game" dataField="game_btnCol">
+				
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton"/>
+	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)"/>
+</s:Group>
