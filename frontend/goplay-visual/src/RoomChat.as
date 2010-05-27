@@ -9,3 +9,4 @@ protected function initializeChatId(object:Object):void {
 	chatid = object.id;
 	chatComponent.init(chatid);
 }
+
