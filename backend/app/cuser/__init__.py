@@ -14,7 +14,6 @@ from game.data import GameConfig
 
 from helper.threads import to_thread__2_callback_args
 
-
 class ConnectedUser:
     __users__ = {}  # {'name' : connected_user_instance}
 
@@ -290,3 +289,4 @@ def watch_game(conn, game_id, trans=None):
         response = GameOk.you_are_already_in_the_game()
         
     conn.send(response, trans)
+

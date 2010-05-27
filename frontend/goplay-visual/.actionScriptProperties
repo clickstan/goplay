@@ -9,7 +9,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="3" linkType="1" path="${DOCUMENTS}/libcomm/bin/libcomm.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/libcomm/bin/libcomm.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
