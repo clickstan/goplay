@@ -30,7 +30,12 @@ package comm.protocol
 												  					 'black', 'white', 'size', 'komi', 'handicap',
 												  					 'timed_game', 'main_time', 'byo_yomi',
 												  					 'moves_handicap', 'moves_all', 'resigned', 'score')};
-		
+
+		client_commands['game.new_public_game_request'] = {'handler' : null_handler,
+															'requires' : new Array('username',
+																'color',
+																'size')};
+
 		client_commands['game.play'] = {'handler' : null_handler,
 										'requires' : new Array('game_id', 'color', 'move')};
 		

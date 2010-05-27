@@ -23,6 +23,9 @@ server_commands =\
                           'requires' : ['username', 'color'],
                           'optional' : ['size']},
                           
+      'room.request_public_game' : {'handler'  : room.request_public_game,
+                          'requires' : ['room','color','size']},
+                          
      'user.watch_game' : {'handler'  : cuser.watch_game,
                           'requires' : ['game_id']},
 

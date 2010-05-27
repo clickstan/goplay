@@ -11,6 +11,13 @@ package comm.protocol.server {
 				'trans'	  : Util.nextTrans()};
 		}
 		
+		public static function request_public_game(room:String, color:String, size:int):Object {
+			return {'command'  : 'room.request_public_game',
+				'color'	   : color,
+				'size'	   : size,
+				'room'	   : room,
+				'trans'    : Util.nextTrans()};
+		}
 		
 		public static function getUsersFromRoom(name:String):Object {
 			return {'command' : 'room.getUsersFromRoom',
