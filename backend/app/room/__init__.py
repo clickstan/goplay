@@ -82,10 +82,12 @@ def getUsersFromRoom(conn, name, trans=None):
 
 def createRoom(conn, name, trans=None):
     Room(name)
+    conn.send({'name':name},trans)
     
 def openRoom(conn, name, trans=None):
     user = conn.data['user']
     user.enterRoom(Room.__rooms__.get(name))
+    conn.send({'name':name},trans)
     
 def getChatId(conn, roomName, trans=None):
     thisRoom = Room.__rooms__.get(roomName)

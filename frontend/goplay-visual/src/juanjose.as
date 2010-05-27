@@ -26,9 +26,13 @@ public function openRoom():void {
 	if (openedNV == null) {
 		trace("sending openRoom(",name,")");
 		var obj:Object = Room.openRoom(name);
-		createRoomNavigatorContent(name);
+		conn.addResponseHandler(createRoomNavigatorContentCaller, obj.trans);
 		conn.send(obj);
 	}
+}
+
+public function createRoomNavigatorContentCaller(obj:Object):void {
+	createRoomNavigatorContent(obj.name);
 }
 
 public function createRoomNavigatorContent(name:String):void {

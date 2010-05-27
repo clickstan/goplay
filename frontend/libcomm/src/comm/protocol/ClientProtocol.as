@@ -5,7 +5,7 @@ package comm.protocol
 	import flash.utils.Dictionary;
 	
 	import mx.utils.ObjectUtil;
-
+ 
 	public class ClientProtocol
 	{
 		private static var client_commands:Dictionary = new Dictionary();

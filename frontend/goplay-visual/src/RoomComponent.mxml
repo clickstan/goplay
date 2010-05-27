@@ -11,6 +11,8 @@
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
+			include "command_handler/chat_RoomComponent.as";
+
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectUtil;
 			
@@ -32,7 +34,7 @@
 				trace("filling player_grid");
 				
 				player_grid.dataProvider = object.users;
-				
+				ClientProtocol.setCommandHandler('chat.broadcast', chatRecievedBroadCast);
 				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
 				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
 			}
