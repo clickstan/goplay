@@ -67,9 +67,9 @@ class UserOk:
         return ok(302, 'logged out')
 
     @staticmethod
-    def startchat_accepted(chat_id):
-        response = ok(303, 'chat accepted') 
-        response.update({'chat_id':chat_id})
+    def startchat_accepted(chat_id, sender, user):
+        response = ok(303, 'chat accepted')
+        response.update({'chat_id':chat_id, 'sender':sender, 'user':user})
         return response
 
     @staticmethod
