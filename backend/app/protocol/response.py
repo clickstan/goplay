@@ -67,16 +67,20 @@ class UserOk:
         return ok(302, 'logged out')
 
     @staticmethod
-    def startchat_accepted():
-        return ok(303, 'chat accepted')
+    def startchat_accepted(chat_id):
+        response = ok(303, 'chat accepted') 
+        response.update({'chat_id':chat_id})
+        return response
 
     @staticmethod
     def startchat_not_accepted():
         return ok(304, 'chat not accepted')
     
     @staticmethod
-    def startgame_accepted():
-        return ok(305, 'game accepted')
+    def startgame_accepted(game_id):
+        response = ok(305, 'game accepted')
+        response.update({'game_id':game_id})
+        return response
 
     @staticmethod
     def startgame_not_accepted():

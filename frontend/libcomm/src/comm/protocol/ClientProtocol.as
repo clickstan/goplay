@@ -26,7 +26,7 @@ package comm.protocol
 											 'requires' : new Array('game_id', 'sender')};
 		
 		client_commands['game.initialize'] = {'handler' : null_handler,
-											  'requires' : new Array('game_id', 'chat_id', 'sender',
+											  'requires' : new Array('game_id', 'chat_id',
 												  					 'black', 'white', 'size', 'komi', 'handicap',
 												  					 'timed_game', 'main_time', 'byo_yomi',
 												  					 'moves_handicap', 'moves_all', 'resigned', 'score')};
@@ -79,7 +79,7 @@ package comm.protocol
 				return
 			}
 			
-			var args:Array = new Array(conn);
+			var args:Array = new Array(conn, trans);
 			
 			for each (var requirement:String in client_commands[command].requires) {
 				if (msg.hasOwnProperty(requirement)) {
@@ -103,7 +103,7 @@ package comm.protocol
 			if (client_commands.hasOwnProperty(command))
 				client_commands[command].handler = handler;
 			else
-				trace("comm.protocol.ClientProtocol", "setCommanHandler(...)", "unknown command");
+				trace("comm.protocol.ClientProtocol", "setCommanHandler(...)", "unknown command", command);
 		}
 	}
 }
