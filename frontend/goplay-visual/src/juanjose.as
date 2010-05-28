@@ -48,3 +48,15 @@ public function createRoomNavigatorContent(name:String):void {
 		chatRoomNavigator.addChild(nc);
 	}
 }
+
+
+public function createRoomNavigatorContent_ChatOnly(name:String, chat_id:int):void {
+	trace("creating the chat tab",name);
+	var nc:NavigatorContent = new NavigatorContent();
+	nc.name = name;
+	nc.label = name;
+	var cc:ChatComponent = new ChatComponent();
+	cc.init(chat_id);
+	nc.addElement(cc);
+	chatRoomNavigator.addChild(nc);
+}

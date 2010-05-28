@@ -98,7 +98,7 @@
 				chat_request_players.removeItem(player);
 				
 				if (obj.code == 303) { // chat accepted
-					// TODO: crear tab de chat con chat_id = obj.chat_id
+					parentApplication.createRoomNavigatorContent_ChatOnly("chat: "+obj.sender+" - "+obj.user, obj.chat_id);
 					trace('chatRequestResponse', 'ready to chat in chat_id', obj.chat_id)
 				}
 			}
