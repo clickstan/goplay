@@ -302,6 +302,8 @@
 	<s:TextInput includeIn="mainRoom" x="10" y="575" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
 	<notify:Notify includeIn="mainRoom" y="614" x="200" id="notify_control">
 	</notify:Notify>
+	<ns1:boardComponent9 includeIn="mainRoom" x="493" y="28">
+	</ns1:boardComponent9>
 
 	
 					<!--Transitions for the components on each state-->
