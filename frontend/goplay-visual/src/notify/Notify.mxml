@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="106" creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			
+			import notify.Notification;
+			
+			private var notifications:ArrayList = new ArrayList();
+			
+			private function init():void {
+				makeAllInvisible();
+			}
+			
+			private function makeAllInvisible():void {
+				label1.visible = false;
+				button1_1.visible = false;
+				button1_2.visible = false;
+				
+				label2.visible = false;
+				button2_1.visible = false;
+				button2_2.visible = false;
+				
+				label3.visible = false;
+				button3_1.visible = false;
+				button3_2.visible = false;
+			}
+			
+			public function addNotification(notification:Notification):void {
+				notifications.addItem(notification);
+				updateDisplay();
+			}
+			
+			public function removeNotification(notification:Notification):void {
+				notifications.removeItem(notification);
+				updateDisplay();
+			}
+			
+			private function updateDisplay():void {
+				makeAllInvisible();
+				
+				for (var i:int=0; i<notifications.length; i++) {
+					switch (i) {
+						case 0:
+						case 1:
+						case 2:
+							setProperties(i);
+					}
+				}
+			}
+			
+			private function setProperties(i:int):void {
+				var options_labels:Array;
+				
+				var labels:Array = new Array(label1, label2, label3);
+				var buttons_1:Array = new Array(button1_1, button2_1, button3_1);
+				var buttons_2:Array = new Array(button1_2, button2_2, button3_2);
+				
+				var label:Label = labels[i];
+				var button_1:Button = buttons_1[i];
+				var button_2:Button = buttons_2[i];
+				
+				label.text = notifications.getItemAt(i).getMsg();
+				label.visible = true;
+				options_labels = notifications.getItemAt(i).getOptionsLabels();
+				for (var j:int=0; j<options_labels.length; j++) {
+					switch (j) {
+						case 0:
+							button_1.label = options_labels[j];
+							button_1.visible = true;
+							break;
+						case 1:
+							button_2.label = options_labels[j];
+							button_2.visible = true;
+							break;
+					}
+				}
+			}
+			
+			private function button_click_handler(btn:Button):void {
+				switch (btn) {
+					case button1_1:
+					case button1_2:
+						notifications.getItemAt(0).callHandlerByLabel(btn.label);
+						break;
+					case button2_1:
+					case button2_2:
+						notifications.getItemAt(1).callHandlerByLabel(btn.label);
+						break;
+					case button3_1:
+					case button3_2:
+						notifications.getItemAt(2).callHandlerByLabel(btn.label);
+						break;
+				}
+			} 
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup x="0" y="0" width="600" height="106" id="tile" gap="1" requestedRowCount="3" rowHeight="33" variableRowHeight="false" paddingLeft="10" paddingTop="5" paddingBottom="5">
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label1" width="375" height="33"/>
+			<s:Button label="Button" id="button1_1" click="{button_click_handler(button1_1)}"/>
+			<s:Button label="Button" id="button1_2" click="{button_click_handler(button1_2)}"/>
+		</s:HGroup>
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label2" width="375" height="33"/>
+			<s:Button label="Button" id="button2_1" click="{button_click_handler(button2_1)}"/>
+			<s:Button label="Button" id="button2_2" click="{button_click_handler(button2_2)}"/>
+		</s:HGroup>
+		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
+			<s:Label text="Label" id="label3" width="375" height="33"/>
+			<s:Button label="Button" id="button3_1" click="{button_click_handler(button3_1)}"/>
+			<s:Button label="Button" id="button3_2" click="{button_click_handler(button3_2)}"/>
+		</s:HGroup>
+	</s:VGroup>
+</s:Group>

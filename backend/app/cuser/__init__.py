@@ -212,7 +212,7 @@ def start_chat(conn, username, trans=None):
 
     def callback(accepted):
         if accepted:
-            conn.send(UserOk.startchat_accepted(), trans)
+            conn.send(UserOk.startchat_accepted(chat.id), trans)
         else:
             sender.exitChat(chat)
             conn.send(UserOk.startchat_not_accepted(), trans)
@@ -246,7 +246,7 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
     
     def call_into_callback(accepted):
         if accepted:
-            conn.send(UserOk.startgame_accepted(), trans)
+            conn.send(UserOk.startgame_accepted(game.id), trans)
         else:
             sender.exitGame(game)
             game.destroy(clear_all_traces=True)
