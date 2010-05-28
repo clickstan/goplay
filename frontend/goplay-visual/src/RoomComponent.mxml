@@ -72,10 +72,14 @@
 			}
 
 			protected function chatRequestResponse(obj:Object):void {
-				trace("chatRequestResponse");
 				var player:String = chat_requests[obj.trans];
 				delete chat_requests[obj.trans];
 				chat_request_players.removeItem(player);
+				
+				if (obj.code == 303) { // chat accepted
+					// TODO: sacar tab de chat con chat_id = obj.chat_id
+					trace('chatRequestResponse', 'ready to chat in chat_id', obj.chat_id)
+				}
 			}
 			
 			protected function chatButton_clickHandler(event:MouseEvent):void

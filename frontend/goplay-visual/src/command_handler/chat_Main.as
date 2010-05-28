@@ -22,12 +22,13 @@ public function chatCHandler_callInto(conn:Conn, trans:int, chat_id:int, sender:
 
 private function chatCCallback_callInto_accept(conn:Conn, trans:int, chat_id:int, notification:Notification):void {
 	conn.send({'trans':trans, 'accepted':true});
-	trace("accepted chat", chat_id, "trans " + trans)
 	notify_control.removeNotification(notification);
+	
+	// TODO: sacar tab de chat con chat_id = chat_id
+	trace('chatCCallback_callInto_accept', 'ready to chat in chat_id', chat_id)
 }
 
 private function chatCCallback_callInto_reject(conn:Conn, trans:int, notification:Notification):void {
 	conn.send({'trans':trans, 'accepted':false});
-	trace("rejected chat with trans " + trans);
 	notify_control.removeNotification(notification);
 }
