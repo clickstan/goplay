@@ -243,7 +243,7 @@ def start_game(conn, username, color, size=None, trans=None):
     
     def call_into_callback(accepted):
         if accepted:
-            conn.send(UserOk.startgame_accepted(), trans)
+            conn.send(UserOk.startgame_accepted(game.id), trans)
         else:
             sender.exitGame(game)
             game.destroy(clear_all_traces=True)

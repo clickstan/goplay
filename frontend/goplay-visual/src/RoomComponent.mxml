@@ -23,10 +23,15 @@
 			public var roomname:String;
 			public var chatid:int;
 			
-			// para que no se pueda hacer spam de requests
+			// para que no se pueda hacer spam de chat_requests
 			// mapea trans:player a los que se le envio un chat_request y no han respondido
 			private var chat_requests:Dictionary = new Dictionary();
 			private var chat_request_players:ArrayList = new ArrayList();
+			
+			// para que no se pueda hacer spam de game_requests
+			// mapea trans:player a los que se le envio un player_request y no han respondido
+			private var game_requests:Dictionary = new Dictionary();
+			private var game_request_players:ArrayList = new ArrayList();
 			
 			public function init(name:String):void {
 				roomname = name;
@@ -59,16 +64,29 @@
 				player_grid.dataProvider.removeItemAt(users.indexOf(name));
 			}
 			
-			protected function playRequestResponse(object:Object):void {
-				trace("playRequestResponse");
+			protected function playRequestResponse(obj:Object):void {
+				var player:String = game_requests[obj.trans];
+				delete game_requests[obj.trans];
+				game_request_players.removeItem(player);
+				
+				if (obj.code == 305) { // game accepted
+					// TODO: crear tab de juego con game_id = obj.game_id
+					trace('gameRequestResponse', 'ready to play in game_id', obj.game_id)
+				}
 			}
 			
 			protected function playButton_clickHandler(event:MouseEvent):void
 			{
-				trace(Main.currentUser,"request game with:",player_grid.selectedItem)
-				var obj:Object = User.start_game(player_grid.selectedItem.toString(),"black");
-				Main.conn.addResponseHandler(playRequestResponse,obj.trans);
-				Main.conn.send(obj);
+				var player:String = player_grid.selectedItem.toString();
+				
+				if (game_request_players.getItemIndex(player) == -1) {
+					var obj:Object = User.start_game(player,"black");
+					Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+					Main.conn.send(obj);
+					
+					game_requests[obj.trans] = obj.username;
+					game_request_players.addItem(player);
+				}
 			}
 
 			protected function chatRequestResponse(obj:Object):void {
@@ -77,7 +95,7 @@
 				chat_request_players.removeItem(player);
 				
 				if (obj.code == 303) { // chat accepted
-					// TODO: sacar tab de chat con chat_id = obj.chat_id
+					// TODO: crear tab de chat con chat_id = obj.chat_id
 					trace('chatRequestResponse', 'ready to chat in chat_id', obj.chat_id)
 				}
 			}
