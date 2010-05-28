@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" minWidth.mainRoom="1024" minHeight.mainRoom="720" creationComplete="init()">
+	<fx:Style source="Main.css"/>
+	<fx:Script>
+		<![CDATA[
+			include "command_handler/room_Main.as";
+			include "juanjose.as";
+			import comm.Conn;
+			import comm.protocol.ClientProtocol;
+			import comm.protocol.server.Room;
+			import comm.protocol.server.User;
+			import mx.core.mx_internal;
+			import mx.utils.ObjectUtil;
+			public static var conn:Conn;
+			public static var currentUser:String;
+
+			//login function --> edit later for conection
+
+			
+			public function init():void {
+				conn = new Conn();
+				conn.addEventHandler(Event.CONNECT, event_connected);
+				conn.addEventHandler(Event.CLOSE, event_disconnected);
+				conn.connect("127.0.0.1", 7777);
+			}
+			
+			public function register_init():void{
+				conn = new Conn();
+				conn.addEventHandler(Event.CONNECT, registerConn_connected);
+				conn.addEventHandler(Event.CLOSE, registerConn_disconnected);
+				conn.connect("127.0.0.1", 7777);
+			}
+
+			public function registerConn_connected(event:Event):void{
+				goTo_login();
+			}
+			
+			public function registerConn_disconnected(event:Event):void {
+				currentState = "welcomeScreen";
+				signInMain_btn.enabled = false;
+				registerMain_btn.enabled = false;
+				connStatusLabel.visible = true;
+				connStatusLabel.text = "Disconected from game server";
+			}
+			
+			public function event_connected(event:Event):void {
+				currentState = "welcomeScreen";
+				signInMain_btn.enabled = true;
+				registerMain_btn.enabled = true;
+				connStatusLabel.visible = false;
+			}
+			
+			public function fillRoomGrid(object:Object):void {
+				trace("filling roomsGrid");
+				roomsGrid.dataProvider = object.rooms;
+			}
+			
+			public function event_disconnected(event:Event):void {
+				currentState = "welcomeScreen";
+				signInMain_btn.enabled = false;
+				registerMain_btn.enabled = false;
+				connStatusLabel.visible = true;
+				connStatusLabel.text = "Disconected from game server";
+			}
+			
+			public function goTo_login():void{
+				currentState = 'loginScreen';
+				password_txt.text = "";
+				userName_txt.text = "";
+				error_lbl.text = "";
+			}
+			
+			public function goTo_register():void{
+				currentState = 'register';
+				error_lbl.text = "";
+				userName_txt.text = "";
+				name_txt.text = "";
+				password_txt.text = "";
+				confirm_txt.text = "";
+				error_lbl.text = "";
+			}
+			
+			public function loginResponse(response:Object):void {
+				
+				if(response.code == 300) {
+					trace("logged in");
+					currentUser = userName_txt.text;
+					error_lbl.text = "";
+					password_txt.text = "";
+					userName_txt.text = "";
+					currentState = "mainRoom";
+					userWelcome_lbl.text = "Welcome, " + currentUser;
+
+
+					//get room list
+					var obj:Object = Room.get_all_rooms();
+					conn.addResponseHandler(fillRoomGrid,obj.trans);
+					conn.send(obj);
+					
+					ClientProtocol.setCommandHandler('room.created', roomCHandler_created);
+					ClientProtocol.setCommandHandler('room.destroyed', roomCHandler_destroyed);
+				} else {
+					currentUser = "";
+					error_lbl.text = "Error:\n "+response.detail;
+					
+				}
+				
+			}
+			
+			public function kill_tabs():void{
+				if(chatRoomNavigator.getChildren().length >=2){
+					chatRoomNavigator.removeChildAt(chatRoomNavigator.selectedIndex);
+				}
+			}
+			
+			
+			public function login():void{
+				if(userName_txt.text.length >= 4 && password_txt.text.length >= 4){
+					
+					var obj:Object = User.login(userName_txt.text, password_txt.text);
+					conn.addResponseHandler(loginResponse,obj.trans);
+					conn.send(obj);
+					currentUser = userName_txt.text;
+				}else{
+					error_lbl.text ="";
+					if(userName_txt.text.length < 4){
+						error_lbl.text = error_lbl.text + "Error:\n *The username must be of 4 to 20 characters.\n";
+					}
+					if(password_txt.text.length < 4){
+						error_lbl.text = error_lbl.text + "Error:\n *The password must be of 4 to 20 characters.\n";
+					}
+				}
+				
+			}
+			
+			//register function --> edit later for conection
+			public function register():void{
+				if((userName_txt.text.length >= 4 && password_txt.text.length >= 4 
+					&& confirm_txt.text.length >= 4 && name_txt.text.length>= 4) && (confirm_txt.text=password_txt.text)){
+					
+					var obj:Object = User.login('registrador', 'registrador');
+					conn.addResponseHandler(loginRegisterResponse,obj.trans);
+					conn.send(obj);
+					
+					
+					//login_lbl.text = "logged in";
+				}else{
+					error_lbl.text ="";
+					if(userName_txt.text.length < 4){
+						error_lbl.text = error_lbl.text + "Error:\n *The username must be of 4 to 20 characters.\n";
+					}
+					if(password_txt.text.length < 4){
+						error_lbl.text = error_lbl.text + "Error:\n *The password must be of 4 to 20 characters.\n";
+					}
+					if(name_txt.text.length < 4){  
+						error_lbl.text = error_lbl.text + "Error:\n *The name must be of 4 to 20 characters.\n";
+					}
+					if(confirm_txt.text.length < 4){
+						error_lbl.text = error_lbl.text + "Error:\n *The passwords doesn't match.\n";
+					}
+					if(confirm_txt.text!=password_txt.text){
+						error_lbl.text = error_lbl.text + "Error:\n *The passwords doesn't match.\n";
+					}
+					
+				}
+			}
+			
+			public function loginRegisterResponse(response:Object):void{
+				if(response.code == 300){
+					var obj:Object = User.register(userName_txt.text, password_txt.text, name_txt.text, "player");
+					conn.addResponseHandler(registerResponse, obj.trans);
+					conn.send(obj);
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+
+			
+			public function registerResponse(response:Object):void{
+				if(response.code == 301){
+					trace("registered");
+					var obj:Object = User.logout();
+					conn.addResponseHandler(logoutRegisterResponse,obj.trans);
+					conn.send(obj);
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+			public function logoutRegisterResponse(response:Object):void{
+				if(response.code == 302){
+					trace("logout");
+					register_init(); 
+				}else{
+					error_lbl.text = "Error:\n "+response.detail;
+				}
+			}
+			
+			
+			public function userLogOut():void{
+				var obj:Object = User.logout();
+				conn.addResponseHandler(userLogOutResponse,obj.trans);
+				conn.send(obj);
+			}
+			
+			public function userLogOutResponse(response:Object):void{
+				if(response.code == 302){
+					trace("logout");
+					init(); 
+				}
+			}
+			
+			
+
+		
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name = "welcomeScreen"/>
+		<s:State name = "loginScreen"/>
+		<s:State name = "register"/>
+		<s:State name = "mainRoom"/>
+		<s:State name = "gameRoom"/>
+	</s:states>
+	
+	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom" x.mainRoom="13" y.mainRoom="73">
+		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
+		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
+	</s:Panel>
+
+	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-12" doubleClick="kill_tabs()" creationComplete="tabNavigatorCreated()">
+	</mx:TabNavigator>
+
+	
+
+	
+									<!--Welcome Screen State components-->
+	<s:Label includeIn="welcomeScreen" x="101" y="76" text="Welcome to GoPlay.com" width="462" height="28" id="welcome_lbl" fontSize="28" fontWeight="bold"/>
+	<s:Label includeIn="welcomeScreen" id="welcome_txt" x="101" y="123" text="GoPlay.com is a community for playing the Go board game online. In order to use all the features you must Register of if you have an Account only sign in. Have fun :)!&#xd;&#xd;" height="116" width="518" fontSize="23"/>
+	<s:Button includeIn="welcomeScreen" x="101" y="272" label="Sign In!" width="185" height="45" id="signInMain_btn" click="goTo_login()" fontSize="25" enabled="false"/>
+	<s:Button includeIn="welcomeScreen" x="315" y="272" label="Register Now!" width="215" height="45" id="registerMain_btn"  click="goTo_register()" fontSize="27" enabled="false"/>
+	
+									<!--Sign In or Register State conponents-->
+	<mx:Form includeIn="loginScreen,register" x="318" y="94" id="entryForm" width="365" height="142" x.register="350" y.register="95" x.loginScreen="382" y.loginScreen="86" width.loginScreen="301" height.loginScreen="91">
+		<mx:FormItem label="Username" id="userName_Item" fontWeight="normal">
+			<s:TextInput width="191" id="userName_txt" toolTip="Write your username. it has to have a length between 4 to 20 characters. this field is required."/>
+		</mx:FormItem>
+		<mx:FormItem label="Full Name" id="fullName_Item" fontWeight="normal" toolTip="Enter your full name between 4 to 20 characters. This Field is Required." includeIn="register">
+			<s:TextInput id="name_txt" width="191"/>
+		</mx:FormItem>
+		<mx:FormItem label="Password" id="password_Item" fontWeight="normal">
+			<s:TextInput width="191" id="password_txt" displayAsPassword="true" toolTip.loginScreen="Enter password between 4 to 20 characters. This Field is Required."
+						 toolTip.register="Enter password between 4 to 20 characters and it has to match the password entered in the confirm field. This Field is Required."/>
+		</mx:FormItem>
+		<mx:FormItem label="Confirm Password" id="confirm_Item" fontWeight="normal" toolTip="Enter password between 4 to 20 characters and it has to match the password entered in the password field. This Field is Required." includeIn="register">
+			<s:TextInput id="confirm_txt" displayAsPassword="true" width="192"/>
+		</mx:FormItem>
+	</mx:Form>
+	<s:HGroup includeIn="loginScreen,register" id="btn_group" x="350" y="261" width="362" height="38" width.register="427" x.register="323" y.register="263" width.loginScreen="438" x.loginScreen="313" y.loginScreen="199">
+		<s:Button label.register="Register" label="Sign In" width="104" click.register = "register()" click.loginScreen = "login()" height="27" id="signIn_btn" fontSize="14"/>
+		<mx:LinkButton label="Go to Sign In &gt;&gt;" fontSize="13" includeIn="register" click="goTo_login()"/>
+		<mx:LinkButton includeIn="loginScreen" label="Need to Register?" id="register_link" click="goTo_register()" fontSize="13"/>
+		<mx:LinkButton label="Go to Welcome Screen &gt;&gt;" fontSize="13" id="welcomeScreen_link"  click="currentState = 'welcomeScreen'"/>
+	</s:HGroup>
+	<s:Label includeIn="register" x="449" y="69" text="Registration Form" id="register_lbl" fontWeight="bold" fontSize="19"/>
+	<s:Label includeIn="loginScreen" x="501" y="56" text="Login" id="login_lbl" fontWeight="bold" fontSize="23"/>
+	<s:Label includeIn="loginScreen,register" x="501" y="263" id="error_lbl" color="red" x.register="527" y.register="313"/>
+	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
+
+	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
+	<mx:DataGrid id="roomsGrid" x="10" y="325" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()">
+		<mx:columns >
+			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:TabNavigator includeIn="gameRoom" x="197" y="95" width="506" height="411" id="gameNav">
+		<s:NavigatorContent label="Game 1" width="100%" height="100%">
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+	<s:Button includeIn="mainRoom" x="10" y="571" label="Create" id="createRoomB"  click="createRoomBtn()"/>
+	<s:TextInput includeIn="mainRoom" x="10" y="599" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
+
+	
+					<!--Transitions for the components on each state-->
+	<s:transitions>
+		<s:Transition toState="register" autoReverse="true">    
+			<s:Sequence>
+				
+				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
+						targets="{[entryForm, btn_group, register_lbl]}"/>                
+				
+			</s:Sequence>
+		</s:Transition>    
+	
+		<s:Transition toState="loginScreen" autoReverse="true">    
+			<s:Sequence>
+				
+				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
+						targets="{[entryForm, btn_group, login_lbl]}"/>                
+				
+			</s:Sequence>
+		</s:Transition>    
+		
+		<s:Transition toState="welcomeScreen" autoReverse="true">    
+			<s:Sequence>  
+				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
+						targets="{[welcome_lbl, welcome_txt, signInMain_btn, registerMain_btn]}"/>                
+				
+			</s:Sequence>
+		</s:Transition>   
+		
+		<s:Transition toState="mainRoom" autoReverse="true">    
+			<s:Sequence>  
+				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
+						targets="{[ctrl_panel, userWelcome_lbl, chatRoomNavigator]}"/>                
+				
+			</s:Sequence>
+		</s:Transition> 
+	</s:transitions>
+	
+	
+</s:Application>
