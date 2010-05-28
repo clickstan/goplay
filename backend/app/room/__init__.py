@@ -4,6 +4,8 @@ from chat import Chat
 
 from cuser import ConnectedUser
 
+import cuser
+
 from protocol.client import Room as ClientRoomCommand
 
 from helper.threads import to_thread
@@ -60,7 +62,7 @@ class Room:
     @to_thread()
     def removeUser(self, user):
         username = user.db_tuple.name
-        
+        remove_game_requests(user.conn, username,self.name)
         try:
             del self.users[username]
         except KeyError:
@@ -93,22 +95,125 @@ def openRoom(conn, name, trans=None):
 def getChatId(conn, roomName, trans=None):
     thisRoom = Room.__rooms__.get(roomName)
     conn.send({'id':thisRoom.chat.id}, trans)
+
+def remove_game_requests(conn, username, room, trans=None):
     
-def request_public_game(conn,room, color, size=None, trans=None):
+    
+    gameroom = Room.__rooms__.get(room)
+    
+    if gameroom is None:
+        return
+    
+    for queue in gameroom.public_games:
+
+        if (queue['white_plyr'] == username or\
+                                        queue['black_plyr'] == username) and\
+                                        queue['gameid'] == -1:
+            resp=queue
+            resp = {'command':'room.remove_public_game_request',
+                         'room':gameroom.name,
+                         'white_plyr':queue['white_plyr'],
+                         'black_plyr':queue['black_plyr'],
+                         'gameid':queue['gameid']}
+            
+
+            for user_in_room in gameroom.users.itervalues():
+                
+                reactor.callFromThread(user_in_room.conn.send,
+                                   resp)
+
+            gameroom.public_games.remove(queue)
+
+
+def get_public_games_list(conn,room, trans=None):
+    gameroom = Room.__rooms__.get(room)
+    conn.send({"lista":gameroom.public_games},trans)
+
+   
+
+def request_public_game(conn,room, color, size, trans=None):
     """Se le habisa a todos los players del room que alguien solicita un juego\
     publico para que lo agreguen a su lista y se guarda en memoria del server"""
+    username = conn.data['user'].db_tuple.name
     gameroom = Room.__rooms__.get(room)
-    for user in gameroom.users:
-        resp={'command':'game.new_public_game_request',
-              'username':conn.data['user'].db_tuple.name,
-              'color':color,
-              'size':size}
-        user.conn.send(resp,None)
+    newGameQueue = None
+    wplayer = None
+    bplayer = None
+    ##check if this game request has a match    
+    for queue in gameroom.public_games:
+        #if the requested size match
+        if queue['size'] == size and queue['gameid'] == -1:
+            #check if the color is right
+            accept_request = (color == "black" and queue['black_plyr'] == "" \
+                                        and queue['white_plyr'] != username) \
+                                or (color == "white" \
+                                    and queue['white_plyr'] == "" \
+                                    and queue['black_plyr'] != username)
+                                
+            ##if the request is accepted tell all room players to remove 
+            #the gamequeue
+            if accept_request == False:
+                continue
+            
+            resp = {'command':'room.remove_public_game_request',
+                 'room':gameroom.name,
+                 'white_plyr':queue['white_plyr'],
+                 'black_plyr':queue['black_plyr'],
+                 'gameid':queue['gameid']}
+
+            for user_in_room in gameroom.users.itervalues():                
+                 reactor.callFromThread(user_in_room.conn.send,resp)
+            #mark the queue as accepted or started
+            if(color == "black"):
+                queue['black_plyr'] = username
+            else:
+                queue['white_plyr'] = username
+            queue['status']="started"
+            
+            print " Se supone va.."
+            newGameQueue = queue
+            #  
+            if color == 'black':
+                otheruser = queue['white_plyr']
+            else:
+                otheruser = queue['black_plyr']
+            cuser.start_game(conn, otheruser, color, size,None, True)
+            #
+            for user in gameroom.users.itervalues():
+                resp={'command':'game.new_public_game_request',
+                      'white_plyr_a': queue['white_plyr'],
+                      'black_plyr_a': queue['black_plyr'],
+                      'size_a':size,
+                      'status_a': queue['status'],
+                      'gameid_a':-1}
+                user.conn.send(resp,None)
+            return
+
+    if newGameQueue is None:
+        if color=='black':
+            bplayer = username
+            wplayer = ""
+        else:
+            wplayer = username
+            bplayer = ""
+        
+        newGameQueue = {
+              'white_plyr':wplayer,
+              'black_plyr':bplayer,
+              'size':size,
+              'status':"waiting",
+              'gameid':-1}
+        
+        if newGameQueue in gameroom.public_games:
+            return;
     
-    gameroom.public_games.append({
-                                  'username':conn.date['data'],
-                                  'color':color,
-                                  'size':size,
-                                  'trans':trans,
-                                  'game':None})
-    print gameroom.public_games
+    for user in gameroom.users.itervalues():
+        resp={'command':'game.new_public_game_request',
+              'white_plyr_a':wplayer,
+              'black_plyr_a':bplayer,
+              'size_a':size,
+              'status_a':'waiting',
+              'gameid_a':-1}
+        user.conn.send(resp,None)
+    gameroom.public_games.append(newGameQueue)
+    

@@ -7,7 +7,6 @@
 		<![CDATA[
 			include "command_handler/room_Main.as";
 			include "juanjose.as";
-			
 			import comm.Conn;
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;

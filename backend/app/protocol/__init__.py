@@ -25,6 +25,8 @@ server_commands =\
                           
       'room.request_public_game' : {'handler'  : room.request_public_game,
                           'requires' : ['room','color','size']},
+    'room.get_public_games_list': {'handler':room.get_public_games_list,
+                                   'requires':['room']},
                           
      'user.watch_game' : {'handler'  : cuser.watch_game,
                           'requires' : ['game_id']},

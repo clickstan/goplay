@@ -32,10 +32,10 @@ package comm.protocol
 												  					 'moves_handicap', 'moves_all', 'resigned', 'score')};
 
 		client_commands['game.new_public_game_request'] = {'handler' : null_handler,
-															'requires' : new Array('username',
-																'color',
-																'size')};
-
+															'requires' : new Array('white_plyr_a','black_plyr_a','size_a','status_a','gameid_a')};
+		
+		
+		
 		client_commands['game.play'] = {'handler' : null_handler,
 										'requires' : new Array('game_id', 'color', 'move')};
 		
@@ -55,7 +55,8 @@ package comm.protocol
 		
 		client_commands['room.removeuser'] = {'handler' : null_handler,
 											  'requires' : new Array('room', 'user')};
-		
+		client_commands['room.remove_public_game_request'] = {'handler' : null_handler,
+			'requires' : new Array('room', 'white_plyr','black_plyr','gameid')};
 		// -- commands end
 		
 		public static function process(conn:Conn, msg:Object):void {

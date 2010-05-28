@@ -10,7 +10,11 @@ package comm.protocol.server {
 			return {'command' : 'room.get_all_rooms',
 				'trans'	  : Util.nextTrans()};
 		}
-		
+		public static function get_public_games_list(room:String):Object {
+			return {'command' : 'room.get_public_games_list',
+					'room':room,
+					'trans'    : Util.nextTrans()}
+		}
 		public static function request_public_game(room:String, color:String, size:int):Object {
 			return {'command'  : 'room.request_public_game',
 				'color'	   : color,
@@ -38,7 +42,7 @@ package comm.protocol.server {
 		}
 		
 		public static function getChatId(roomName:String):Object{
-			return {'command' : 'room.getRoomId',
+			return {'command' : 'room.getChatId',
 				'roomName'		: roomName,
 				'trans'	  : Util.nextTrans()};
 		}

@@ -14,6 +14,7 @@ from game.data import GameConfig
 
 from helper.threads import to_thread__2_callback_args
 
+
 class ConnectedUser:
     __users__ = {}  # {'name' : connected_user_instance}
 
@@ -70,6 +71,7 @@ class ConnectedUser:
             self.enterChat(room.chat)
 
     def exitRoom(self, room):
+        #Room.remove_game_requests(self.conn,self.db_tuple.name)
         room.removeUser(self)
         try: del self.rooms[room.name]
         except: pass
@@ -133,8 +135,9 @@ class ConnectedUser:
 
         self.conn.addResponseCallback(response_callback, command['trans'])
         self.conn.send(command)
-
-
+#start_game(conn, username, color, size=None, trans=None, start_now=False):
+#    def start_game(conn, username, color, size):
+#        ConnectedUser.start_game(conn, username, color, size=None, trans=None, start_now=False):
 
 def _login_callback(user_tuple, conn, trans=None):
     if user_tuple is not None:
@@ -221,7 +224,7 @@ def start_chat(conn, username, trans=None):
         conn.send(UserError.user_not_connected(), trans)
 
 
-def start_game(conn, username, color, size=None, trans=None):
+def start_game(conn, username, color, size=None, trans=None, start_now=False):
     """first part of message interchange for starting a game
     
     color: 'white' or 'black'  (game starter will get this color)
@@ -254,7 +257,10 @@ def start_game(conn, username, color, size=None, trans=None):
             conn.send(GameError.init_failed(), trans)
         else:
             sender.enterGame(game)
-            user.callIntoGame(sender, game.id, call_into_callback)
+            if start_now:
+                user.enterGame(game)
+            else:
+                user.callIntoGame(sender, game.id, call_into_callback)
     
     if color == 'white':
         white = sender.db_tuple.name
