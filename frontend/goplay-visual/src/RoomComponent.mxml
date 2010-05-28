@@ -5,7 +5,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			include "command_handler/chat_RoomComponent.as";
 			include "command_handler/room_RoomComponent.as";
 			include "RoomChat.as";
 			
@@ -48,7 +47,6 @@
 				
 				player_grid.dataProvider = object.users;
 				ClientProtocol.setCommandHandler('game.request_public_game', new_public_game_request);
-				ClientProtocol.setCommandHandler('chat.broadcast', chatRecievedBroadCast);
 				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
 				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
 			}

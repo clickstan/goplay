@@ -4,13 +4,24 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="480" height="200">
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
+			include "command_handler/chat_ChatComponent.as";
+			
+			// --
+			
+			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Chat;
+			
+			import mx.events.FlexEvent;
+			
 			public var chatid:int;
+			
+			public static var chats:Dictionary = new Dictionary();
 			
 			public function init(id:int):void
 			{
 				chatid = id;
+				chats[id] = this;
+				ClientProtocol.setCommandHandler('chat.broadcast', chatRecievedBroadCast);
 			}
 
 			protected function send_btn_clickHandler(event:MouseEvent):void
