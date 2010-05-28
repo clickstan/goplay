@@ -128,7 +128,8 @@ class ConnectedUser:
             """expects response to be a dict with a key 'accepted'
             and boolean value"""
             if response['accepted']:
-                self.enterGame(sender.getGameById(game_id))
+                #self.enterGame(sender.getGameById(game_id))
+                self.enterGame(Game.__games__.get(game_id))
             sender_callback(response['accepted'])
 
         command = ClientGameCommand.call_into(sender.db_tuple.name, game_id)
@@ -247,8 +248,9 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
     def call_into_callback(accepted):
         if accepted:
             conn.send(UserOk.startgame_accepted(game.id), trans)
+            if not start_now:
+                sender.enterGame(game)
         else:
-            sender.exitGame(game)
             game.destroy(clear_all_traces=True)
             conn.send(UserOk.startgame_not_accepted(), trans)
     
@@ -256,8 +258,8 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
         if game.id is None:
             conn.send(GameError.init_failed(), trans)
         else:
-            sender.enterGame(game)
             if start_now:
+                sender.enterGame(game)
                 user.enterGame(game)
             else:
                 user.callIntoGame(sender, game.id, call_into_callback)
