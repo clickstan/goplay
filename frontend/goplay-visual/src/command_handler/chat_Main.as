@@ -24,7 +24,7 @@ private function chatCCallback_callInto_accept(conn:Conn, trans:int, chat_id:int
 	conn.send({'trans':trans, 'accepted':true});
 	notify_control.removeNotification(notification);
 	
-	// TODO: sacar tab de chat con chat_id = chat_id
+	// TODO: crear tab de chat con chat_id = chat_id
 	trace('chatCCallback_callInto_accept', 'ready to chat in chat_id', chat_id)
 }
 

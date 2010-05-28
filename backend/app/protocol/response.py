@@ -77,8 +77,10 @@ class UserOk:
         return ok(304, 'chat not accepted')
     
     @staticmethod
-    def startgame_accepted():
-        return ok(305, 'game accepted')
+    def startgame_accepted(game_id):
+        response = ok(305, 'game accepted')
+        response.update({'game_id':game_id})
+        return response
 
     @staticmethod
     def startgame_not_accepted():
