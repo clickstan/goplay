@@ -212,7 +212,7 @@ def start_chat(conn, username, trans=None):
 
     def callback(accepted):
         if accepted:
-            conn.send(UserOk.startchat_accepted(chat.id), trans)
+            conn.send(UserOk.startchat_accepted(chat.id, sender.db_tuple.name, username), trans)
         else:
             sender.exitChat(chat)
             conn.send(UserOk.startchat_not_accepted(), trans)

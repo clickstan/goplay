@@ -11,7 +11,7 @@ public function chatCHandler_callInto(conn:Conn, trans:int, chat_id:int, sender:
 	
 	options.push({'label':'accept',
 				  'handler':{'func':chatCCallback_callInto_accept,
-					  		 'args':new Array(conn, trans, chat_id, notification)}});
+					  		 'args':new Array(conn, trans, chat_id, sender, notification)}});
 	
 	options.push({'label':'reject',
 				  'handler':{'func':chatCCallback_callInto_reject,
@@ -20,11 +20,11 @@ public function chatCHandler_callInto(conn:Conn, trans:int, chat_id:int, sender:
 	notify_control.addNotification(notification);
 }
 
-private function chatCCallback_callInto_accept(conn:Conn, trans:int, chat_id:int, notification:Notification):void {
+private function chatCCallback_callInto_accept(conn:Conn, trans:int, chat_id:int, sender:String, notification:Notification):void {
 	conn.send({'trans':trans, 'accepted':true});
 	notify_control.removeNotification(notification);
 	
-	// TODO: crear tab de chat con chat_id = chat_id
+	createRoomNavigatorContent_ChatOnly("chat: "+sender+" - "+currentUser, chat_id);
 	trace('chatCCallback_callInto_accept', 'ready to chat in chat_id', chat_id)
 }
 
