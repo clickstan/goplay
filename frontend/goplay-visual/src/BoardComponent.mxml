@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" height="600" width="800">
+	<fx:Script>
+		<![CDATA[
+			public var color_player:String =  "artwork/board19x19.jpg";
+			public var color_white:String =  "artwork/white_stone19.png";
+			public var color_white19:String = "@Embed(source='artwork/white_stone19.png')";
+			protected function stone_clickHandler(image:Image):void{
+				// procesarlo
+				
+			}
+			
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image width="576" height="576" verticalCenter="-2" source="@Embed(source='artwork/board19x19.jpg')" left="9"/>
+	<mx:Image x="57" y="55" source="{white_source.source}" width="25" height="25" id="b3"/>
+	<mx:Image x="57" y="228" source="{white_source.source}" width="25" height="25" id="b30"/>
+	<mx:Image x="544" y="228" width="25" height="25" source="{white_source.source}" id="alfa0"/>
+	<mx:Image x="488" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="228" source="{white_source.source}" width="25" height="25" id="b31"/>
+	<mx:Image x="372" y="228" width="25" height="25" source="{white_source.source}" id="c24" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="228" source="{white_source.source}" width="25" height="25" id="b32"/>
+	<mx:Image x="286" y="228" width="25" height="25" source="{white_source.source}" id="c25" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="228" source="{white_source.source}" width="25" height="25" id="b33"/>
+	<mx:Image x="170" y="228" width="25" height="25" source="{white_source.source}" id="c26" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="228" source="{white_source.source}" width="25" height="25" id="b34"/>
+	<mx:Image x="57" y="197" source="{white_source.source}" width="25" height="25" id="b35"/>
+	<mx:Image x="544" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="256" source="{white_source.source}" width="25" height="25" id="b36"/>
+	<mx:Image x="544" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="314" source="{white_source.source}" width="25" height="25" id="b37"/>
+	<mx:Image x="544" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="314" source="{white_source.source}" width="25" height="25" id="b38"/>
+	<mx:Image x="372" y="314" width="25" height="25" source="{white_source.source}" id="c27" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="314" source="{white_source.source}" width="25" height="25" id="b39"/>
+	<mx:Image x="286" y="314" width="25" height="25" source="{white_source.source}" id="c28" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="314" source="{white_source.source}" width="25" height="25" id="b40"/>
+	<mx:Image x="170" y="314" width="25" height="25" source="{white_source.source}" id="c29" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="314" source="{white_source.source}" width="25" height="25" id="b41"/>
+	<mx:Image x="57" y="283" source="{white_source.source}" width="25" height="25" id="b42"/>
+	<mx:Image x="544" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="342" source="{white_source.source}" width="25" height="25" id="b43"/>
+	<mx:Image x="544" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="56" y="427" source="{white_source.source}" width="25" height="25" id="b60"/>
+	<mx:Image x="543" y="427" width="25" height="25" source="{white_source.source}" id="alfa1"/>
+	<mx:Image x="487" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="427" source="{white_source.source}" width="25" height="25" id="b61"/>
+	<mx:Image x="371" y="427" width="25" height="25" source="{white_source.source}" id="c48" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="427" source="{white_source.source}" width="25" height="25" id="b62"/>
+	<mx:Image x="285" y="427" width="25" height="25" source="{white_source.source}" id="c49" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="427" source="{white_source.source}" width="25" height="25" id="b63"/>
+	<mx:Image x="169" y="427" width="25" height="25" source="{white_source.source}" id="c50" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="427" source="{white_source.source}" width="25" height="25" id="b64"/>
+	<mx:Image x="56" y="396" source="{white_source.source}" width="25" height="25" id="b65"/>
+	<mx:Image x="543" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="56" y="455" source="{white_source.source}" width="25" height="25" id="b66"/>
+	<mx:Image x="543" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="56" y="513" source="{white_source.source}" width="25" height="25" id="b67"/>
+	<mx:Image x="543" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="513" source="{white_source.source}" width="25" height="25" id="b68"/>
+	<mx:Image x="371" y="513" width="25" height="25" source="{white_source.source}" id="c51" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="513" source="{white_source.source}" width="25" height="25" id="b69"/>
+	<mx:Image x="286" y="342" width="25" height="25" source="{white_source.source}" id="c52" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="286" y="512" width="25" height="25" source="{white_source.source}" id="c76" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="513" source="{white_source.source}" width="25" height="25" id="b70"/>
+	<mx:Image x="169" y="513" width="25" height="25" source="{white_source.source}" id="c53" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="513" source="{white_source.source}" width="25" height="25" id="b71"/>
+	<mx:Image x="56" y="482" source="{white_source.source}" width="25" height="25" id="b72"/>
+	<mx:Image x="543" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="56" y="541" source="{white_source.source}" width="25" height="25" id="b73"/>
+	<mx:Image x="543" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="541" source="{white_source.source}" width="25" height="25" id="b74"/>
+	<mx:Image x="371" y="541" width="25" height="25" source="{white_source.source}" id="c54" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="541" source="{white_source.source}" width="25" height="25" id="b75"/>
+	<mx:Image x="285" y="541" width="25" height="25" source="{white_source.source}" id="c55" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="541" source="{white_source.source}" width="25" height="25" id="b76"/>
+	<mx:Image x="169" y="541" width="25" height="25" source="{white_source.source}" id="c56" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="541" source="{white_source.source}" width="25" height="25" id="b77"/>
+	<mx:Image x="84" y="541" width="25" height="25" source="{white_source.source}" id="c57" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="541" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="482" source="{white_source.source}" width="25" height="25" id="b78"/>
+	<mx:Image x="371" y="482" width="25" height="25" source="{white_source.source}" id="c58" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="482" source="{white_source.source}" width="25" height="25" id="b79"/>
+	<mx:Image x="285" y="482" width="25" height="25" source="{white_source.source}" id="c59" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="482" source="{white_source.source}" width="25" height="25" id="b80"/>
+	<mx:Image x="169" y="482" width="25" height="25" source="{white_source.source}" id="c60" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="482" source="{white_source.source}" width="25" height="25" id="b81"/>
+	<mx:Image x="84" y="482" width="25" height="25" source="{white_source.source}" id="c61" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="482" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="84" y="513" width="25" height="25" source="{white_source.source}" id="c62" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="513" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="455" source="{white_source.source}" width="25" height="25" id="b82"/>
+	<mx:Image x="371" y="455" width="25" height="25" source="{white_source.source}" id="c63" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="455" source="{white_source.source}" width="25" height="25" id="b83"/>
+	<mx:Image x="285" y="455" width="25" height="25" source="{white_source.source}" id="c64" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="455" source="{white_source.source}" width="25" height="25" id="b84"/>
+	<mx:Image x="169" y="455" width="25" height="25" source="{white_source.source}" id="c65" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="455" source="{white_source.source}" width="25" height="25" id="b85"/>
+	<mx:Image x="84" y="455" width="25" height="25" source="{white_source.source}" id="c66" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="455" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="396" source="{white_source.source}" width="25" height="25" id="b86"/>
+	<mx:Image x="371" y="396" width="25" height="25" source="{white_source.source}" id="c67" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="396" source="{white_source.source}" width="25" height="25" id="b87"/>
+	<mx:Image x="285" y="396" width="25" height="25" source="{white_source.source}" id="c68" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="396" source="{white_source.source}" width="25" height="25" id="b88"/>
+	<mx:Image x="169" y="396" width="25" height="25" source="{white_source.source}" id="c69" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="396" source="{white_source.source}" width="25" height="25" id="b89"/>
+	<mx:Image x="84" y="396" width="25" height="25" source="{white_source.source}" id="c70" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="396" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="84" y="427" width="25" height="25" source="{white_source.source}" id="c71" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="427" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="56" y="368" source="{white_source.source}" width="25" height="25" id="b90"/>
+	<mx:Image x="543" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="487" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="343" y="368" source="{white_source.source}" width="25" height="25" id="b91"/>
+	<mx:Image x="371" y="368" width="25" height="25" source="{white_source.source}" id="c72" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="400" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="429" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="256" y="368" source="{white_source.source}" width="25" height="25" id="b92"/>
+	<mx:Image x="285" y="368" width="25" height="25" source="{white_source.source}" id="c73" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="314" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="515" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="141" y="368" source="{white_source.source}" width="25" height="25" id="b93"/>
+	<mx:Image x="169" y="368" width="25" height="25" source="{white_source.source}" id="c74" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="199" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="227" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="25" y="368" source="{white_source.source}" width="25" height="25" id="b94"/>
+	<mx:Image x="84" y="368" width="25" height="25" source="{white_source.source}" id="c75" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="112" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="458" y="368" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="342" source="{white_source.source}" width="25" height="25" id="b44"/>
+	<mx:Image x="372" y="342" width="25" height="25" source="{white_source.source}" id="c30" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="342" source="{white_source.source}" width="25" height="25" id="b45"/>
+	<mx:Image x="285" y="541" width="25" height="25" source="{white_source.source}" id="c31" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="342" source="{white_source.source}" width="25" height="25" id="b46"/>
+	<mx:Image x="170" y="342" width="25" height="25" source="{white_source.source}" id="c32" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="342" source="{white_source.source}" width="25" height="25" id="b47"/>
+	<mx:Image x="85" y="342" width="25" height="25" source="{white_source.source}" id="c33" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="342" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="283" source="{white_source.source}" width="25" height="25" id="b48"/>
+	<mx:Image x="372" y="283" width="25" height="25" source="{white_source.source}" id="c34" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="283" source="{white_source.source}" width="25" height="25" id="b49"/>
+	<mx:Image x="286" y="283" width="25" height="25" source="{white_source.source}" id="c35" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="283" source="{white_source.source}" width="25" height="25" id="b50"/>
+	<mx:Image x="170" y="283" width="25" height="25" source="{white_source.source}" id="c36" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="283" source="{white_source.source}" width="25" height="25" id="b51"/>
+	<mx:Image x="85" y="283" width="25" height="25" source="{white_source.source}" id="c37" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="283" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="85" y="314" width="25" height="25" source="{white_source.source}" id="c38" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="314" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="256" source="{white_source.source}" width="25" height="25" id="b52"/>
+	<mx:Image x="372" y="256" width="25" height="25" source="{white_source.source}" id="c39" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="256" source="{white_source.source}" width="25" height="25" id="b53"/>
+	<mx:Image x="286" y="256" width="25" height="25" source="{white_source.source}" id="c40" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="256" source="{white_source.source}" width="25" height="25" id="b54"/>
+	<mx:Image x="170" y="256" width="25" height="25" source="{white_source.source}" id="c41" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="256" source="{white_source.source}" width="25" height="25" id="b55"/>
+	<mx:Image x="85" y="256" width="25" height="25" source="{white_source.source}" id="c42" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="256" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="197" source="{white_source.source}" width="25" height="25" id="b56"/>
+	<mx:Image x="372" y="197" width="25" height="25" source="{white_source.source}" id="c43" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="197" source="{white_source.source}" width="25" height="25" id="b57"/>
+	<mx:Image x="286" y="197" width="25" height="25" source="{white_source.source}" id="c44" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="197" source="{white_source.source}" width="25" height="25" id="b58"/>
+	<mx:Image x="170" y="197" width="25" height="25" source="{white_source.source}" id="c45" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="197" source="{white_source.source}" width="25" height="25" id="b59"/>
+	<mx:Image x="85" y="197" width="25" height="25" source="{white_source.source}" id="c46" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="197" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="85" y="228" width="25" height="25" source="{white_source.source}" id="c47" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="228" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="544" y="55" width="25" height="25" source="{white_source.source}" id="alfa"/>
+	<mx:Image x="488" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="55" source="{white_source.source}" width="25" height="25" id="b1"/>
+	<mx:Image x="372" y="55" width="25" height="25" source="{white_source.source}" id="c1" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="55" source="{white_source.source}" width="25" height="25" id="b2"/>
+	<mx:Image x="286" y="55" width="25" height="25" source="{white_source.source}" id="c2" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="55" source="{white_source.source}" width="25" height="25" id="b0"/>
+	<mx:Image x="170" y="55" width="25" height="25" source="{white_source.source}" id="c0" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="55" source="{white_source.source}" width="25" height="25" id="b18"/>
+	<mx:Image x="57" y="24" source="{white_source.source}" width="25" height="25" id="b4"/>
+	<mx:Image x="544" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="83" source="{white_source.source}" width="25" height="25" id="b9"/>
+	<mx:Image x="544" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="141" source="{white_source.source}" width="25" height="25" id="b14"/>
+	<mx:Image x="544" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="141" source="{white_source.source}" width="25" height="25" id="b15"/>
+	<mx:Image x="372" y="141" width="25" height="25" source="{white_source.source}" id="c11" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="141" source="{white_source.source}" width="25" height="25" id="b16"/>
+	<mx:Image x="286" y="141" width="25" height="25" source="{white_source.source}" id="c12" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="141" source="{white_source.source}" width="25" height="25" id="b17"/>
+	<mx:Image x="170" y="141" width="25" height="25" source="{white_source.source}" id="c13" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="139" source="{white_source.source}" width="25" height="25" id="b19"/>
+	<mx:Image x="57" y="110" source="{white_source.source}" width="25" height="25" id="b20"/>
+	<mx:Image x="544" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="57" y="169" source="{white_source.source}" width="25" height="25" id="b21"/>
+	<mx:Image x="544" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="169" source="{white_source.source}" width="25" height="25" id="b22"/>
+	<mx:Image x="372" y="169" width="25" height="25" source="{white_source.source}" id="c14" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="169" source="{white_source.source}" width="25" height="25" id="b23"/>
+	<mx:Image x="286" y="169" width="25" height="25" source="{white_source.source}" id="c15" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="169" source="{white_source.source}" width="25" height="25" id="b24"/>
+	<mx:Image x="170" y="169" width="25" height="25" source="{white_source.source}" id="c16" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="169" source="{white_source.source}" width="25" height="25" id="b25"/>
+	<mx:Image x="85" y="169" width="25" height="25" source="{white_source.source}" id="c17" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="169" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="110" source="{white_source.source}" width="25" height="25" id="b26"/>
+	<mx:Image x="372" y="110" width="25" height="25" source="{white_source.source}" id="c19" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="110" source="{white_source.source}" width="25" height="25" id="b27"/>
+	<mx:Image x="286" y="110" width="25" height="25" source="{white_source.source}" id="c20" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="110" source="{white_source.source}" width="25" height="25" id="b28"/>
+	<mx:Image x="170" y="110" width="25" height="25" source="{white_source.source}" id="c21" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="110" source="{white_source.source}" width="25" height="25" id="b29"/>
+	<mx:Image x="85" y="110" width="25" height="25" source="{white_source.source}" id="c22" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="110" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="85" y="141" width="25" height="25" source="{white_source.source}" id="c23" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="141" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="83" source="{white_source.source}" width="25" height="25" id="b10"/>
+	<mx:Image x="372" y="83" width="25" height="25" source="{white_source.source}" id="c7" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="83" source="{white_source.source}" width="25" height="25" id="b11"/>
+	<mx:Image x="286" y="83" width="25" height="25" source="{white_source.source}" id="c8" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="83" source="{white_source.source}" width="25" height="25" id="b12"/>
+	<mx:Image x="170" y="83" width="25" height="25" source="{white_source.source}" id="c9" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="83" source="{white_source.source}" width="25" height="25" id="b13"/>
+	<mx:Image x="85" y="83" width="25" height="25" source="{white_source.source}" id="c10" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="83" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="488" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="344" y="24" source="{white_source.source}" width="25" height="25" id="b5"/>
+	<mx:Image x="372" y="24" width="25" height="25" source="{white_source.source}" id="c3" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="401" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="430" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="257" y="24" source="{white_source.source}" width="25" height="25" id="b6"/>
+	<mx:Image x="286" y="24" width="25" height="25" source="{white_source.source}" id="c4" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="315" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="516" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="142" y="24" source="{white_source.source}" width="25" height="25" id="b7"/>
+	<mx:Image x="170" y="24" width="25" height="25" source="{white_source.source}" id="c5" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="200" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="228" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="26" y="24" source="{white_source.source}" width="25" height="25" id="b8"/>
+	<mx:Image x="85" y="24" width="25" height="25" source="{white_source.source}" id="c6" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="24" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="85" y="55" width="25" height="25" source="{white_source.source}" id="c18" click="{stone_clickHandler(c18)}"/>
+	<mx:Image x="113" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="459" y="55" width="25" height="25" source="{white_source.source}"/>
+	<mx:Image x="627" y="24" width="25" height="25" id="white_source" source="@Embed(source='artwork/white_stone19.png')"/>
+	
+</s:Group>

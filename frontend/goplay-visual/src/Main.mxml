@@ -8,11 +8,13 @@
 			include "command_handler/room_Main.as";
 			include "command_handler/chat_Main.as";
 			include "juanjose.as";
-			
 			import comm.Conn;
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
 			import comm.protocol.server.User;
+			
+			import flash.net.navigateToURL;
+			
 			import mx.core.mx_internal;
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
@@ -213,7 +215,9 @@
 			public function userLogOutResponse(response:Object):void{
 				if(response.code == 302){
 					trace("logout");
-					init(); 
+					//init(); 
+					var req:URLRequest = new URLRequest("main.html");
+					navigateToURL(req,'_self');
 				}
 			}
 			
