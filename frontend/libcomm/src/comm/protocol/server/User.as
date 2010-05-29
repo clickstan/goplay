@@ -40,10 +40,11 @@ package comm.protocol.server
 				'trans'    : Util.nextTrans()};
 		}
 		
-		public static function start_game(username:String,color:String):Object {
+		public static function start_game(username:String,color:String="black", size:int=19):Object {
 			return {'command'  : 'user.start_game',
 				'username' : username,
 				'color'	   : color,
+				'size'	   : size,
 				'trans'    : Util.nextTrans()};
 		}
 		
