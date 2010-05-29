@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="548" xmlns:ns1="*">
+
+	<fx:Script>
+		<![CDATA[
+			
+			include "command_handler/room_RoomComponent.as";
+			include "RoomChat.as";
+			
+			// ---
+			
+			import comm.Conn;
+			import comm.protocol.ClientProtocol;
+			import comm.protocol.server.Room;
+			import comm.protocol.server.User;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectUtil;
+			
+			public static var rooms:Dictionary = new Dictionary();
+			public var roomname:String;
+			public var chatid:int;
+			
+
+			// para que no se pueda hacer spam de chat_requests
+			// mapea trans:player a los que se le envio un chat_request y no han respondido
+			private var chat_requests:Dictionary = new Dictionary();
+			private var chat_request_players:ArrayList = new ArrayList();
+			
+			// para que no se pueda hacer spam de game_requests
+			// mapea trans:player a los que se le envio un player_request y no han respondido
+			private var game_requests:Dictionary = new Dictionary();
+			private var game_request_players:ArrayList = new ArrayList();
+			
+			public function init(name:String):void {
+				roomname = name;
+				rooms[roomname] = this;
+				
+				//get players
+				var obj2:Object = Room.getUsersFromRoom(roomname);
+				Main.conn.addResponseHandler(fillPlayersGrid,obj2.trans);
+				Main.conn.send(obj2);
+			}
+			
+			public function fillPlayersGrid(object:Object):void {
+				trace("filling player_grid");
+				
+				player_grid.dataProvider = object.users;
+				ClientProtocol.setCommandHandler('room.remove_public_game_request', remove_public_game_request);
+				ClientProtocol.setCommandHandler('game.new_public_game_request', new_public_game_request);
+				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);
+				ClientProtocol.setCommandHandler('room.removeuser', roomCHandler_removeuser);
+			}
+			
+			public function addPlayer(name:String):void {
+				var users:Array = player_grid.dataProvider.toArray();
+				if (users.indexOf(name) == -1)
+					player_grid.dataProvider.addItem(name);
+			}
+			
+			public function removePlayer(name:String):void {
+				var users:Array = player_grid.dataProvider.toArray();
+				player_grid.dataProvider.removeItemAt(users.indexOf(name));
+			}
+			
+			protected function playRequestResponse(obj:Object):void {
+				var player:String = game_requests[obj.trans];
+				delete game_requests[obj.trans];
+				game_request_players.removeItem(player);
+				
+				if (obj.code == 305) { // game accepted
+					// TODO: crear tab de juego con game_id = obj.game_id
+					trace('gameRequestResponse', 'ready to play in game_id', obj.game_id)
+				}
+			}
+			
+			protected function playButton_clickHandler(event:MouseEvent):void
+			{
+				var player:String = player_grid.selectedItem.toString();
+				
+				if (game_request_players.getItemIndex(player) == -1) {
+					var obj:Object = User.start_game(player,"black");
+					Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+					Main.conn.send(obj);
+					game_requests[obj.trans] = obj.username;
+					game_request_players.addItem(player);
+				}
+
+			}
+
+			protected function chatRequestResponse(obj:Object):void {
+				var player:String = chat_requests[obj.trans];
+				delete chat_requests[obj.trans];
+				chat_request_players.removeItem(player);
+				
+				if (obj.code == 303) { // chat accepted
+					parentApplication.createRoomNavigatorContent_ChatOnly("chat: "+obj.sender+" - "+obj.user, obj.chat_id);
+					trace('chatRequestResponse', 'ready to chat in chat_id', obj.chat_id)
+				}
+			}
+
+			
+			protected function chatButton_clickHandler(event:MouseEvent):void
+			{
+				var player:String = player_grid.selectedItem.toString();
+				
+				if (chat_request_players.getItemIndex(player) == -1) {
+					trace(Main.currentUser,"request chat with:",player_grid.selectedItem)
+					var obj:Object = User.start_chat(player);
+					Main.conn.addResponseHandler(chatRequestResponse,obj.trans);
+					Main.conn.send(obj);
+			
+					chat_requests[obj.trans] = obj.username;
+					chat_request_players.addItem(player);
+				}
+			}
+
+
+			protected function requestGameB_clickHandler(event:MouseEvent):void
+			{
+				trace("Request a public game");
+				
+				var obj:Object = Room.request_public_game(roomname,queueColor.selectedItem,queueSize.selectedItem);
+				Main.conn.send(obj);
+			}
+			
+			protected function new_public_game_request(conn:Conn,trans:int, white_plyr_a:String,black_plyr_a:String,size_a:int,status_a:String, gameid_a:int):void {
+				trace("new_public_game_requested");
+				currentGames.dataProvider.addItem({
+					white_plyr:white_plyr_a,
+					black_plyr:black_plyr_a,
+					size:size_a,
+					status:status_a})
+			}
+
+			protected function fillGamesGrid(obj:Object):void {
+				trace("filling games grid", obj.lista.toString());
+
+				currentGames.dataProvider = new ArrayList();
+				
+				for (var i:Object in obj.lista) {
+					trace("####",obj.lista[i]);
+					currentGames.dataProvider.addItem(obj.lista[i]);
+				}
+			}
+			protected function currentGames_creationCompleteHandler(event:FlexEvent):void
+			{
+				trace("filling games grid name=",roomname);
+				var obj2:Object = Room.get_public_games_list(roomname)
+				Main.conn.addResponseHandler(fillGamesGrid,obj2.trans);
+				Main.conn.send(obj2);
+			}
+
+			
+			protected function queueColor_creationCompleteHandler(event:FlexEvent):void
+			{
+				queueColor.dataProvider = new ArrayList();
+				queueColor.dataProvider.addItem('black');
+				queueColor.dataProvider.addItem('white');
+			}
+
+			protected function remove_public_game_request(conn:Conn,trans:int, room:String, white_plyr:String, black_plyr:String, gameid:int):void {
+				trace("remove public game request");
+				var a:ArrayList = new ArrayList();
+				
+				for(var i:int = 0; i<currentGames.dataProvider.length; i++){
+					var obj:Object = currentGames.dataProvider[i];
+					trace("$$%$%$%$:",obj.toString(),obj['white_plyr'].toString())
+					
+					if(obj['white_plyr'].toString()==white_plyr && obj['black_plyr'].toString()==black_plyr) {
+						trace("removing");
+						currentGames.dataProvider.removeItemAt(i);
+					}
+						
+				}
+			}
+			protected function queueSize_creationCompleteHandler(event:FlexEvent):void
+			{
+				queueSize.dataProvider = new ArrayList();
+				queueSize.dataProvider.addItem(9);
+				queueSize.dataProvider.addItem(13);
+				queueSize.dataProvider.addItem(19);
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448" >
+		<mx:columns>
+			<mx:DataGridColumn headerText="Players" dataField="col1"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<ns1:ChatComponent x="11" y="321" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
+	</ns1:ChatComponent>
+	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)">
+		<mx:columns>
+			<mx:DataGridColumn headerText="White" dataField="white_plyr"/>
+			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
+			<mx:DataGridColumn headerText="Size" dataField="size"/>
+			<mx:DataGridColumn headerText="Game Status" dataField="status"/>
+			
+		</mx:columns>
+	</mx:DataGrid>
+	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton"/>
+	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)"/>
+	<s:Button x="31" y="287" label="Button" id="requestGameB" click="requestGameB_clickHandler(event)"/>
+	<s:DropDownList x="121" y="287" width="107" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="236" y="288" width="99" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
+</s:Group>
