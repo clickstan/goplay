@@ -47,7 +47,7 @@
 			private function updateDisplay():void {
 				makeAllInvisible();
 				
-				parentApplication.setElementIndex(this, 0);
+				parentApplication.setElementIndex(this, parentApplication.numElements - 1);
 				
 				for (var i:int=0; i<notifications.length; i++) {
 					switch (i) {

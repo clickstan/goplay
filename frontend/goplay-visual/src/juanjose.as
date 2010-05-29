@@ -71,12 +71,14 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 	nc.name = name;
 	nc.label = name;
 	
-	var cc:ChatComponent_Game = new ChatComponent_Game();
-	cc.init(chat_id);
+	var cc:ChatComponent = new ChatComponent();
+	cc.init(chat_id, true);
 	
 	var container:HGroup = new HGroup();
 	container.requestedColumnCount = 2;
 	container.variableColumnWidth=true;
+	container.width = chatRoomNavigator.width;
+	container.height = chatRoomNavigator.height;
 	
 	nc.addElement(container);
 	

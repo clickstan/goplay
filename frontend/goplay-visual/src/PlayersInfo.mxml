@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="200" height="500">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Label x="79" y="70" text="player1"/>
+	<s:Label x="79" y="226" text="player2"/>
+	<s:Button x="10" y="468" label="Pass" id="pass_btn"/>
+	<s:Button x="126" y="468" label="Resign" id="resign_btn"/>
+</s:Group>
