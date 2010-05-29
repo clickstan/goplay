@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="106" creationComplete="init()">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="202" height="306" creationComplete="init()">
 	
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayList;
+			import mx.effects.Effect;
+			import mx.effects.Resize;
 			
 			import notify.Notification;
 			
@@ -17,14 +19,17 @@
 			
 			private function makeAllInvisible():void {
 				label1.visible = false;
+				panel1.visible = false;
 				button1_1.visible = false;
 				button1_2.visible = false;
 				
 				label2.visible = false;
+				panel2.visible = false;
 				button2_1.visible = false;
 				button2_2.visible = false;
 				
 				label3.visible = false;
+				panel3.visible = false;
 				button3_1.visible = false;
 				button3_2.visible = false;
 			}
@@ -53,6 +58,11 @@
 			}
 			
 			private function setProperties(i:int):void {
+				var panels:Array = new Array(panel1,panel2,panel3);
+				var panel:Panel = panels[i];
+
+				panel.visible = true;
+				
 				var options_labels:Array;
 				
 				var labels:Array = new Array(label1, label2, label3);
@@ -79,7 +89,7 @@
 					}
 				}
 			}
-			
+
 			private function button_click_handler(btn:Button):void {
 				switch (btn) {
 					case button1_1:
@@ -101,22 +111,22 @@
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+
+
 	</fx:Declarations>
-	<s:VGroup x="0" y="0" width="600" height="106" id="tile" gap="1" requestedRowCount="3" rowHeight="33" variableRowHeight="false" paddingLeft="10" paddingTop="5" paddingBottom="5">
-		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
-			<s:Label text="Label" id="label1" width="375" height="33"/>
-			<s:Button label="Button" id="button1_1" click="{button_click_handler(button1_1)}"/>
-			<s:Button label="Button" id="button1_2" click="{button_click_handler(button1_2)}"/>
-		</s:HGroup>
-		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
-			<s:Label text="Label" id="label2" width="375" height="33"/>
-			<s:Button label="Button" id="button2_1" click="{button_click_handler(button2_1)}"/>
-			<s:Button label="Button" id="button2_2" click="{button_click_handler(button2_2)}"/>
-		</s:HGroup>
-		<s:HGroup width="583" height="200" requestedColumnCount="3" variableColumnWidth="true">
-			<s:Label text="Label" id="label3" width="375" height="33"/>
-			<s:Button label="Button" id="button3_1" click="{button_click_handler(button3_1)}"/>
-			<s:Button label="Button" id="button3_2" click="{button_click_handler(button3_2)}"/>
-		</s:HGroup>
-	</s:VGroup>
+	<s:Panel x="0" y="200" width="200" height="100" scaleZ="50" id="panel1">
+		<s:Button label="Button" id="button1_2" click="{button_click_handler(button1_2)}" x="124" y="32" />
+		<s:Button label="Button" id="button1_1" click="{button_click_handler(button1_1)}" x="10" y="32"/>
+		<s:Label text="Label" id="label1" width="175" height="50" x="10" y="-20"/>
+	</s:Panel>
+	<s:Panel x="0" y="100" width="200" height="100" id="panel2">
+		<s:Button x="122" y="32" label="Button" id="button2_2" click="{button_click_handler(button2_2)}"/>
+		<s:Button x="11" y="32" label="Button" id="button2_1" click="{button_click_handler(button2_1)}"/>
+		<s:Label x="10" y="-20" text="Label" width="175" height="50" id="label2"/>
+	</s:Panel>
+	<s:Panel x="0" y="0" width="200" height="100" id="panel3">
+		<s:Button x="128" y="39" label="Button" id="button3_2" click="{button_click_handler(button3_2)}"/>
+		<s:Button x="13" y="39" label="Button" id="button3_1" click="{button_click_handler(button3_1)}"/>
+		<s:Label x="10" y="-20" text="Label" width="175" height="50" id="label3"/>
+	</s:Panel>
 </s:Group>

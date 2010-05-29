@@ -123,9 +123,10 @@
 			protected function requestGameB_clickHandler(event:MouseEvent):void
 			{
 				trace("Request a public game");
-				
-				var obj:Object = Room.request_public_game(roomname,queueColor.selectedItem,queueSize.selectedItem);
-				Main.conn.send(obj);
+				if(queueSize.selectedItem != 0) {
+					var obj:Object = Room.request_public_game(roomname,queueColor.selectedItem,queueSize.selectedItem);
+					Main.conn.send(obj);
+				}
 			}
 			
 			protected function new_public_game_request(conn:Conn,trans:int, white_plyr_a:String,black_plyr_a:String,size_a:int,status_a:String, gameid_a:int):void {
@@ -161,6 +162,7 @@
 				queueColor.dataProvider = new ArrayList();
 				queueColor.dataProvider.addItem('black');
 				queueColor.dataProvider.addItem('white');
+				queueColor.selectedItem = queueColor.dataProvider.getItemAt(0); 
 			}
 
 			protected function remove_public_game_request(conn:Conn,trans:int, room:String, white_plyr:String, black_plyr:String, gameid:int):void {
@@ -184,6 +186,7 @@
 				queueSize.dataProvider.addItem(9);
 				queueSize.dataProvider.addItem(13);
 				queueSize.dataProvider.addItem(19);
+				queueSize.selectedItem = queueSize.dataProvider.getItemAt(0);
 			}
 
 		]]>
