@@ -1,6 +1,7 @@
 import flash.utils.Dictionary;
 
-// ActionScript file
+import spark.components.HGroup;
+
 public function tabNavigatorCreated():void {
 	createRoomNavigatorContent("main");
 }
@@ -70,8 +71,14 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 	nc.name = name;
 	nc.label = name;
 	
-	var cc:ChatComponent = new ChatComponent();
+	var cc:ChatComponent_Game = new ChatComponent_Game();
 	cc.init(chat_id);
+	
+	var container:HGroup = new HGroup();
+	container.requestedColumnCount = 2;
+	container.variableColumnWidth=true;
+	
+	nc.addElement(container);
 	
 	var bc9:BoardComponent9;
 	var bc13:BoardComponent13;
@@ -84,20 +91,20 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 					 black, white, size, komi, handicap,
 					 timed_game, main_time, byo_yomi,
 					 moves_handicap, moves_all, resigned, score);
-			nc.addElement(bc9);
+			container.addElement(bc9);
 			break;
 		case 13:
 			bc13 = new BoardComponent13();
 			//bc13.init(game_id);
-			nc.addElement(bc19);
+			container.addElement(bc19);
 			break;
 		case 19:
 			bc19 = new BoardComponent();
 			//bc19.init(game_id);
-			nc.addElement(bc19);
+			container.addElement(bc19);
 			break;
 	}
 	
-	nc.addElement(cc);
+	container.addElement(cc);
 	chatRoomNavigator.addChild(nc);
 }
