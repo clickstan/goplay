@@ -215,4 +215,9 @@
 	<s:Button x="31" y="287" label="Button" id="requestGameB" click="requestGameB_clickHandler(event)"/>
 	<s:DropDownList x="121" y="287" width="107" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)"></s:DropDownList>
 	<s:DropDownList x="236" y="288" width="99" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
+	
+	
+	<s:DropDownList x="121" y="387" width="107" id="q2ueueColor" creationComplete="queueColor_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="236" y="388" width="99" id="q2ueueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
+	
 </s:Group>
