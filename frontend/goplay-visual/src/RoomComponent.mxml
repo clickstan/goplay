@@ -194,14 +194,14 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448"  toolTip="Here are listed the Player that are in this room. you can select one from this list and then choose if you want to chat or play against him clicking the button below.">
+	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448"  toolTip="Here are listed the Player that are in this room. you can select one from this list and then choose if you want to chat or play against one filling the options that appear and clicking the 'Play Game' button.">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Players" dataField="col1"/>
 		</mx:columns>
 	</mx:DataGrid>
 	<ns1:ChatComponent x="11" y="321" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
 	</ns1:ChatComponent>
-	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)">
+	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)" toolTip="Here is a list of the Current Games that are being held right now or the ones that are on stanby. By Double-Clicking on one that it's status is 'Started' you can watch the game :). If you want to create a new game, edit your game option below and click the &quot;create new Game&quot; Button Below and wait for someone that accepts to play with you.">
 		<mx:columns>
 			<mx:DataGridColumn headerText="White" dataField="white_plyr"/>
 			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
@@ -210,9 +210,12 @@
 			
 		</mx:columns>
 	</mx:DataGrid>
-	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton"/>
-	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)"/>
-	<s:Button x="31" y="287" label="Button" id="requestGameB" click="requestGameB_clickHandler(event)"/>
-	<s:DropDownList x="121" y="287" width="107" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)"></s:DropDownList>
-	<s:DropDownList x="236" y="288" width="99" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
+	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton" toolTip="click Here after selecting a player of the list above to start chatting with him."/>
+	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)" toolTip="click Here after selecting a Player on the list above, edit the settings in the combo boxes that appear below and click again this button to start a new game."/>
+	<s:Button toolTip="Click this button After you select the color of stone you want, the board size in the two combo Boxes on the right Create a new Game and wait for someone that wants to play with you." x="10" 
+			  y="287" label="Create New Game" id="requestGameB" click="requestGameB_clickHandler(event)"/>
+	<s:DropDownList x="215" y="288" width="92" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)" toolTip="Here you can select wich color of stone you want if is black or white. Select The Board Size in the combo box on the right and Click the 'Create New Game' Button to Create a new Game and wait for someone that accept to play with you."></s:DropDownList>
+	<s:DropDownList x="422" y="287" width="64" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)" toolTip="Here you can select wich size of board you want to play. the sizes are: 9x9, 13x13 and 19x19, then you can select the color of stone you like in the combo box on the right and then click the 'Create New Game' Button to create a new game and wait for someone who wants to play with you. Remember that while bigger the board, more time it will take to finish and more complex the game will be."></s:DropDownList>
+	<s:Label x="170" y="292" text="Color" fontWeight="bold" fontSize="13" enabled="true" color="#534400"/>
+	<s:Label x="341" y="292" text="Board Size" fontWeight="bold" enabled="true" color="#534400"/>
 </s:Group>

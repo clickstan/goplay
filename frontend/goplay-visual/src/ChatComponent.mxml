@@ -40,8 +40,8 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:Panel x="0" y="0" width="480" height="202" id="chat_panel" title="Chat">
-		<s:TextInput x="13" y="120" width="375" height="37" id="textInput"/>
-		<s:Button x="396" y="127" label="Send" width="67" id="send_btn" click="send_btn_clickHandler(event)"/>
-		<s:TextArea x="13" y="-9" width="457" height="121" editable="false" id="conversationTXT"/>
+		<s:TextInput x="13" y="120" width="375" height="37" id="textInput" toolTip="Write here the message you want to send to the other participants in the conversation."/>
+		<s:Button x="396" y="127" label="Send" width="67" id="send_btn" click="send_btn_clickHandler(event)" toolTip="Click Here to send your message."/>
+		<s:TextArea x="13" y="-9" width="457" height="121" editable="false" id="conversationTXT" toolTip="here you can see the messages that have benn sent by you or the other participants in the conversation."/>
 	</s:Panel>
 </s:Group>
