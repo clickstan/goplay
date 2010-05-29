@@ -80,14 +80,23 @@
 			
 			protected function playButton_clickHandler(event:MouseEvent):void
 			{
-				var player:String = player_grid.selectedItem.toString();
+				var player:Object = player_grid.selectedItem;
 				
-				if (game_request_players.getItemIndex(player) == -1) {
-					var obj:Object = User.start_game(player,"black", 9);
-					Main.conn.addResponseHandler(playRequestResponse,obj.trans);
-					Main.conn.send(obj);
-					game_requests[obj.trans] = obj.username;
-					game_request_players.addItem(player);
+				if (player != null) {
+					if(playButton.label != "Request") {
+						playerQueueColor.visible = true;
+						playerQueueSize.visible = true;
+						playButton.label = "Request";
+					} else {
+						playerQueueColor.visible = false;
+						playerQueueSize.visible = false;
+						playButton.label = "play";
+						var obj:Object = User.start_game(player.toString(), playerQueueColor.selectedItem, roomname, playerQueueSize.selectedItem);
+						Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+						Main.conn.send(obj);
+						game_requests[obj.trans] = obj.username;
+						game_request_players.addItem(player);
+					}
 				}
 
 			}
@@ -161,7 +170,18 @@
 				queueColor.dataProvider = new ArrayList();
 				queueColor.dataProvider.addItem('black');
 				queueColor.dataProvider.addItem('white');
-				queueColor.selectedItem = queueColor.dataProvider.getItemAt(0); 
+				queueColor.selectedItem = queueColor.dataProvider.getItemAt(0);
+				
+			}
+			
+			protected function playerQueueColor_creationCompleteHandler(event:FlexEvent):void
+			{
+				playerQueueColor.dataProvider = new ArrayList();
+				playerQueueColor.dataProvider.addItem('black');
+				playerQueueColor.dataProvider.addItem('white');
+				playerQueueColor.selectedItem = playerQueueColor.dataProvider.getItemAt(0); 
+				playerQueueColor.visible = false;
+				
 			}
 
 			protected function remove_public_game_request(conn:Conn,trans:int, room:String, white_plyr:String, black_plyr:String, gameid:int):void {
@@ -186,6 +206,15 @@
 				queueSize.dataProvider.addItem(13);
 				queueSize.dataProvider.addItem(19);
 				queueSize.selectedItem = queueSize.dataProvider.getItemAt(0);
+			}
+			protected function playerQueueSize_creationCompleteHandler(event:FlexEvent):void
+			{
+				playerQueueSize.dataProvider = new ArrayList();
+				playerQueueSize.dataProvider.addItem(9);
+				playerQueueSize.dataProvider.addItem(13);
+				playerQueueSize.dataProvider.addItem(19);
+				playerQueueSize.selectedItem = playerQueueSize.dataProvider.getItemAt(0);
+				playerQueueSize.visible = false;
 			}
 
 		]]>
@@ -217,7 +246,7 @@
 	<s:DropDownList x="236" y="288" width="99" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
 	
 	
-	<s:DropDownList x="121" y="387" width="107" id="q2ueueColor" creationComplete="queueColor_creationCompleteHandler(event)"></s:DropDownList>
-	<s:DropDownList x="236" y="388" width="99" id="q2ueueSize" creationComplete="queueSize_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="508" y="496" width="64" id="playerQueueColor" creationComplete="playerQueueColor_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="580" y="496" width="64" id="playerQueueSize" creationComplete="playerQueueSize_creationCompleteHandler(event)"></s:DropDownList>
 	
 </s:Group>

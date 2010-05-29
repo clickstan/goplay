@@ -1,9 +1,10 @@
 class GameConfig:
-    def __init__(self, white, black,
+    def __init__(self, white, black,gameroom,
                        size=19, komi=6.5, handicap=0, timed_game=False,
                        main_time=30, byo_yomi=False):
         self.white = white      # username
         self.black = black      # username
+        self.gameroom = gameroom
         self.size = size
         self.komi = komi if handicap == 0 else 0.5
         self.handicap = handicap
