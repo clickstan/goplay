@@ -14,7 +14,6 @@
 			import mx.events.FlexEvent;
 			
 			public var chatid:int;
-			
 			public static var chats:Dictionary = new Dictionary();
 			
 			public function init(id:int):void

@@ -111,6 +111,7 @@
 					
 					ClientProtocol.setCommandHandler('chat.call_into', chatCHandler_callInto);
 					ClientProtocol.setCommandHandler('game.call_into', gameCHandler_callInto);
+					ClientProtocol.setCommandHandler('game.initialize', gameCHandler_initialize);
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;

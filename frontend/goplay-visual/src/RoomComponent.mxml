@@ -83,7 +83,7 @@
 				var player:String = player_grid.selectedItem.toString();
 				
 				if (game_request_players.getItemIndex(player) == -1) {
-					var obj:Object = User.start_game(player,"black");
+					var obj:Object = User.start_game(player,"black", 9);
 					Main.conn.addResponseHandler(playRequestResponse,obj.trans);
 					Main.conn.send(obj);
 					game_requests[obj.trans] = obj.username;
@@ -98,8 +98,7 @@
 				chat_request_players.removeItem(player);
 				
 				if (obj.code == 303) { // chat accepted
-					parentApplication.createRoomNavigatorContent_ChatOnly("chat: "+obj.sender+" - "+obj.user, obj.chat_id);
-					trace('chatRequestResponse', 'ready to chat in chat_id', obj.chat_id)
+					parentApplication.createRoomNavigatorContent_ChatOnly("chat: "+obj.user, obj.chat_id);
 				}
 			}
 

@@ -23,12 +23,23 @@ public function gameCHandler_callInto(conn:Conn, trans:int, game_id:int, sender:
 private function gameCCallback_callInto_accept(conn:Conn, trans:int, game_id:int, notification:Notification):void {
 	conn.send({'trans':trans, 'accepted':true});
 	notify_control.removeNotification(notification);
-	
-	// TODO: crear tab de game con game_id = game_id
-	trace('gameCCallback_callInto_accept', 'ready to play in game_id', game_id)
 }
 
 private function gameCCallback_callInto_reject(conn:Conn, trans:int, notification:Notification):void {
 	conn.send({'trans':trans, 'accepted':false});
 	notify_control.removeNotification(notification);
+}
+
+
+public function gameCHandler_initialize(conn:Conn, trans:int, game_id:int, chat_id:int,
+										black:String, white:String, size:int, komi:Number, handicap:int,
+										timed_game:Boolean, main_time:int, byo_yomi:Number,
+										moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
+{
+	var enemy:String = currentUser == black? white : black;
+	
+	createRoomNavigatorContent_Game("game: "+enemy, game_id, chat_id,
+													black, white, size, komi, handicap,
+													timed_game, main_time, byo_yomi,
+													moves_handicap, moves_all, resigned, score);
 }
