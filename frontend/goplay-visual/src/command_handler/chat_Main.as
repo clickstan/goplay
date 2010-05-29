@@ -24,8 +24,7 @@ private function chatCCallback_callInto_accept(conn:Conn, trans:int, chat_id:int
 	conn.send({'trans':trans, 'accepted':true});
 	notify_control.removeNotification(notification);
 	
-	createRoomNavigatorContent_ChatOnly("chat: "+sender+" - "+currentUser, chat_id);
-	trace('chatCCallback_callInto_accept', 'ready to chat in chat_id', chat_id)
+	createRoomNavigatorContent_ChatOnly("chat: "+sender, chat_id);
 }
 
 private function chatCCallback_callInto_reject(conn:Conn, trans:int, notification:Notification):void {

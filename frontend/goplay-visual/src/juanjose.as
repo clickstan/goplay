@@ -1,3 +1,5 @@
+import flash.utils.Dictionary;
+
 // ActionScript file
 public function tabNavigatorCreated():void {
 	createRoomNavigatorContent("main");
@@ -38,7 +40,6 @@ public function createRoomNavigatorContentCaller(obj:Object):void {
 public function createRoomNavigatorContent(name:String):void {
 	var openedNV:Object = chatRoomNavigator.getChildByName(name);
 	if (openedNV == null) {
-		trace("creating the room tab",name);
 		var nc:NavigatorContent = new NavigatorContent();
 		nc.name = name;
 		nc.label = name;
@@ -51,12 +52,52 @@ public function createRoomNavigatorContent(name:String):void {
 
 
 public function createRoomNavigatorContent_ChatOnly(name:String, chat_id:int):void {
-	trace("creating the chat tab",name);
 	var nc:NavigatorContent = new NavigatorContent();
 	nc.name = name;
 	nc.label = name;
 	var cc:ChatComponent = new ChatComponent();
 	cc.init(chat_id);
+	nc.addElement(cc);
+	chatRoomNavigator.addChild(nc);
+}
+
+public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_id:int,
+												black:String, white:String, size:int, komi:Number, handicap:int,
+												timed_game:Boolean, main_time:int, byo_yomi:Number,
+												moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
+{
+	var nc:NavigatorContent = new NavigatorContent();
+	nc.name = name;
+	nc.label = name;
+	
+	var cc:ChatComponent = new ChatComponent();
+	cc.init(chat_id);
+	
+	var bc9:BoardComponent9;
+	var bc13:BoardComponent13;
+	var bc19:BoardComponent;
+	
+	switch (size) {
+		case 9:
+			bc9 = new BoardComponent9();
+			bc9.init(game_id, chat_id,
+					 black, white, size, komi, handicap,
+					 timed_game, main_time, byo_yomi,
+					 moves_handicap, moves_all, resigned, score);
+			nc.addElement(bc9);
+			break;
+		case 13:
+			bc13 = new BoardComponent13();
+			//bc13.init(game_id);
+			nc.addElement(bc19);
+			break;
+		case 19:
+			bc19 = new BoardComponent();
+			//bc19.init(game_id);
+			nc.addElement(bc19);
+			break;
+	}
+	
 	nc.addElement(cc);
 	chatRoomNavigator.addChild(nc);
 }
