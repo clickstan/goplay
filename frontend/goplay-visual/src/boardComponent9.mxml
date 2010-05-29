@@ -4,10 +4,56 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="600" creationComplete="create_Stones()">
 	<fx:Script>
 		<![CDATA[
+			import flashx.textLayout.tlf_internal;
+			
 			import mx.controls.Alert;
+			
 			public var color_player:String =  "@Embed(source = 'artwork/board9x9.jpg')";
 			public var color_black19:String =  "{black_source.source}";
 			public var color_white19:String = "{white_source.source}";
+			
+			public var game_id:int;
+			public var chat_id:int;
+			public var black:String;
+			public var white:String;
+			public var size:int;
+			public var komi:Number;
+			public var handicap:int;
+			public var timed_game:Boolean;
+			public var main_time:int;
+			public var byo_yomi:Number;
+			public var moves_handicap:Array;
+			public var moves_all:Array;
+			public var resigned:String;
+			public var score:String;
+			
+			public static var games:Dictionary = new Dictionary();
+			
+			public function init(game_id:int, chat_id:int,
+								 black:String, white:String, size:int, komi:Number, handicap:int,
+								 timed_game:Boolean, main_time:int, byo_yomi:Number,
+								 moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
+			{
+				games[game_id] = this;
+
+				this.game_id = game_id;
+				this.chat_id = game_id;
+				this.black = black;
+				this.white = white;
+				this.size = size;
+				this.komi = komi;
+				this.handicap = handicap;
+				this.timed_game = timed_game;
+				this.main_time = main_time;
+				this.byo_yomi = byo_yomi;
+				this.moves_handicap = moves_handicap;
+				this.moves_all = moves_all;
+				this.resigned = resigned;
+				this.score = score;
+				
+				//ClientProtocol.setCommandHandler('game.play', ...);
+				//ClientProtocol.setCommandHandler('game.final_score', ...);
+			}
 			
 			public function create_Stones():void{
 				var stones_array:Array = new Array();
@@ -36,30 +82,11 @@
 					}
 					
 				}
-				
 			}
+			
 			protected function stone_clickHandler(event:MouseEvent):void{
-				// procesarlo
-				//var img:Image = event.relatedObject;
-			}
-			
-			
-			
-			protected function position_click(img:Image):void
-			{
 				
-				/*if(img.source == white_source.source){
-				Alert.show("entro a click Handler condicion de blanco");
-				img.source = color_black19;
-				b9.source = "black_source.source"
-				}
-				
-				if(img.source == black_source.source){
-				Alert.show("entro a click Handler condicion de negro");
-				img.source = color_white19;
-				}*/
-				
-			}
+			}		
 		]]>
 	</fx:Script>
 	<fx:Declarations>
