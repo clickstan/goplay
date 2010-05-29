@@ -195,7 +195,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448" >
+	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448"  toolTip="Here are listed the Player that are in this room. you can select one from this list and then choose if you want to chat or play against him clicking the button below.">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Players" dataField="col1"/>
 		</mx:columns>
