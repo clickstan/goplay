@@ -101,5 +101,4 @@
 						<!--Control Buttons-->
 	<s:Button x="526" y="36" label="Pass" id="pass_btn"/>
 	<s:Button x="526" y="66" label="Resign" id="resign_btn"/>
-	<s:Button x="526" y="492" label="Close" id="close_btn"/>
 </s:Group>
