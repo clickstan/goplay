@@ -1,141 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="600">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="600" creationComplete="create_Stones()">
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
+			public var color_player:String =  "@Embed(source = 'artwork/board9x9.jpg')";
+			public var color_black19:String =  "{black_source.source}";
+			public var color_white19:String = "{white_source.source}";
 			
-			public var color_black19:String =  "black_source.source";
-			public var color_white19:String = "white_source.source";
+			public function create_Stones():void{
+				var stones_array:Array = new Array();
+				var pos_x:int = 32;
+				var pos_y:int = 32;
+				var i:int = 0;
+				for(i=0; i<9; i++){
+					stones_array.push(row_array);
+					var row_array:Array = new Array();
+					for(var j:int = 0; j<9; j++){ 
+						var image:Image = new Image();
+						image.source = black_source.source;
+						image.id = j + ","+i;
+						image.x = pos_x+j*51;
+						image.y = pos_y+i*51;
+						
+						function handler():void {
+							var x:int = j;
+							var y:int = i;
+							Alert.show(x+ ","+y);
+						}
+						
+						image.addEventListener(MouseEvent.CLICK,handler);
+						row_array.push(image);
+						addElement(image);
+					}
+					
+				}
+				
+			}
+			protected function stone_clickHandler(event:MouseEvent):void{
+				// procesarlo
+				//var img:Image = event.relatedObject;
+			}
+			
+			
 			
 			protected function position_click(img:Image):void
 			{
-				//procesar lo de las piedras
-				if(img.source == white_source.source){
-					Alert.show("entro a click Handler condicion de blanco");
-					img.source = color_black19;
+				
+				/*if(img.source == white_source.source){
+				Alert.show("entro a click Handler condicion de blanco");
+				img.source = color_black19;
+				b9.source = "black_source.source"
 				}
 				
 				if(img.source == black_source.source){
-					Alert.show("entro a click Handler condicion de negro");
-					img.source = color_white19;
-				}
+				Alert.show("entro a click Handler condicion de negro");
+				img.source = color_white19;
+				}*/
 				
 			}
-
-			protected function a7_clickHandler(event:MouseEvent):void
-			{
-				// TODO Auto-generated method stub
-			}
-
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<mx:Image x="10" y="10" id="board" source="@Embed(source = 'artwork/board9x9.jpg')"/>
-	
-								<!--Board A Column-->
-	<mx:Image x="35" y="34" width="50" height="50" id="a9" source="{black_source.source}" click="{position_click(a9)}"/>
-	<mx:Image x="35" y="86" width="50" height="50" id="a8" source="{black_source.source}" click="{position_click(a8)}"/>
-	<mx:Image x="34" y="138" width="50" height="50" id="a7" source="{black_source.source}" click="{position_click(a7)}"/>
-	<mx:Image x="34" y="189" width="50" height="50" id="a6" source="{black_source.source}" click="{position_click(a6)}"/>
-	<mx:Image x="34" y="240" width="50" height="50" id="a5" source="{black_source.source}" click="{position_click(a5)}"/>
-	<mx:Image x="34" y="291" width="50" height="50" id="a4" source="{black_source.source}" click="{position_click(a4)}"/>
-	<mx:Image x="33" y="342" width="50" height="50" id="a3" source="{black_source.source}" click="{position_click(a3)}"/>
-	<mx:Image x="33" y="393" width="50" height="50" id="a2" source="{black_source.source}" click="{position_click(a2)}"/>
-	<mx:Image x="32" y="445" width="50" height="50" id="a1" source="{black_source.source}" click="{position_click(a1)}"/>
-	
-								
-								<!--Board B Column-->
-	<mx:Image x="86" y="33" id="b9" source="{black_source.source}" width="50" height="50" click="{position_click(b9)}"/>
-	<mx:Image x="86" y="85" id="b8" source="{black_source.source}" width="50" height="50" click="{position_click(b8)}"/>
-	<mx:Image x="85" y="137" id="b7" source="{black_source.source}" width="50" height="50" click="{position_click(b7)}"/>
-	<mx:Image x="85" y="188" id="b6" source="{black_source.source}" width="50" height="50" click="{position_click(b6)}"/>
-	<mx:Image x="85" y="239" id="b5" source="{black_source.source}" width="50" height="50" click="{position_click(b5)}"/>
-	<mx:Image x="85" y="291" id="b4" source="{black_source.source}" width="50" height="50" click="{position_click(b4)}"/>
-	<mx:Image x="84" y="341" id="b3" source="{black_source.source}" width="50" height="50" click="{position_click(b3)}"/>
-	<mx:Image x="84" y="391" id="b2" source="{black_source.source}" width="50" height="50" click="{position_click(b2)}"/>
-	<mx:Image x="83" y="443" id="b1" source="{black_source.source}" width="50" height="50" click="{position_click(b1)}"/>
-	
-								<!--Board C Column-->
-	<mx:Image x="137" y="34" id="c9" width="50" height="50" source="{black_source.source}" click="{position_click(c9)}"/>
-	<mx:Image x="137" y="86" id="c8" width="50" height="50" source="{black_source.source}" click="{position_click(c8)}"/>
-	<mx:Image x="136" y="137" id="c7" width="50" height="50" source="{black_source.source}" click="{position_click(c7)}"/>
-	<mx:Image x="136" y="189" id="c6" width="50" height="50" source="{black_source.source}" click="{position_click(c6)}"/>
-	<mx:Image x="136" y="240" id="c5" width="50" height="50" source="{black_source.source}" click="{position_click(c5)}"/>
-	<mx:Image x="136" y="291" id="c4" width="50" height="50" source="{black_source.source}" click="{position_click(c4)}"/>
-	<mx:Image x="135" y="342" id="c3" width="50" height="50" source="{black_source.source}" click="{position_click(c3)}"/>
-	<mx:Image x="135" y="393" id="c2" width="50" height="50" source="{black_source.source}" click="{position_click(c2)}"/>
-	<mx:Image x="134" y="444" id="c1" width="50" height="50" source="{black_source.source}" click="{position_click(c1)}"/>
-	
-								<!--Board D Column-->
-	<mx:Image x="187" y="34" id="d9" source="{black_source.source}" width="50" height="50" click="{position_click(d9)}"/>
-	<mx:Image x="187" y="85" id="d8" source="{black_source.source}" width="50" height="50" click="{position_click(d8)}"/>
-	<mx:Image x="185" y="137" id="d7" source="{black_source.source}" width="50" height="50" click="{position_click(d7)}"/>
-	<mx:Image x="186" y="188" id="d6" source="{black_source.source}" width="50" height="50" click="{position_click(d6)}"/>
-	<mx:Image x="186" y="239" id="d5" source="{black_source.source}" width="50" height="50" click="{position_click(d5)}"/>
-	<mx:Image x="186" y="289" id="d4" source="{black_source.source}" width="50" height="50" click="{position_click(d4)}"/>
-	<mx:Image x="185" y="339" id="d3" source="{black_source.source}" width="50" height="50" click="{position_click(d3)}"/>
-	<mx:Image x="185" y="391" id="d2" source="{black_source.source}" width="50" height="50" click="{position_click(d2)}"/>
-	<mx:Image x="184" y="443" id="d1" source="{black_source.source}" width="50" height="50" click="{position_click(d1)}"/>
-	
-	
-								<!--Board E Column-->
-	<mx:Image x="238" y="35" source="{black_source.source}" id="e9" width="50" height="50" click="{position_click(e9)}"/>
-	<mx:Image x="238" y="86" source="{black_source.source}" id="e8" width="50" height="50" click="{position_click(e8)}"/>
-	<mx:Image x="237" y="137" source="{black_source.source}" id="e7" width="50" height="50" click="{position_click(e7)}"/>
-	<mx:Image x="237" y="189" source="{black_source.source}" id="e6" width="50" height="50" click="{position_click(e6)}"/>
-	<mx:Image x="237" y="239" source="{black_source.source}" id="e5" width="50" height="50" click="{position_click(e5)}"/>
-	<mx:Image x="237" y="289" source="{black_source.source}" id="e4" width="50" height="50" click="{position_click(e4)}"/>
-	<mx:Image x="236" y="339" source="{black_source.source}" id="e3" width="50" height="50" click="{position_click(e3)}"/>
-	<mx:Image x="236" y="390" source="{black_source.source}" id="e2" width="50" height="50" click="{position_click(e2)}"/>
-	<mx:Image x="235" y="442" source="{black_source.source}" id="e1" width="50" height="50" click="{position_click(e1)}"/>
-	
-								<!--Board F Column-->
-	<mx:Image x="289" y="35" width="50" height="50" id="f9" source="{black_source.source}" click="{position_click(f9)}"/>
-	<mx:Image x="289" y="86" width="50" height="50" id="f8" source="{black_source.source}" click="{position_click(f8)}"/>
-	<mx:Image x="288" y="137" width="50" height="50" id="f7" source="{black_source.source}" click="{position_click(f7)}"/>
-	<mx:Image x="288" y="188" width="50" height="50" id="f6" source="{black_source.source}" click="{position_click(f6)}"/>
-	<mx:Image x="288" y="239" width="50" height="50" id="f5" source="{black_source.source}" click="{position_click(f5)}"/>
-	<mx:Image x="288" y="288" width="50" height="50" id="f4" source="{black_source.source}" click="{position_click(f4)}"/>
-	<mx:Image x="287" y="339" width="50" height="50" id="f3" source="{black_source.source}" click="{position_click(f3)}"/>
-	<mx:Image x="287" y="390" width="50" height="50" id="f2" source="{black_source.source}" click="{position_click(f2)}"/>
-	<mx:Image x="286" y="442" width="50" height="50" id="f1" source="{black_source.source}" click="{position_click(f1)}"/>
-	
-								<!--Board G Column-->
-	<mx:Image x="339" y="35" id="g9" source="{black_source.source}" width="50" height="50" click="{position_click(g9)}"/>
-	<mx:Image x="339" y="87" id="g8" source="{black_source.source}" width="50" height="50" click="{position_click(g8)}"/>
-	<mx:Image x="338" y="138" id="g7" source="{black_source.source}" width="50" height="50" click="{position_click(g7)}"/>
-	<mx:Image x="338" y="188" id="g6" source="{black_source.source}" width="50" height="50" click="{position_click(g6)}"/>
-	<mx:Image x="338" y="238" id="g5" source="{black_source.source}" width="50" height="50" click="{position_click(g5)}"/>
-	<mx:Image x="338" y="289" id="g4" source="{black_source.source}" width="50" height="50" click="{position_click(g4)}"/>
-	<mx:Image x="337" y="339" id="g3" source="{black_source.source}" width="50" height="50" click="{position_click(g3)}"/>
-	<mx:Image x="337" y="390" id="g2" source="{black_source.source}" width="50" height="50" click="{position_click(g2)}"/>
-	<mx:Image x="336" y="442" id="g1" source="{black_source.source}" width="50" height="50" click="{position_click(g1)}"/>
-	
-								<!--Board H Column-->
-	<mx:Image x="389" y="35" id="h9" source="{black_source.source}" width="50" height="50" click="{position_click(h9)}"/>
-	<mx:Image x="389" y="86" id="h8" source="{black_source.source}" width="50" height="50" click="{position_click(h8)}"/>
-	<mx:Image x="388" y="137" id="h7" source="{black_source.source}" width="50" height="50" click="{position_click(h7)}"/>
-	<mx:Image x="388" y="188" id="h6" source="{black_source.source}" width="50" height="50" click="{position_click(h6)}"/>
-	<mx:Image x="388" y="237" id="h5" source="{black_source.source}" width="50" height="50" click="{position_click(h5)}"/>
-	<mx:Image x="388" y="287" id="h4" source="{black_source.source}" width="50" height="50" click="{position_click(h4)}"/>
-	<mx:Image x="387" y="338" id="h3" source="{black_source.source}" width="50" height="50" click="{position_click(h3)}"/>
-	<mx:Image x="387" y="389" id="h2" source="{black_source.source}" width="50" height="50" click="{position_click(h2)}"/>
-	<mx:Image x="386" y="441" id="h1" source="{black_source.source}" width="50" height="50" click="{position_click(h1)}"/>
-	
-								<!--Board J Column-->
-	<mx:Image x="439" y="36" id="j9" source="{black_source.source}" width="50" height="50" click="{position_click(j9)}"/>
-	<mx:Image x="439" y="87" id="j8" source="{black_source.source}" width="50" height="50" click="{position_click(j8)}"/>
-	<mx:Image x="438" y="138" id="j7" source="{black_source.source}" width="50" height="50" click="{position_click(j7)}"/>
-	<mx:Image x="438" y="188" id="j6" source="{black_source.source}" width="50" height="50" click="{position_click(j6)}"/>
-	<mx:Image x="438" y="238" id="j5" source="{black_source.source}" width="50" height="50" click="{position_click(j5)}"/>
-	<mx:Image x="438" y="288" id="j4" source="{black_source.source}" width="50" height="50" click="{position_click(j4)}"/>
-	<mx:Image x="437" y="338" id="j3" source="{black_source.source}" width="50" height="50" click="{position_click(j3)}"/>
-	<mx:Image x="437" y="390" id="j2" source="{black_source.source}" width="50" height="50" click="{position_click(j2)}"/>
-	<mx:Image x="436" y="442" id="j1" source="{black_source.source}" width="50" height="50" click="{position_click(j1)}"/>
 	
 						<!--Embeded stone image sources-->
 	<mx:Image x="540" y="192" id="white_source" source="@Embed(source='artwork/white_stone9.png')" width="50" height="50"/>

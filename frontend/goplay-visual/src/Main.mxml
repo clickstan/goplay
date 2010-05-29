@@ -226,8 +226,7 @@
 			}
 			
 			
-
-		
+			//public var test:String  = 'a' + 1;
 
 		]]>
 	</fx:Script>
