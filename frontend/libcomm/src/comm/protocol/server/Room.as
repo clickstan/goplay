@@ -6,6 +6,15 @@ package comm.protocol.server {
 	
 	public class Room	{
 	
+		public static function add_game(wplayer:String, bplayer:String, size:int, room:String):Object {
+			return {'command' : 'room.add_game',
+				'wplayer':wplayer,
+				'bplayer':bplayer,
+				'size':size,
+				'room':room,
+				'trans' : Util.nextTrans()};
+		}
+		
 		public static function get_all_rooms():Object {
 			return {'command' : 'room.get_all_rooms',
 				'trans'	  : Util.nextTrans()};

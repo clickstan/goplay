@@ -11,6 +11,8 @@ from exception import GameException
 
 from data import GameConfig, GameMoves
 
+
+
 from engine import config as engine_config
 _temp = __import__('engine.'+engine_config['engine'],
                    globals(), locals(),
@@ -40,7 +42,7 @@ class Game:
         self.id = None              # client side component and database has same id
         self._config = None
         self._moves = None
-        
+        #self.room = None
         self.chat = Chat()
         self.broadcast_to = set()   # ConnectedUser set (not chat broadcast)
         
@@ -49,6 +51,7 @@ class Game:
             pass only GameConfig instance as parameter
         Retrieve game from database:
             pass only 'id' as parameter"""
+
         if self.id is not None:
             return
         
