@@ -248,7 +248,7 @@
 		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
-	<mx:TabNavigator width="950" height="543" id="chatRoomNavigator" includeIn="mainRoom" doubleClickEnabled="true" doubleClick="kill_tabs()" creationComplete="tabNavigatorCreated()" x="145" y="42">
+	<mx:TabNavigator width="950" height="543" id="chatRoomNavigator" includeIn="mainRoom" creationComplete="tabNavigatorCreated()" x="145" y="42">
 	</mx:TabNavigator>
 
 	
