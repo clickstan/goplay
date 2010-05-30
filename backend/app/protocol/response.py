@@ -137,7 +137,9 @@ class GameOk:
     
     @staticmethod
     def ok_move():
-        return ok(500, "ok move")
+        response = ok(500, "ok move")
+        #response.update({'game_id':game_id})
+        return response
     
     @staticmethod
     def you_can_watch():
