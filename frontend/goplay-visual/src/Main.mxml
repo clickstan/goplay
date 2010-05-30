@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" minWidth.mainRoom="1024" minHeight.mainRoom="720" creationComplete="init()" xmlns:notify="notify.*" width.mainRoom="1178">
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" creationComplete="init()" xmlns:notify="notify.*" width.mainRoom="100%" height.mainRoom="100%">
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
+		
 			include "command_handler/room_Main.as";
 			include "command_handler/chat_Main.as";
 			include "command_handler/game_Main.as";
@@ -251,6 +252,15 @@
 				
 			}
 
+
+			protected function otherlogin_clickHandler(event:MouseEvent):void
+			{
+				userName_txt.text = "other"
+				var obj:Object = User.login("other","other");
+				conn.addResponseHandler(loginResponse,obj.trans);
+				conn.send(obj);
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -270,7 +280,7 @@
 		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
-	<mx:TabNavigator width="684" height="543" id="chatRoomNavigator" includeIn="mainRoom" horizontalCenter="0" doubleClickEnabled="true" verticalCenter="-33" doubleClick="kill_tabs()" creationComplete="tabNavigatorCreated()">
+	<mx:TabNavigator width="875" height="543" id="chatRoomNavigator" includeIn="mainRoom" doubleClickEnabled="true" creationComplete="tabNavigatorCreated()" x="144" y="56">
 	</mx:TabNavigator>
 
 	
@@ -310,7 +320,7 @@
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
 	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl"/>
-	<mx:DataGrid id="roomsGrid" x="10" y="308" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()">
+	<mx:DataGrid id="roomsGrid" x="10" y="308" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()" toolTip="here you can see the list of rooms currently active. If you want to join a room, double click on the name in the list. If you want to Create a new room, click the button below.">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
@@ -319,12 +329,13 @@
 		<s:NavigatorContent label="Game 1" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
-	<s:Button includeIn="mainRoom" x="10" y="549" label="Create" id="createRoomB"  click="createRoomBtn()"/>
+	<s:Button includeIn="mainRoom" x="10" y="549" label="Create" id="createRoomB"  click="createRoomBtn()" toolTip="Click this button if you want to create a new room."/>
 	<s:TextInput includeIn="mainRoom" x="10" y="575" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
-	<notify:Notify includeIn="mainRoom" y="56" x="953" id="notify_control" width="215" height="373">
+	<notify:Notify includeIn="mainRoom" id="notify_control" width="202" height="304" right="20" bottom="20">
 	</notify:Notify>
 	<s:Button x="319" y="167" label="admin" id="adminlogin" click="adminlogin_clickHandler(event)" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen"/>
 	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
+	<s:Button x="505" y="170" label="other" id="otherlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>

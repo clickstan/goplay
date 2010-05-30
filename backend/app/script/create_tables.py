@@ -27,7 +27,16 @@ def setDefaults(session):
             privileged_client_role = role
 
     # ---
+    for username in ['admin','player','other']:
+        privileged_user1 = user.User(
+                        username,
+                        hashlib.sha256(username).hexdigest(),
+                        'The GoPlay Original Frontend')
 
+        privileged_user1.role = privileged_client_role
+
+        session.add(privileged_user1)
+    # ---
     privileged_user1 = user.User(
                         'tgpof',
                         hashlib.sha256('#sp1-goplay').hexdigest(),

@@ -248,11 +248,9 @@ def start_game(conn, username, color,roomname, size=None, trans=None, start_now=
     def call_into_callback(accepted):
         if accepted:
             conn.send(UserOk.startgame_accepted(game.id), trans)
-            print roomname, "<<"
+            sender.enterGame(game)
             room = sender.rooms.get(roomname)
-            room.add_game(conn, white, black, size)
-            if not start_now:
-                sender.enterGame(game)
+            room.add_game(conn, white, black, size, game.id)
         else:
             game.destroy(clear_all_traces=True)
             conn.send(UserOk.startgame_not_accepted(), trans)
@@ -264,6 +262,8 @@ def start_game(conn, username, color,roomname, size=None, trans=None, start_now=
             if start_now:
                 sender.enterGame(game)
                 user.enterGame(game)
+                room = sender.rooms.get(roomname)
+                room.add_game(conn, white, black, size, game.id)
             else:
                 user.callIntoGame(sender, game.id, call_into_callback)
     
