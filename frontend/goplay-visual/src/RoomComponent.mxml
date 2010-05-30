@@ -5,12 +5,6 @@
 
 	<fx:Script>
 		<![CDATA[
-			
-			include "command_handler/room_RoomComponent.as";
-			include "RoomChat.as";
-			
-			// ---
-			
 			import comm.Conn;
 			import comm.protocol.ClientProtocol;
 			import comm.protocol.server.Room;
@@ -19,12 +13,16 @@
 			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.utils.ObjectUtil;
 			
 			public static var rooms:Dictionary = new Dictionary();
 			public var roomname:String;
 			public var chatid:int;
-			
+			// ***
+			include "command_handler/room_RoomComponent.as";
+			include "RoomChat.as";
+			// ---
 
 			// para que no se pueda hacer spam de chat_requests
 			// mapea trans:player a los que se le envio un chat_request y no han respondido
@@ -80,14 +78,23 @@
 			
 			protected function playButton_clickHandler(event:MouseEvent):void
 			{
-				var player:String = player_grid.selectedItem.toString();
+				var player:Object = player_grid.selectedItem;
 				
-				if (game_request_players.getItemIndex(player) == -1) {
-					var obj:Object = User.start_game(player,"black", 9);
-					Main.conn.addResponseHandler(playRequestResponse,obj.trans);
-					Main.conn.send(obj);
-					game_requests[obj.trans] = obj.username;
-					game_request_players.addItem(player);
+				if (player != null) {
+					if(playButton.label != "Request") {
+						playerQueueColor.visible = true;
+						playerQueueSize.visible = true;
+						playButton.label = "Request";
+					} else {
+						playerQueueColor.visible = false;
+						playerQueueSize.visible = false;
+						playButton.label = "play";
+						var obj:Object = User.start_game(player.toString(), playerQueueColor.selectedItem, roomname, playerQueueSize.selectedItem);
+						Main.conn.addResponseHandler(playRequestResponse,obj.trans);
+						Main.conn.send(obj);
+						game_requests[obj.trans] = obj.username;
+						game_request_players.addItem(player);
+					}
 				}
 
 			}
@@ -134,7 +141,8 @@
 					white_plyr:white_plyr_a,
 					black_plyr:black_plyr_a,
 					size:size_a,
-					status:status_a})
+					status:status_a,
+					gameid:gameid_a})
 			}
 
 			protected function fillGamesGrid(obj:Object):void {
@@ -161,7 +169,18 @@
 				queueColor.dataProvider = new ArrayList();
 				queueColor.dataProvider.addItem('black');
 				queueColor.dataProvider.addItem('white');
-				queueColor.selectedItem = queueColor.dataProvider.getItemAt(0); 
+				queueColor.selectedItem = queueColor.dataProvider.getItemAt(0);
+				
+			}
+			
+			protected function playerQueueColor_creationCompleteHandler(event:FlexEvent):void
+			{
+				playerQueueColor.dataProvider = new ArrayList();
+				playerQueueColor.dataProvider.addItem('black');
+				playerQueueColor.dataProvider.addItem('white');
+				playerQueueColor.selectedItem = playerQueueColor.dataProvider.getItemAt(0); 
+				playerQueueColor.visible = false;
+				
 			}
 
 			protected function remove_public_game_request(conn:Conn,trans:int, room:String, white_plyr:String, black_plyr:String, gameid:int):void {
@@ -187,6 +206,37 @@
 				queueSize.dataProvider.addItem(19);
 				queueSize.selectedItem = queueSize.dataProvider.getItemAt(0);
 			}
+			protected function playerQueueSize_creationCompleteHandler(event:FlexEvent):void
+			{
+				playerQueueSize.dataProvider = new ArrayList();
+				playerQueueSize.dataProvider.addItem(9);
+				playerQueueSize.dataProvider.addItem(13);
+				playerQueueSize.dataProvider.addItem(19);
+				playerQueueSize.selectedItem = playerQueueSize.dataProvider.getItemAt(0);
+				playerQueueSize.visible = false;
+			}
+
+
+			protected function currentGames_itemDoubleClickHandler(event:ListEvent):void
+			{
+				//if game is not complete we join the game
+				var size:int = currentGames.selectedItem["size"];
+				var obj:Object;
+				if (currentGames.selectedItem['white_plyr'] == "") {
+					obj = Room.request_public_game(roomname,"white",size);
+					Main.conn.send(obj);
+					return;
+				}else if(currentGames.selectedItem['black_plyr'] == ""){
+					obj = Room.request_public_game(roomname,"black",size);
+					Main.conn.send(obj);
+					return;
+				}
+				//if the game is complete we join as an espectator
+				trace("####################>>>>>>>>>>>>>");
+				trace(currentGames.selectedItem["gameid"]);
+				obj = User.watch_game(currentGames.selectedItem["gameid"]);
+				Main.conn.send(obj);
+			}
 
 		]]>
 	</fx:Script>
@@ -201,12 +251,13 @@
 	</mx:DataGrid>
 	<ns1:ChatComponent x="11" y="321" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
 	</ns1:ChatComponent>
-	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)" toolTip="Here is a list of the Current Games that are being held right now or the ones that are on stanby. By Double-Clicking on one that it's status is 'Started' you can watch the game :). If you want to create a new game, edit your game option below and click the &quot;create new Game&quot; Button Below and wait for someone that accepts to play with you.">
+	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)" toolTip="Here is a list of the Current Games that are being held right now or the ones that are on stanby. By Double-Clicking on one that it's status is 'Started' you can watch the game :). If you want to create a new game, edit your game option below and click the &quot;create new Game&quot; Button Below and wait for someone that accepts to play with you." doubleClickEnabled="true" itemClick="currentGames_itemDoubleClickHandler(event)">
 		<mx:columns>
 			<mx:DataGridColumn headerText="White" dataField="white_plyr"/>
 			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
 			<mx:DataGridColumn headerText="Size" dataField="size"/>
 			<mx:DataGridColumn headerText="Game Status" dataField="status"/>
+			<mx:DataGridColumn headerText="Game id" dataField="gameid"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
@@ -215,7 +266,12 @@
 	<s:Button toolTip="Click this button After you select the color of stone you want, the board size in the two combo Boxes on the right Create a new Game and wait for someone that wants to play with you." x="10" 
 			  y="287" label="Create New Game" id="requestGameB" click="requestGameB_clickHandler(event)"/>
 	<s:DropDownList x="215" y="288" width="92" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)" toolTip="Here you can select wich color of stone you want if is black or white. Select The Board Size in the combo box on the right and Click the 'Create New Game' Button to Create a new Game and wait for someone that accept to play with you."></s:DropDownList>
+	
+	
+	<s:DropDownList x="508" y="496" width="64" id="playerQueueColor" creationComplete="playerQueueColor_creationCompleteHandler(event)"></s:DropDownList>
 	<s:DropDownList x="422" y="287" width="64" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)" toolTip="Here you can select wich size of board you want to play. the sizes are: 9x9, 13x13 and 19x19, then you can select the color of stone you like in the combo box on the right and then click the 'Create New Game' Button to create a new game and wait for someone who wants to play with you. Remember that while bigger the board, more time it will take to finish and more complex the game will be."></s:DropDownList>
 	<s:Label x="170" y="292" text="Color" fontWeight="bold" fontSize="13" enabled="true" color="#534400"/>
 	<s:Label x="341" y="292" text="Board Size" fontWeight="bold" enabled="true" color="#534400"/>
+	<s:DropDownList x="580" y="496" width="64" id="playerQueueSize" creationComplete="playerQueueSize_creationCompleteHandler(event)"></s:DropDownList>
+	
 </s:Group>

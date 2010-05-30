@@ -20,7 +20,7 @@ server_commands =\
                           'requires' : ['username']},
 
      'user.start_game' : {'handler'  : cuser.start_game,
-                          'requires' : ['username', 'color'],
+                          'requires' : ['username', 'color','roomname'],
                           'optional' : ['size']},
                           
       'room.request_public_game' : {'handler'  : room.request_public_game,

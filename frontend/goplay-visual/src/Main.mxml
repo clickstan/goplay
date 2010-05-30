@@ -5,6 +5,8 @@
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
+		
+			
 			include "command_handler/room_Main.as";
 			include "command_handler/chat_Main.as";
 			include "command_handler/game_Main.as";
@@ -34,6 +36,7 @@
 				conn.addEventHandler(Event.CONNECT, event_connected);
 				conn.addEventHandler(Event.CLOSE, event_disconnected);
 				conn.connect("127.0.0.1", 7777);
+				goTo_login();
 			}
 			
 			public function register_init():void{
@@ -44,6 +47,7 @@
 			}
 
 			public function registerConn_connected(event:Event):void{
+				
 				goTo_login();
 			}
 			
@@ -235,6 +239,35 @@
 			
 			//public var test:String  = 'a' + 1;
 
+
+			protected function adminlogin_clickHandler(event:MouseEvent):void
+			{
+				userName_txt.text = "admin"
+				var obj:Object = User.login("admin","admin");
+				conn.addResponseHandler(loginResponse,obj.trans);
+				conn.send(obj);
+				currentUser = userName_txt.text;
+			}
+
+
+			protected function playerlogin_clickHandler(event:MouseEvent):void
+			{
+				userName_txt.text = "player"
+				var obj:Object = User.login("player","player");
+				conn.addResponseHandler(loginResponse,obj.trans);
+				conn.send(obj);
+				
+			}
+
+
+			protected function otherlogin_clickHandler(event:MouseEvent):void
+			{
+				userName_txt.text = "other"
+				var obj:Object = User.login("other","other");
+				conn.addResponseHandler(loginResponse,obj.trans);
+				conn.send(obj);
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -307,7 +340,9 @@
 	<s:TextInput includeIn="mainRoom" x="10" y="575" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
 	<notify:Notify includeIn="mainRoom" id="notify_control" width="202" height="304" right="20" bottom="20">
 	</notify:Notify>
-
+	<s:Button x="319" y="167" label="admin" id="adminlogin" click="adminlogin_clickHandler(event)" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen"/>
+	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
+	<s:Button x="505" y="170" label="other" id="otherlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>

@@ -225,7 +225,7 @@ def start_chat(conn, username, trans=None):
         conn.send(UserError.user_not_connected(), trans)
 
 
-def start_game(conn, username, color, size=None, trans=None, start_now=False):
+def start_game(conn, username, color,roomname, size=None, trans=None, start_now=False):
     """first part of message interchange for starting a game
     
     color: 'white' or 'black'  (game starter will get this color)
@@ -248,8 +248,9 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
     def call_into_callback(accepted):
         if accepted:
             conn.send(UserOk.startgame_accepted(game.id), trans)
-            if not start_now:
-                sender.enterGame(game)
+            sender.enterGame(game)
+            room = sender.rooms.get(roomname)
+            room.add_game(conn, white, black, size, game.id)
         else:
             game.destroy(clear_all_traces=True)
             conn.send(UserOk.startgame_not_accepted(), trans)
@@ -261,6 +262,8 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
             if start_now:
                 sender.enterGame(game)
                 user.enterGame(game)
+                room = sender.rooms.get(roomname)
+                room.add_game(conn, white, black, size, game.id)
             else:
                 user.callIntoGame(sender, game.id, call_into_callback)
     
@@ -276,8 +279,8 @@ def start_game(conn, username, color, size=None, trans=None, start_now=False):
     if isinstance(size, int):
         kwarg['size'] = size
     
-    game_config = GameConfig(white, black, **kwarg)
-        
+    game_config = GameConfig(white, black, roomname, **kwarg)
+    
     game.initialize(game_init_done_callback, game_config=game_config)
 
 
