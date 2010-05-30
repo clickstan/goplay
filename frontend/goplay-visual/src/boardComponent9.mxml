@@ -4,10 +4,17 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="704" height="600" creationComplete="create_Stones()" xmlns:ns1="*">
 	<fx:Script>
 		<![CDATA[
-			import flashx.textLayout.tlf_internal;
+			include "board.as";
+			
+			// --
+			
+			import comm.Conn;
+			import comm.protocol.ClientProtocol;
+			import comm.protocol.server.Game;
+			
+			import flash.net.sendToURL;
 			
 			import mx.collections.ArrayList;
-			import mx.controls.Alert;
 			
 			public var game_id:int;
 			public var chat_id:int;
@@ -24,14 +31,17 @@
 			public var resigned:String;
 			public var score:String;
 			
-			public static var games:Dictionary = new Dictionary();
+			public var player_color:String;
+			
+			// maps for example: "A1" -> Image
+			private var stones:Dictionary = new Dictionary();
 			
 			public function init(game_id:int, chat_id:int,
 								 black:String, white:String, size:int, komi:Number, handicap:int,
 								 timed_game:Boolean, main_time:int, byo_yomi:Number,
 								 moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
 			{
-				games[game_id] = this;
+				Main.games[game_id] = this;
 
 				this.game_id = game_id;
 				this.chat_id = game_id;
@@ -48,8 +58,12 @@
 				this.resigned = resigned;
 				this.score = score;
 				
-				//ClientProtocol.setCommandHandler('game.play', ...);
-				//ClientProtocol.setCommandHandler('game.final_score', ...);
+				if (black == Main.currentUser)
+					player_color = black;
+				else if (white == Main.currentUser)
+					player_color = white;
+				else
+					player_color = null;
 			}
 			
 			public function create_Stones():void{
@@ -59,30 +73,30 @@
 				for(i=0; i<9; i++){
 					for(var j:int = 0; j<9; j++){ 
 						var image:Image = new Image();
-						image.source = black_source.source;
-						image.id = (j+1)+","+(Math.abs(i - 8) + 1);
+						image.source = transparent_source.source;
 						image.x = pos_x+j*50;
 						image.y = pos_y+i*50;
+						
+						stones[xyToGoNotation(j+1,Math.abs(i - 8) + 1)] = image;
 						
 						function makeHandler():Function {
 							var x:int = j + 1;
 							var y:int= Math.abs(i - 8) + 1;
 							var img:Image = image;
+							
 							return function():void {
-								if (img.source == black_source.source)
-									img.source = white_source.source;
-								else if (img.source == white_source.source)
-									img.source = transparent_source.source;
-								else
-									img.source = black_source.source;
+								var msg:Object = Game.play(game_id, xyToGoNotation(x,y));
+								Main.conn.send(msg);
 							}
 						}
 						
-						image.addEventListener(MouseEvent.CLICK,makeHandler());
+						if (player_color != null)
+							image.addEventListener(MouseEvent.CLICK,makeHandler());
+						
 						addElement(image);
 					}
 				}
-			}		
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>

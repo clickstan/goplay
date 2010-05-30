@@ -22,6 +22,9 @@
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
 			public static var currentUser:String;
+			
+			// used by BoardComponent#
+			public static var games:Dictionary = new Dictionary();
 
 			//login function --> edit later for conection
 
@@ -110,8 +113,11 @@
 					ClientProtocol.setCommandHandler('room.destroyed', roomCHandler_destroyed);
 					
 					ClientProtocol.setCommandHandler('chat.call_into', chatCHandler_callInto);
+					
 					ClientProtocol.setCommandHandler('game.call_into', gameCHandler_callInto);
 					ClientProtocol.setCommandHandler('game.initialize', gameCHandler_initialize);
+					ClientProtocol.setCommandHandler('game.play', gameCHandler_play);
+					ClientProtocol.setCommandHandler('game.final_score', gameCHandler_finalScore);
 				} else {
 					currentUser = "";
 					error_lbl.text = "Error:\n "+response.detail;
