@@ -4,13 +4,17 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="704" height="600" creationComplete="create_Stones()" xmlns:ns1="*">
 	<fx:Script>
 		<![CDATA[
-			import flashx.textLayout.tlf_internal;
+			include "board.as";
 			
-			import mx.controls.Alert;
+			// --
 			
-			public var color_player:String =  "@Embed(source = 'artwork/board9x9.jpg')";
-			public var color_black19:String =  "{black_source.source}";
-			public var color_white19:String = "{white_source.source}";
+			import comm.Conn;
+			import comm.protocol.ClientProtocol;
+			import comm.protocol.server.Game;
+			
+			import flash.net.sendToURL;
+			
+			import mx.collections.ArrayList;
 			
 			public var game_id:int;
 			public var chat_id:int;
@@ -27,14 +31,17 @@
 			public var resigned:String;
 			public var score:String;
 			
-			public static var games:Dictionary = new Dictionary();
+			public var player_color:String;
+			
+			// maps for example: "A1" -> Image
+			private var stones:Dictionary = new Dictionary();
 			
 			public function init(game_id:int, chat_id:int,
 								 black:String, white:String, size:int, komi:Number, handicap:int,
 								 timed_game:Boolean, main_time:int, byo_yomi:Number,
 								 moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
 			{
-				games[game_id] = this;
+				Main.games[game_id] = this;
 
 				this.game_id = game_id;
 				this.chat_id = game_id;
@@ -51,42 +58,45 @@
 				this.resigned = resigned;
 				this.score = score;
 				
-				//ClientProtocol.setCommandHandler('game.play', ...);
-				//ClientProtocol.setCommandHandler('game.final_score', ...);
+				if (black == Main.currentUser)
+					player_color = black;
+				else if (white == Main.currentUser)
+					player_color = white;
+				else
+					player_color = null;
 			}
 			
 			public function create_Stones():void{
-				var stones_array:Array = new Array();
-				var pos_x:int = 32;
-				var pos_y:int = 32;
+				var pos_x:int = 28;
+				var pos_y:int = 28;
 				var i:int = 0;
 				for(i=0; i<9; i++){
-					stones_array.push(row_array);
-					var row_array:Array = new Array();
 					for(var j:int = 0; j<9; j++){ 
 						var image:Image = new Image();
-						image.source = black_source.source;
-						image.id = j + ","+i;
-						image.x = pos_x+j*51;
-						image.y = pos_y+i*51;
+						image.source = transparent_source.source;
+						image.x = pos_x+j*50;
+						image.y = pos_y+i*50;
 						
-						function handler():void {
-							var x:int = j;
-							var y:int = i;
-							Alert.show(x+ ","+y);
+						stones[xyToGoNotation(j+1,Math.abs(i - 8) + 1)] = image;
+						
+						function makeHandler():Function {
+							var x:int = j + 1;
+							var y:int= Math.abs(i - 8) + 1;
+							var img:Image = image;
+							
+							return function():void {
+								var msg:Object = Game.play(game_id, xyToGoNotation(x,y));
+								Main.conn.send(msg);
+							}
 						}
 						
-						image.addEventListener(MouseEvent.CLICK,handler);
-						row_array.push(image);
+						if (player_color != null)
+							image.addEventListener(MouseEvent.CLICK,makeHandler());
+						
 						addElement(image);
 					}
-					
 				}
 			}
-			
-			protected function stone_clickHandler(event:MouseEvent):void{
-				
-			}		
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -95,11 +105,10 @@
 						<!--Embeded stone image sources-->
 	<mx:Image x="231" y="177" id="white_source" source="@Embed(source='artwork/white_stone9.png')" width="50" height="50" visible="false"/>
 	<mx:Image x="202" y="66" id="black_source" source="@Embed(source='artwork/black_stone9.png')" width="50" height="50" visible="false"/>
+	<mx:Image x="250" y="300" id="transparent_source" source="@Embed(source='artwork/transparent_stone9.png')" width="50" height="50" visible="false"/>
 	<s:HGroup x="0" y="0" width="100%" height="100%" requestedColumnCount="2" variableColumnWidth="true">
-		<mx:Image id="board" source="@Embed(source = 'artwork/board9x9.jpg')"/>
+		<mx:Image id="board" source="@Embed(source='artwork/board9x9.jpg')"/>
 		<ns1:PlayersInfo>
 		</ns1:PlayersInfo>
 	</s:HGroup>
-	
-						<!--Control Buttons-->
 </s:Group>

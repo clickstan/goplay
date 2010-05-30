@@ -28,9 +28,9 @@
 				
 				if (gamechat) {
 					width = 250;
-					height = 520;
+					height = 510;
 					chat_panel.width = 250;
-					chat_panel.height = 520;
+					chat_panel.height = 510;
 				}
 			}
 			

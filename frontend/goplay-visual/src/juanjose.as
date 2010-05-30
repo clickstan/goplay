@@ -1,6 +1,11 @@
+import flash.events.MouseEvent;
 import flash.utils.Dictionary;
 
+import mx.controls.Button;
+import mx.events.FlexEvent;
+
 import spark.components.HGroup;
+import spark.components.NavigatorContent;
 
 public function tabNavigatorCreated():void {
 	createRoomNavigatorContent("main");
@@ -44,6 +49,8 @@ public function createRoomNavigatorContent(name:String):void {
 		var nc:NavigatorContent = new NavigatorContent();
 		nc.name = name;
 		nc.label = name;
+		makeNavigatorContentCloseable(nc);
+		
 		var rc:RoomComponent = new RoomComponent();
 		rc.init(name);
 		nc.addElement(rc);
@@ -56,6 +63,8 @@ public function createRoomNavigatorContent_ChatOnly(name:String, chat_id:int):vo
 	var nc:NavigatorContent = new NavigatorContent();
 	nc.name = name;
 	nc.label = name;
+	makeNavigatorContentCloseable(nc);
+	
 	var cc:ChatComponent = new ChatComponent();
 	cc.init(chat_id);
 	nc.addElement(cc);
@@ -70,6 +79,7 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 	var nc:NavigatorContent = new NavigatorContent();
 	nc.name = name;
 	nc.label = name;
+	makeNavigatorContentCloseable(nc);
 	
 	var cc:ChatComponent = new ChatComponent();
 	cc.init(chat_id, true);
@@ -109,4 +119,21 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 	
 	container.addElement(cc);
 	chatRoomNavigator.addChild(nc);
+}
+
+private function makeNavigatorContentCloseable(nc:NavigatorContent):void {
+	nc.addEventListener(FlexEvent.CREATION_COMPLETE, cccListener);
+	
+	function cccListener():void {
+		var tab:mx.controls.Button = chatRoomNavigator.getTabAt(chatRoomNavigator.numChildren - 1);
+		tab.doubleClickEnabled = true;
+		tab.addEventListener(MouseEvent.DOUBLE_CLICK, makeNavigatorContentRemover(nc));
+	}
+		
+	function makeNavigatorContentRemover():Function {
+		var _nc:NavigatorContent = nc;
+		return function():void {
+			chatRoomNavigator.removeChild(_nc);
+		}
+	}
 }

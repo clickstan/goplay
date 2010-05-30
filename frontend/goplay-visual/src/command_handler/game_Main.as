@@ -43,3 +43,12 @@ public function gameCHandler_initialize(conn:Conn, trans:int, game_id:int, chat_
 													timed_game, main_time, byo_yomi,
 													moves_handicap, moves_all, resigned, score);
 }
+
+public static function gameCHandler_play(conn:Conn, trans:int, game_id:int, color:String, move:String):void {
+	if ((game_id in Main.games) && (Main.games[game_id] != null))
+		Main.games[game_id].makeMove(color, move);
+}
+
+public static function gameCHandler_finalScore(conn:Conn, trans:int, game_id:int, score:String):void {
+	trace("gameCHandler_finalScore", "game_id=", game_id, "score=",score);
+}
