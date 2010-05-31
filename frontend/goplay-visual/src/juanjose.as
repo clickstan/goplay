@@ -1,3 +1,7 @@
+import board.BoardComponent;
+import board.BoardComponent13;
+import board.BoardComponent9;
+
 import flash.events.MouseEvent;
 import flash.utils.Dictionary;
 
