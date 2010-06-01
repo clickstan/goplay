@@ -301,14 +301,14 @@ def watch_game(conn, game_id, trans=None):
 
     # TODO: what if game is not in memory, but in the database?
     
-    if user.getGameById(game_id) is None:
-        if game is not None:
-            user.enterGame(game)
-            response = GameOk.you_can_watch()
-        else:
-            response = GameError.game_not_found()
+    #if user.getGameById(game_id) is None:
+    if game is not None:
+        user.enterGame(game)
+        response = GameOk.you_can_watch()
     else:
-        response = GameOk.you_are_already_in_the_game()
+        response = GameError.game_not_found()
+    #else:
+    #    response = GameOk.you_are_already_in_the_game()
         
     conn.send(response, trans)
 
