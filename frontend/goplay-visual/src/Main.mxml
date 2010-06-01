@@ -39,6 +39,25 @@
 				goTo_login();
 			}
 			
+			
+			public function back_toWelcome():void{
+				tour_stack.selectedChild = design_tour;
+				currentState = 'welcomeScreen';
+			}
+			
+			public function go_toTour():void{
+				currentState = 'tourScreen';
+				//tour_stack.selectedChild = design_tour;
+			}
+			
+			public function prev_tourScreen():void{
+				
+			}
+			
+			public function next_tourScreen():void{
+				
+			}
+			
 			public function register_init():void{
 				conn = new Conn();
 				conn.addEventHandler(Event.CONNECT, registerConn_connected);
@@ -286,6 +305,8 @@
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Fade id="fadeIn" alphaFrom="0.0" alphaTo="1.0"/>
+		<mx:Fade id="fadeOut" alphaFrom="1.0" alphaTo="0.0"/>
 	</fx:Declarations>
 	
 	<s:states>
@@ -293,12 +314,10 @@
 		<s:State name = "loginScreen"/>
 		<s:State name = "register"/>
 		<s:State name = "mainRoom"/>
-		<s:State name = "gameRoom"/>
+		<s:State name = "tourScreen"/>
 	</s:states>
 	
-	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom">
-		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
-	</s:Panel>
+	
 
 	<mx:TabNavigator width="950" height="543" id="chatRoomNavigator" includeIn="mainRoom" creationComplete="tabNavigatorCreated()" x="145" y="42">
 	</mx:TabNavigator>
@@ -339,16 +358,13 @@
 	<s:Label includeIn="loginScreen,register" x="501" y="263" id="error_lbl" color="red" x.register="527" y.register="313"/>
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
-	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl" x.mainRoom="10" y.mainRoom="10"/>
+	<s:Label includeIn="mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl" x.mainRoom="10" y.mainRoom="10"/>
 	<mx:DataGrid id="roomsGrid" x="10" y="50" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()" toolTip="here you can see the list of rooms currently active. If you want to join a room, double click on the name in the list. If you want to Create a new room, click the button below.">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
 	</mx:DataGrid>
-	<mx:TabNavigator includeIn="gameRoom" x="197" y="95" width="506" height="411" id="gameNav">
-		<s:NavigatorContent label="Game 1" width="100%" height="100%">
-		</s:NavigatorContent>
-	</mx:TabNavigator>
+	
 	<s:Button includeIn="mainRoom" x="10" y="296" label="Create" id="createRoomB"  click="createRoomBtn()" toolTip="Click this button if you want to create a new room."/>
 	<s:TextInput includeIn="mainRoom" x="9" y="326" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128" />
 	<notify:Notify includeIn="mainRoom" id="notify_control" width="202" height="304" right="20" bottom="20">
@@ -357,6 +373,30 @@
 	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="false" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
 	<s:Button x="505" y="170" label="other" id="otherlogin" visible="false" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
 	<mx:LinkButton label="Sign Out" id="signOut_btn" click="userLogOut()" x="393" y="11" fontSize="18" fontStyle="italic" includeIn="mainRoom"/>
+	<mx:LinkButton y="517" label="&lt;&lt; Back to Welcome Screen" fontSize="13" id="back_link" includeIn="tourScreen" click="back_toWelcome()" left="170"/>
+	<mx:LinkButton y="517" label="What are you waiting for? Sign Up Today! &gt;&gt;" fontSize="13" id="sing_link" includeIn="tourScreen" click="goTo_login()" right="114"/>
+	<mx:LinkButton includeIn="welcomeScreen" x="437" y="344" label="Want to Know more? Take a Tour &gt;&gt;" id="tour_link" fontSize="16" fontStyle="italic" click="{currentState = 'tourScreen'}"/>
+	<mx:ViewStack includeIn="tourScreen" id="tour_stack" width="710" height="460" horizontalCenter="18" top="43" backgroundAlpha="0.0">
+		<s:NavigatorContent label="design tour" id="design_tour" width="100%" height="100%" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="5" y="5" source="@Embed(source='artwork/tour1.png')"/>
+			<mx:LinkButton includeIn="tourScreen" y="424" label="Next: Multiple Rooms &gt;&gt;" fontSize="13" id="next_link" width="333" click="{tour_stack.selectedChild = room_tour}" x="367"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="room tour" width="100%" height="100%" id="room_tour" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="3" y="2" source="@Embed(source='artwork/tour2.png')"/>
+			<mx:LinkButton y="432" label="Next: Private and Public Chatting &gt;&gt;" fontSize="13" id="next_link0" width="293" click="{tour_stack.selectedChild = chat_tour}" x="407"/>
+			<mx:LinkButton y="428" label="&lt;&lt; Previous: Simple Design Interface" fontSize="13" id="next_link1" width="286" click="{tour_stack.selectedChild = design_tour}" x="10"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="char tour" width="100%" height="100%" id="chat_tour" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="3" y="3" scaleContent="false" source="@Embed(source='artwork/tour3.png')"/>
+			<mx:LinkButton y="428" label="Next: Play and Watch Games &gt;&gt;" fontSize="13" id="next_link2" width="293" click="{tour_stack.selectedChild = game_tour}" x="407"/>
+			<mx:LinkButton y="432" label="&lt;&lt; Previous: Multiple Rooms" fontSize="13" id="next_link3" width="286" click="{tour_stack.selectedChild = room_tour}" x="6"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="game tour" width="100%" height="100%" id="game_tour" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="4" y="6" source="@Embed(source='artwork/tour4.png')"/>
+			<mx:LinkButton y="432" label="&lt;&lt; Previous: Private and public chatting" fontSize="13" id="next_link4" width="286" click="{tour_stack.selectedChild = chat_tour}" x="6"/>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+	
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>
@@ -393,6 +433,15 @@
 				
 			</s:Sequence>
 		</s:Transition> 
+	
+	
+	<s:Transition toState="tourScreen" autoReverse="true">    
+		<s:Sequence>  
+			<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" targets="{[tour_stack]}"/>                
+			
+		</s:Sequence>
+	</s:Transition> 
+	
 	</s:transitions>
 	
 	
