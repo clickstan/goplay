@@ -222,11 +222,11 @@
 				//if game is not complete we join the game
 				var size:int = currentGames.selectedItem["size"];
 				var obj:Object;
-				if (currentGames.selectedItem['white_plyr'] == "") {
+				if (currentGames.selectedItem['white_plyr'] == "" && currentGames.selectedItem['black_plyr']!=Main.currentUser) {
 					obj = Room.request_public_game(roomname,"white",size);
 					Main.conn.send(obj);
 					return;
-				}else if(currentGames.selectedItem['black_plyr'] == ""){
+				}else if(currentGames.selectedItem['black_plyr'] == "" && currentGames.selectedItem['white_plyr']!=Main.currentUser){
 					obj = Room.request_public_game(roomname,"black",size);
 					Main.conn.send(obj);
 					return;
