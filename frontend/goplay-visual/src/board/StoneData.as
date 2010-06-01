@@ -27,7 +27,6 @@ package board
 		public function addToGroup(sd:StoneData):void {
 			group.add(sd);
 			sd.group = group;
-			sd.image.toolTip = group.id.toString();
 		}
 		
 		public function joinGroups(sds:Array):void {
