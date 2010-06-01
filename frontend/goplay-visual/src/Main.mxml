@@ -268,6 +268,20 @@
 				conn.send(obj);
 			}
 
+
+			protected function userName_txt_keyDownHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.ENTER)
+					password_txt.setFocus();
+			}
+
+
+			protected function password_txt_keyDownHandler(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.ENTER)
+					login();
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -301,14 +315,14 @@
 									<!--Sign In or Register State conponents-->
 	<mx:Form includeIn="loginScreen,register" x="318" y="94" id="entryForm" width="365" height="142" x.register="350" y.register="95" x.loginScreen="382" y.loginScreen="86" width.loginScreen="301" height.loginScreen="91">
 		<mx:FormItem label="Username" id="userName_Item" fontWeight="normal">
-			<s:TextInput width="191" id="userName_txt" toolTip="Write your username. it has to have a length between 4 to 20 characters. this field is required."/>
+			<s:TextInput width="191" id="userName_txt" toolTip="Write your username. it has to have a length between 4 to 20 characters. this field is required." keyDown="userName_txt_keyDownHandler(event)"/>
 		</mx:FormItem>
 		<mx:FormItem label="Full Name" id="fullName_Item" fontWeight="normal" toolTip="Enter your full name between 4 to 20 characters. This Field is Required." includeIn="register">
 			<s:TextInput id="name_txt" width="191"/>
 		</mx:FormItem>
 		<mx:FormItem label="Password" id="password_Item" fontWeight="normal">
 			<s:TextInput width="191" id="password_txt" displayAsPassword="true" toolTip.loginScreen="Enter password between 4 to 20 characters. This Field is Required."
-						 toolTip.register="Enter password between 4 to 20 characters and it has to match the password entered in the confirm field. This Field is Required."/>
+						 toolTip.register="Enter password between 4 to 20 characters and it has to match the password entered in the confirm field. This Field is Required." keyDown="password_txt_keyDownHandler(event)"/>
 		</mx:FormItem>
 		<mx:FormItem label="Confirm Password" id="confirm_Item" fontWeight="normal" toolTip="Enter password between 4 to 20 characters and it has to match the password entered in the password field. This Field is Required." includeIn="register">
 			<s:TextInput id="confirm_txt" displayAsPassword="true" width="192"/>
