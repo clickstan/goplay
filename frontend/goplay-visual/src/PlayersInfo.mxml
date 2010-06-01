@@ -4,6 +4,8 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="194" height="324">
 	<fx:Script>
 		<![CDATA[
+			import comm.protocol.server.Game;
+			
 			import mx.events.FlexEvent;
 			
 
@@ -16,6 +18,20 @@
 				
 			}
 
+
+			protected function pass_btn_clickHandler(event:MouseEvent):void
+			{
+				var msg:Object = Game.play(parentDocument.game_id, "PASS");
+				Main.conn.send(msg);
+			}
+
+
+			protected function resign_btn_clickHandler(event:MouseEvent):void
+			{
+				var msg:Object = Game.resign(parentDocument.game_id);
+				Main.conn.send(msg);
+			}
+
 		]]>
 	</fx:Script>
 	
@@ -25,8 +41,8 @@
 	<s:Panel x="1" y="-2" width="194" height="329" id="playersInfo" creationComplete="playersInfo_creationCompleteHandler(event)">
 	<s:Label x="69" y="146" id="blackp" text="black player" fontSize="20"/>
 	<s:Label x="59" y="54" id="whitep" text="white player" fontSize="20" height="23"/>
-	<s:Button x="10" y="257" label="Pass" id="pass_btn"/>
-	<s:Button x="120" y="256" label="Resign" id="resign_btn"/>
+	<s:Button x="10" y="257" label="Pass" id="pass_btn" click="pass_btn_clickHandler(event)"/>
+	<s:Button x="120" y="256" label="Resign" id="resign_btn" click="resign_btn_clickHandler(event)"/>
 	<mx:Image x="10" y="41" width="41" height="36" id="white_source"  source="@Embed(source='/artwork/white_stone19.png')"/>
 	<mx:Image x="8" y="127" id="black_source" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
 	<mx:Image x="10" y="192" id="black_source0" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
