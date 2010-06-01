@@ -165,11 +165,13 @@ public function makeMove(color:String, move:String):void {
 	
 	if (color == "white") {
 		white_captures += captures;
-		playersInfo.whiteCaptures;
+		
 	} else {
 		black_captures += captures;
-		playersInfo.blackCaptures;
+		
 	}
+	playersInfo.whiteCaptures.text=""+white_captures;
+	playersInfo.blackCaptures.text=""+black_captures;
 }
 
 
