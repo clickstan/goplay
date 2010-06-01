@@ -67,6 +67,9 @@ public var score:String;
 
 public var player_color:String;
 
+public var white_captures:int = 0;
+public var black_captures:int = 0;
+
 // maps for example: "A1" -> StoneData
 private var stones:Dictionary = new Dictionary();
 
@@ -148,8 +151,12 @@ public function makeMove(color:String, move:String):void {
 	for (var j:int=0; j<groups.length; j++)
 		if (groupLiberties(groups[j]) == 0)
 			captures += groups[j].stones[0].captureGroup();
-		
-	trace("captures:", captures);
+	
+	if (color == "white") {
+		white_captures += captures;
+	} else {
+		black_captures += captures;
+	}
 }
 
 
