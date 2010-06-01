@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="669" height="548" xmlns:ns1="*">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="961" height="548" xmlns:ns1="*">
 
 	<fx:Script>
 		<![CDATA[
@@ -243,13 +243,15 @@
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:Fade id="fadeIn" alphaFrom="0.0" alphaTo="1.0" />
+		<mx:Fade id="fadeOut" alphaFrom="1.0" alphaTo="0.0" />
 	</fx:Declarations>
 	<mx:DataGrid id="player_grid" x="501" y="10" width="158" height="448"  toolTip="Here are listed the Player that are in this room. you can select one from this list and then choose if you want to chat or play against one filling the options that appear and clicking the 'Play Game' button.">
 		<mx:columns>
 			<mx:DataGridColumn headerText="Players" dataField="col1"/>
 		</mx:columns>
 	</mx:DataGrid>
-	<ns1:ChatComponent x="11" y="321" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
+	<ns1:ChatComponent x="10" y="313" id="chatComponent" creationComplete="chat_creationCompleteHandler(event)" height="201">
 	</ns1:ChatComponent>
 	<mx:DataGrid x="10" y="10" width="476" height="269" id="currentGames" creationComplete="currentGames_creationCompleteHandler(event)" toolTip="Here is a list of the Current Games that are being held right now or the ones that are on stanby. By Double-Clicking on one that it's status is 'Started' you can watch the game :). If you want to create a new game, edit your game option below and click the &quot;create new Game&quot; Button Below and wait for someone that accepts to play with you." doubleClickEnabled="true" itemClick="currentGames_itemDoubleClickHandler(event)">
 		<mx:columns>
@@ -261,17 +263,34 @@
 			
 		</mx:columns>
 	</mx:DataGrid>
-	<s:Button x="508" y="466" label="Chat" click="chatButton_clickHandler(event)" id="chatButton" toolTip="click Here after selecting a player of the list above to start chatting with him."/>
-	<s:Button x="580" y="466" label="Play" id="playButton" click="playButton_clickHandler(event)" toolTip="click Here after selecting a Player on the list above, edit the settings in the combo boxes that appear below and click again this button to start a new game."/>
+	<s:Button x="508" y="462" label="Chat" click="chatButton_clickHandler(event)" id="chatButton" toolTip="click Here after selecting a player of the list above to start chatting with him."/>
+	<s:Button x="580" y="462" label="Play" id="playButton" click="playButton_clickHandler(event)" toolTip="click Here after selecting a Player on the list above, edit the settings in the combo boxes that appear below and click again this button to start a new game."/>
 	<s:Button toolTip="Click this button After you select the color of stone you want, the board size in the two combo Boxes on the right Create a new Game and wait for someone that wants to play with you." x="10" 
 			  y="287" label="Create New Game" id="requestGameB" click="requestGameB_clickHandler(event)"/>
 	<s:DropDownList x="215" y="288" width="92" id="queueColor" creationComplete="queueColor_creationCompleteHandler(event)" toolTip="Here you can select wich color of stone you want if is black or white. Select The Board Size in the combo box on the right and Click the 'Create New Game' Button to Create a new Game and wait for someone that accept to play with you."></s:DropDownList>
 	
 	
-	<s:DropDownList x="508" y="496" width="64" id="playerQueueColor" creationComplete="playerQueueColor_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="502" y="489" width="88" id="playerQueueColor" creationComplete="playerQueueColor_creationCompleteHandler(event)"></s:DropDownList>
 	<s:DropDownList x="422" y="287" width="64" id="queueSize" creationComplete="queueSize_creationCompleteHandler(event)" toolTip="Here you can select wich size of board you want to play. the sizes are: 9x9, 13x13 and 19x19, then you can select the color of stone you like in the combo box on the right and then click the 'Create New Game' Button to create a new game and wait for someone who wants to play with you. Remember that while bigger the board, more time it will take to finish and more complex the game will be."></s:DropDownList>
 	<s:Label x="170" y="292" text="Color" fontWeight="bold" fontSize="13" enabled="true" color="#534400"/>
 	<s:Label x="341" y="292" text="Board Size" fontWeight="bold" enabled="true" color="#534400"/>
-	<s:DropDownList x="580" y="496" width="64" id="playerQueueSize" creationComplete="playerQueueSize_creationCompleteHandler(event)"></s:DropDownList>
+	<s:DropDownList x="595" y="489" width="64" id="playerQueueSize" creationComplete="playerQueueSize_creationCompleteHandler(event)"></s:DropDownList>
+	<mx:ViewStack x="667" y="10" id="howto_viewStack" width="275" height="486">
+		<s:NavigatorContent label="index" width="100%" height="100%" id="index" showEffect="fadeIn" hideEffect="fadeOut">
+			<s:Label x="10" y="10" text="Help How To's:" fontSize="24" fontWeight="bold"/>
+			<mx:LinkButton x="4" y="58" label="Start a private chat with a player  &gt;&gt;" click="{howto_viewStack.selectedChild = player_howto}" fontSize="13"/>
+			<mx:LinkButton x="4" y="82" label="Challenge a player to play a game &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = challenge_howto}"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="How To 1" width="100%" height="100%" id="player_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="7" y="2" source="@Embed(source='artwork/howto1.png')"/>
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+			<mx:LinkButton x="10" y="433" label="Next: Challenge a player to a game &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = challenge_howto}"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="challenge how To" width="100%" height="100%" id="challenge_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="6" y="6" source="@Embed(source='artwork/howto2.png')"/>
+			<mx:LinkButton x="10" y="438" label="Next: Create a new free game &gt;&gt;" fontSize="12"/>
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+		</s:NavigatorContent>
+	</mx:ViewStack>
 	
 </s:Group>

@@ -283,7 +283,7 @@
 	</s:states>
 	
 	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom" x.mainRoom="12" y.mainRoom="56">
-		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
+		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15" includeIn="gameRoom"/>
 		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
 	</s:Panel>
 
