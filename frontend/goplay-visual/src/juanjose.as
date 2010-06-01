@@ -12,6 +12,7 @@ import spark.components.HGroup;
 import spark.components.NavigatorContent;
 
 public function tabNavigatorCreated():void {
+
 	createRoomNavigatorContent("main");
 }
 
@@ -75,7 +76,7 @@ public function createRoomNavigatorContent_ChatOnly(name:String, chat_id:int):vo
 	chatRoomNavigator.addChild(nc);
 }
 
-public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_id:int,
+public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_id:int, roomname:String,
 												black:String, white:String, size:int, komi:Number, handicap:int,
 												timed_game:Boolean, main_time:int, byo_yomi:Number,
 												moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
@@ -105,7 +106,7 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 			bc9 = new BoardComponent9();
 			
 			
-			bc9.init(game_id, chat_id,
+			bc9.init(game_id, chat_id, roomname,
 					 black, white, size, komi, handicap,
 					 timed_game, main_time, byo_yomi,
 					 moves_handicap, moves_all, resigned, score);

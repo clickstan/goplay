@@ -63,6 +63,7 @@ class Game:
         return {'command' : 'game.initialize',
                 'game_id' : game.id,
                 'chat_id' : game.chat.id, 
+                'roomname': game.roomname,
                 # config
                 'black' : game._config.black,
                 'white' : game._config.white,

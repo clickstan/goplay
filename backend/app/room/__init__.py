@@ -2,7 +2,7 @@ from twisted.internet import reactor
 
 from chat import Chat
 
-from cuser import ConnectedUser
+from cuser import ConnectedUser, setroomingame
 
 import cuser
 
@@ -241,3 +241,4 @@ def request_public_game(conn,room, color, size, trans=None):
     gameid = -1;
     gameroom.add_game(conn, wplayer, bplayer,size,gameid)
     
+setroomingame(Room)

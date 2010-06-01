@@ -4,7 +4,7 @@ class GameConfig:
                        main_time=30, byo_yomi=False):
         self.white = white      # username
         self.black = black      # username
-        self.gameroom = gameroom
+        self.roomname = gameroom
         self.size = size
         self.komi = komi if handicap == 0 else 0.5
         self.handicap = handicap

@@ -2,7 +2,14 @@
 
 import comm.Conn;
 
+import flash.utils.Dictionary;
+
+import mx.collections.ArrayList;
+import mx.containers.TabNavigator;
+
 import notify.Notification;
+
+import spark.components.NavigatorContent;
 
 public function gameCHandler_callInto(conn:Conn, trans:int, game_id:int, sender:String):void {
 	var options:Array = new Array();
@@ -31,14 +38,14 @@ private function gameCCallback_callInto_reject(conn:Conn, trans:int, notificatio
 }
 
 
-public function gameCHandler_initialize(conn:Conn, trans:int, game_id:int, chat_id:int,
+public function gameCHandler_initialize(conn:Conn, trans:int, game_id:int, chat_id:int, roomname:String,
 										black:String, white:String, size:int, komi:Number, handicap:int,
 										timed_game:Boolean, main_time:int, byo_yomi:Number,
 										moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
 {
 	var enemy:String = currentUser == black? white : black;
 	
-	createRoomNavigatorContent_Game("game: "+enemy, game_id, chat_id,
+	createRoomNavigatorContent_Game("game: "+enemy, game_id, chat_id, roomname,
 													black, white, size, komi, handicap,
 													timed_game, main_time, byo_yomi,
 													moves_handicap, moves_all, resigned, score);
@@ -50,7 +57,15 @@ public static function gameCHandler_play(conn:Conn, trans:int, game_id:int, colo
 }
 
 public static function gameCHandler_finalScore(conn:Conn, trans:int, game_id:int, score:String):void {
-	
 	trace("gameCHandler_finalScore", "game_id=", game_id, "score=",score);
 	Main.games[game_id].playersInfo.finalScore.text = score;
+	var rc:RoomComponent = RoomComponent.rooms[Main.games[game_id].roomname];
+	for(var i:int=0; i<rc.currentGames.dataProvider.length; i++) {
+		var game:Object = rc.currentGames.dataProvider.getItemAt(i);
+		if(game.gameid == game_id)
+			game.status="finished";
+		rc.currentGames.dataProvider.setItemAt(game,i);
+	}
+	
+	
 }

@@ -42,7 +42,7 @@ class Game:
         self.id = None              # client side component and database has same id
         self._config = None
         self._moves = None
-        #self.room = None
+        self.roomname = None
         self.chat = Chat()
         self.broadcast_to = set()   # ConnectedUser set (not chat broadcast)
         
@@ -54,7 +54,9 @@ class Game:
 
         if self.id is not None:
             return
-        
+        self.roomname = game_config.roomname
+        if self.roomname is None:
+            print "roomname es None"
         self._moves = GameMoves()
         
         if (id is None) and (game_config is not None):
@@ -186,6 +188,10 @@ class Game:
         
         if color is not None:
             if self._moves.resign(color):
+                lista = self.__class__.Room.__rooms__.get(self.roomname).public_games
+                for i in range(len(lista)):
+                    if lista[i].get('gameid') == self.id:
+                        lista[i]['status']="finished"
                 self.broadcast(ClientGameCommand.\
                                 final_score(self.id, self._moves.score()))
                 return True

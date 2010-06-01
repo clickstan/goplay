@@ -6,7 +6,7 @@
 	<fx:Script>
 		<![CDATA[
 	
-			
+		
 			include "command_handler/room_Main.as";
 			include "command_handler/chat_Main.as";
 			include "command_handler/game_Main.as";
@@ -24,7 +24,7 @@
 			import mx.utils.ObjectUtil;
 			public static var conn:Conn;
 			public static var currentUser:String;
-			
+			public static var tabNavigator:TabNavigator;
 			// used by BoardComponent#
 			public static var games:Dictionary = new Dictionary();
 

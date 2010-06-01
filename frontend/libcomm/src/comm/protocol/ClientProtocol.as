@@ -26,7 +26,7 @@ package comm.protocol
 											 'requires' : new Array('game_id', 'sender')};
 		
 		client_commands['game.initialize'] = {'handler' : null_handler,
-											  'requires' : new Array('game_id', 'chat_id',
+											  'requires' : new Array('game_id', 'chat_id','roomname',
 												  					 'black', 'white', 'size', 'komi', 'handicap',
 												  					 'timed_game', 'main_time', 'byo_yomi',
 												  					 'moves_handicap', 'moves_all', 'resigned', 'score')};

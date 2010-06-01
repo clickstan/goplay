@@ -312,3 +312,5 @@ def watch_game(conn, game_id, trans=None):
         
     conn.send(response, trans)
 
+def setroomingame(Room):
+    Game.Room = Room

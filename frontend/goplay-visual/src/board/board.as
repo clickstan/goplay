@@ -52,6 +52,7 @@ alphabetToX["T"] = 19;
 
 public var game_id:int;
 public var chat_id:int;
+public var roomname:String;
 public var black:String;
 public var white:String;
 public var size:int;
@@ -73,7 +74,7 @@ public var black_captures:int = 0;
 // maps for example: "A1" -> StoneData
 private var stones:Dictionary = new Dictionary();
 
-public function init(game_id:int, chat_id:int,
+public function init(game_id:int, chat_id:int,roomname:String,
 					 black:String, white:String, size:int, komi:Number, handicap:int,
 					 timed_game:Boolean, main_time:int, byo_yomi:Number,
 					 moves_handicap:Array, moves_all:Array, resigned:String, score:String):void
@@ -82,6 +83,7 @@ public function init(game_id:int, chat_id:int,
 	
 	this.game_id = game_id;
 	this.chat_id = game_id;
+	this.roomname = roomname;
 	this.black = black;
 	this.white = white;
 	this.size = size;

@@ -17,6 +17,7 @@
 			import mx.utils.ObjectUtil;
 			
 			public static var rooms:Dictionary = new Dictionary();
+			public var globalCurrentGames:DataGrid;
 			public var roomname:String;
 			public var chatid:int;
 			// ***
@@ -115,7 +116,7 @@
 			{
 				var player:String = player_grid.selectedItem.toString();
 				
-				if (chat_request_players.getItemIndex(player) == -1) {
+				if (chat_request_players.getItemIndex(player) == -1 && player != "GNUgo") {
 					trace(Main.currentUser,"request chat with:",player_grid.selectedItem)
 					var obj:Object = User.start_chat(player);
 					Main.conn.addResponseHandler(chatRequestResponse,obj.trans);
@@ -158,6 +159,7 @@
 			}
 			protected function currentGames_creationCompleteHandler(event:FlexEvent):void
 			{
+				globalCurrentGames = currentGames;
 				trace("filling games grid name=",roomname);
 				var obj2:Object = Room.get_public_games_list(roomname)
 				Main.conn.addResponseHandler(fillGamesGrid,obj2.trans);
