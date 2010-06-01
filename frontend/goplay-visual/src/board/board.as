@@ -136,6 +136,14 @@ public function makeMove(color:String, move:String):void {
 	if (move=="PASS") {
 		playersInfo.displayNotice(color + " has passed");
 		return;
+	} else {
+		playersInfo.displayNotice("Last move: " + move);
+		
+		if (playersInfo.turn_source.source == playersInfo.white_source.source)
+			playersInfo.turn_source.source = playersInfo.black_source.source;
+		else
+			playersInfo.turn_source.source = playersInfo.white_source.source;
+		
 	}
 	
 	var sd:StoneData = stones[move];

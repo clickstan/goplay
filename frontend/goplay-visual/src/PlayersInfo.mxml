@@ -59,9 +59,9 @@
 	<s:Label x="59" y="54" id="whitep" text="white player" fontSize="20" height="23"/>
 	<s:Button x="10" y="418" label="Pass" id="pass_btn" click="pass_btn_clickHandler(event)"/>
 	<s:Button x="120" y="418" label="Resign" id="resign_btn" click="resign_btn_clickHandler(event)"/>
-	<mx:Image x="10" y="41" width="41" height="36" id="white_source"  source="@Embed(source='/artwork/white_stone19.png')"/>
-	<mx:Image x="8" y="127" id="black_source" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
-	<mx:Image x="10" y="192" id="black_source0" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
+	<mx:Image x="10" y="41" width="41" height="36" id="white_source"  source="@Embed(source='/artwork/white_stone9.png')"/>
+	<mx:Image x="8" y="127" id="black_source" source="@Embed(source='/artwork/black_stone9.png')"  width="41" height="38"/>
+	<mx:Image x="10" y="192" id="turn_source" source="{black_source.source}"  width="41" height="38"/>
 	<s:Label x="44" y="85" text="Captures"/>
 	<s:Label x="44" y="173" text="Captures"/>
 	<s:Label x="110" y="85" text="0" id="whiteCaptures"/>
