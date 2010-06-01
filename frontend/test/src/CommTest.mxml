@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import comm.Conn;
+			import comm.protocol.server.User;
+			
+			import mx.controls.Alert;
+			
+			public var conn:Conn;
+			
+			public function connect():void {
+				conn = new Conn();
+				conn.addEventHandler(Event.CONNECT, event_connected);
+				conn.addEventHandler(Event.CLOSE, event_disconnected);
+				
+				conn.connect("127.0.0.1", 7777);
+			}
+			
+			public function event_connected(event:Event):void {
+				trace("nos conectamos");
+				var obj:Object = User.login("player","player");
+				//conn.addResponseHandler(test,obj.trans);
+				conn.send(obj);
+			}
+
+			private function event_disconnected(event:Event):void {
+				trace("nos desconectamos");
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button x="56" y="69" label="conectar" id="connect_btn" click="connect()"/>
+</s:Application>
