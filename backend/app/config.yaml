@@ -10,8 +10,8 @@ protocol:
 game-engine:
     engine: gnugo
 
-    #path: X:\\sp1\\gnugo-3.8
-    path: E:\goplaychivas\gnugo-3.8\gnugo-3.8
+    path: X:\\sp1\\gnugo-3.8
+    #path: E:\goplaychivas\gnugo-3.8\gnugo-3.8
     #path: G:\Proy_SP1\gnugo-3.8
 
 

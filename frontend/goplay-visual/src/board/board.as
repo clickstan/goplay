@@ -121,6 +121,7 @@ public function init(game_id:int, chat_id:int,
 	
 }
 
+// initialized at init(...)
 public var makeAllMoves:Function;
 
 public static function xyToGoNotation(x:int, y:int):String {
