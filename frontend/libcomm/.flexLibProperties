@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" version="3">
+  <includeClasses>
+    <classEntry path="comm.Conn"/>
+    <classEntry path="comm.protocol.ClientProtocol"/>
+    <classEntry path="comm.protocol.server.User"/>
+    <classEntry path="comm.protocol.server.Util"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

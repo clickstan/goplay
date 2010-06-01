@@ -1,0 +1,7 @@
+TODO CLiente:
+
+-agregar boton close en la tab
+-hacer el link de logout
+-ver como hacer titilar la ventana cuando haya nuevo mensaje
+-terminar los componentes para los states de juego y cuartos
+-terminar el panel de control
