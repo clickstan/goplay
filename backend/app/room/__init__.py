@@ -75,18 +75,23 @@ class Room:
     def add_game(self, conn, wplayer, bplayer,size,gameid, trans=None):
         gameroom = self
  
+        if gameid == -1:
+            status = "waiting"
+        else:
+            status = "started"
+ 
         gameroom.public_games.append({
                   'white_plyr':wplayer,
                   'black_plyr':bplayer,
                   'size':size,
-                  'status':"started",
+                  'status':status,
                   'gameid':gameid})
         
         resp={'command':'game.new_public_game_request',
                   'white_plyr_a':wplayer,
                   'black_plyr_a':bplayer,
                   'size_a':size,
-                  'status_a':'started',
+                  'status_a':status,
                   'gameid_a':gameid}
         
         for user_in_room in gameroom.users.itervalues():

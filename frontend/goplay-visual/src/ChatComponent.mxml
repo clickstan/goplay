@@ -16,15 +16,16 @@
 			public var chatid:int;
 			public static var chats:Dictionary = new Dictionary();
 			
-			public var gamechat:Boolean;
-			
-			public function init(id:int, gamechat:Boolean=false):void
+			public var gamechat:Boolean, bigChat:Boolean;
+			public function init(id:int, gamechat:Boolean=false, bigChat:Boolean=false):void
 			{
 				chatid = id;
 				chats[id] = this;
 				ClientProtocol.setCommandHandler('chat.broadcast', chatRecievedBroadCast);
 				
 				this.gamechat = gamechat;
+				this.bigChat = bigChat;
+				
 				
 				if (gamechat) {
 					width = 250;
@@ -36,6 +37,7 @@
 			
 			private function resize_inner():void {
 				if (gamechat) {
+					
 					conversationTXT.width = 234;
 					conversationTXT.height = 424;
 					textInput.y = 419;
@@ -44,6 +46,21 @@
 					send_btn.x = 177;
 					send_btn.y = 422;
 					send_btn.width = 67;
+				} else if(bigChat) {
+					chat_panel.width = 950;
+					chat_panel.height = 543;
+					textInput.width = 829;
+					textInput.height = 72;
+					textInput.x=14
+					textInput.y=422
+					send_btn.width = 79;
+					send_btn.height = 72;
+					send_btn.x=851;
+					send_btn.y=422;
+					conversationTXT.width = 919;
+					conversationTXT.height = 423;
+					conversationTXT.x = 13;
+					conversationTXT.y = -9;
 				}
 			} 
 

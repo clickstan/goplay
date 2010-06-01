@@ -5,7 +5,7 @@
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
-		
+	
 			
 			include "command_handler/room_Main.as";
 			include "command_handler/chat_Main.as";

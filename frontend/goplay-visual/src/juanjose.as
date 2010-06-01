@@ -70,7 +70,7 @@ public function createRoomNavigatorContent_ChatOnly(name:String, chat_id:int):vo
 	makeNavigatorContentCloseable(nc);
 	
 	var cc:ChatComponent = new ChatComponent();
-	cc.init(chat_id);
+	cc.init(chat_id, false, true);
 	nc.addElement(cc);
 	chatRoomNavigator.addChild(nc);
 }
@@ -103,6 +103,8 @@ public function createRoomNavigatorContent_Game(name:String, game_id:int, chat_i
 	switch (size) {
 		case 9:
 			bc9 = new BoardComponent9();
+			
+			
 			bc9.init(game_id, chat_id,
 					 black, white, size, komi, handicap,
 					 timed_game, main_time, byo_yomi,
