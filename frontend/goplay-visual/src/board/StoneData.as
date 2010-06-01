@@ -4,6 +4,10 @@ package board
 
 	public class StoneData
 	{
+		public static var black_source:Object;
+		public static var white_source:Object;
+		public static var transparent_source:Object;
+		
 		public var name:String;
 		public var image:Image;
 		public var group:StoneGroup;
@@ -40,6 +44,30 @@ package board
 					addToGroup(_sd);
 				}
 			}
+		}
+		
+		public function capture():Boolean {
+			trace("StoneData - capture()", this);
+			if (group != null) {
+				trace("StoneData - capture() - group != null", this);
+				image.source = transparent_source;
+				group = null;
+				return true;
+			}
+			return false;
+		}
+		
+		public function captureGroup():int {
+			if (group == null) return 0;
+			
+			var captures:int = 0;
+			var g:StoneGroup = group;
+			
+			for (var i:int=0; i<g.size(); i++)
+				if (g.stones[i].capture())
+					captures++;
+					
+			return captures;
 		}
 		
 		public function toString():String {

@@ -98,6 +98,10 @@ public function init(game_id:int, chat_id:int,
 		player_color = white;
 	else
 		player_color = null;
+	
+	StoneData.black_source = black_source.source;
+	StoneData.white_source = white_source.source;
+	StoneData.transparent_source = transparent_source.source;
 }
 
 public static function xyToGoNotation(x:int, y:int):String {
@@ -127,12 +131,25 @@ public function makeMove(color:String, move:String):void {
 		friends_surrounding[0].addToGroup(sd);
 	else {
 		// join groups
-		trace("makeMove - join groups:", friends_surrounding);
 		sd.joinGroups(friends_surrounding);
 	}
 	
 	// captures
-	// ..
+	
+	var captures:int = 0;
+	var groups:Array = new Array();
+	
+	for (var i:int=0; i<enemies_surrounding.length; i++) {
+		var g:StoneGroup = enemies_surrounding[i].group;
+		if (groups.indexOf(g) == -1)
+			groups.push(g);
+	}
+	
+	for (var j:int=0; j<groups.length; j++)
+		if (groupLiberties(groups[j]) == 0)
+			captures += groups[j].stones[0].captureGroup();
+		
+	trace("captures:", captures);
 }
 
 
@@ -181,4 +198,30 @@ private function getStonesSurrounding(color:String, pos:String, test:Function):A
 	testAndPush(xyToGoNotation(p.x+1, p.y));
 	
 	return stones_s;
+}
+
+private function stoneLiberties(sd:StoneData):int {
+	var p:Point = goNotationToXY(sd.name);
+	var liberties:int = 0;
+	
+	function isLiberty(pos:String):void {
+		if ((stones[pos]!=null) && (isTransparent(stones[pos])))
+			liberties++;
+	}
+	
+	isLiberty(xyToGoNotation(p.x, p.y+1));
+	isLiberty(xyToGoNotation(p.x, p.y-1));
+	isLiberty(xyToGoNotation(p.x-1, p.y));
+	isLiberty(xyToGoNotation(p.x+1, p.y));
+	
+	return liberties;
+}
+
+private function groupLiberties(group:StoneGroup):int {
+	var liberties:int = 0;
+	
+	for (var i:int=0; i<group.size(); i++)
+		liberties += stoneLiberties(group.stones[i]);
+			
+	return liberties;
 }
