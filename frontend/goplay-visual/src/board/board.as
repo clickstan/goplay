@@ -106,17 +106,22 @@ public function init(game_id:int, chat_id:int,
 	StoneData.white_source = white_source.source;
 	StoneData.transparent_source = transparent_source.source;
 	
-	for (var i:int=0; i<moves_all.length; i++) {
+	makeAllMoves = function():void {
 		var color:String = "white";
-		
-		if (color == "white")
-			color = "black";
-		else
-			color = "white";
-		
-		makeMove(color, moves_all[i]);
+		for (var i:int=0; i<moves_all.length; i++) {
+			
+			if (color == "white")
+				color = "black";
+			else
+				color = "white";
+			
+			makeMove(color, moves_all[i]);
+		}
 	}
+	
 }
+
+public var makeAllMoves:Function;
 
 public static function xyToGoNotation(x:int, y:int):String {
 	return xToAlphabet[x] + y;
@@ -127,6 +132,8 @@ public static function goNotationToXY(pos:String):Point {
 }
 
 public function makeMove(color:String, move:String):void {
+	if (move=="PASS") return;
+	
 	var sd:StoneData = stones[move];
 	var source:Object = color=="black"? black_source.source : white_source.source;
 	
