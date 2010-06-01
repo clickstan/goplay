@@ -48,6 +48,7 @@
 				trace("filling player_grid");
 				
 				player_grid.dataProvider = object.users;
+				player_grid.dataProvider.addItemAt("GNUGo", 0);
 				ClientProtocol.setCommandHandler('room.remove_public_game_request', remove_public_game_request);
 				ClientProtocol.setCommandHandler('game.new_public_game_request', new_public_game_request);
 				ClientProtocol.setCommandHandler('room.adduser', roomCHandler_adduser);

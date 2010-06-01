@@ -47,7 +47,11 @@ class EngineProcessProtocol(protocol.ProcessProtocol):
         self.addResponseCallback(process_response)
         self.send("play {0} {1}".format(color, pos))
         
-    def genmove(self, color):
+    def genmove(self, color, callback):
+        def process_response(msg):
+            callback(msg[2:])
+            
+        self.addResponseCallback(process_response)
         self.send("genmove {0}".format(color))
         
     def final_score(self, callback):

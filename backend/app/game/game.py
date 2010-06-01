@@ -139,11 +139,12 @@ class Game:
         except KeyError:
             pass
 
-    def play(self, move, callback1):
+    def play(self, move, callback1, genmove=False):
         """callback1 is called whith a True or False parameter
         when able to notify success or error"""
         if self._moves.finished():
-            callback1(False)
+            if not genmove:
+                callback1(False)
             return
         
         color = self._moves.turn()
@@ -161,11 +162,25 @@ class Game:
                 self.broadcast(ClientGameCommand.play(self.id, color, move))
                 if self._moves.finished():
                     self.engine.final_score(callback3)
+                else:
+                    if ((color == "black") and (self._config.white == "GNUGo")) or\
+                       ((color == "white") and (self._config.black == "GNUGo")):
+                            self.play(None, lambda: None, genmove=True)
             
             callback1(valid)
+            
+        def callback2_genmove(move):
+            """called when move is executed using genmove"""
+            self._moves.play(move)
+            self.broadcast(ClientGameCommand.play(self.id, color, move))
+            if self._moves.finished():
+                self.engine.final_score(callback3)
         
-        self.engine.play(color, move, callback2)
-        
+        if not genmove:
+            self.engine.play(color, move, callback2)
+        else:
+            self.engine.genmove(color, callback2_genmove)
+            
     def resign(self, player):
         color = self._config.getColorByPlayer(player)
         

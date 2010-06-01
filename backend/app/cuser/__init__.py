@@ -232,16 +232,20 @@ def start_game(conn, username, color,roomname, size=None, trans=None, start_now=
     
     # TODO: faltan otras opciones de juego a configurar
     """
-    user = ConnectedUser.__users__.get(username)
     sender = conn.data['user']
-
-    if sender is user:
-        conn.send(UserError.startgame_cannot_play_with_yourself(), trans)
-        return
     
-    if user is None:
-        conn.send(UserError.user_not_connected(), trans)
-        return
+    if username == "GNUGo":
+        start_now=True
+    else:
+        user = ConnectedUser.__users__.get(username)
+
+        if sender is user:
+            conn.send(UserError.startgame_cannot_play_with_yourself(), trans)
+            return
+    
+        if user is None:
+            conn.send(UserError.user_not_connected(), trans)
+            return
 
     game = Game()
     
@@ -261,7 +265,8 @@ def start_game(conn, username, color,roomname, size=None, trans=None, start_now=
         else:
             if start_now:
                 sender.enterGame(game)
-                user.enterGame(game)
+                if username != "GNUGo":
+                    user.enterGame(game)
                 room = sender.rooms.get(roomname)
                 room.add_game(conn, white, black, size, game.id)
             else:
@@ -269,10 +274,16 @@ def start_game(conn, username, color,roomname, size=None, trans=None, start_now=
     
     if color == 'white':
         white = sender.db_tuple.name
-        black = user.db_tuple.name
+        if username != "GNUGo":
+            black = user.db_tuple.name
+        else:
+            black = username
     else:
         black = sender.db_tuple.name
-        white = user.db_tuple.name
+        if username != "GNUGo":
+            white = user.db_tuple.name
+        else:
+            white = username
         
     kwarg = {}
     
