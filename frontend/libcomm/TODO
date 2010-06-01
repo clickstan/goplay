@@ -1,9 +1,3 @@
 al terminarse un juego no cambia el estado a finished en el room
 
 no es posible regresar a un juego
-
-mensajes de acciones en juego, p.e: un jugador hizo PASS, RESIGN, movimiento invalido, no es tu turno
-
-marcar ultimo movimiento (punto blanco o negro sobre la piedra)
-
-PlayersInfo: turn
