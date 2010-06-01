@@ -30,6 +30,7 @@
 							return function():void {
 								var msg:Object = Game.play(game_id, xyToGoNotation(x,y));
 								Main.conn.send(msg);
+								Main.conn.addResponseHandler(gamePlayResponseHandler, msg.trans);
 							}
 						}
 						
