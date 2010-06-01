@@ -259,7 +259,7 @@
 			<mx:DataGridColumn headerText="Black" dataField="black_plyr"/>
 			<mx:DataGridColumn headerText="Size" dataField="size"/>
 			<mx:DataGridColumn headerText="Game Status" dataField="status"/>
-			<mx:DataGridColumn headerText="Game id" dataField="gameid"/>
+			<mx:DataGridColumn headerText="Game id" dataField="gameid" visible="false"/>
 			
 		</mx:columns>
 	</mx:DataGrid>
@@ -280,6 +280,11 @@
 			<s:Label x="10" y="10" text="Help How To's:" fontSize="24" fontWeight="bold"/>
 			<mx:LinkButton x="4" y="58" label="Start a private chat with a player  &gt;&gt;" click="{howto_viewStack.selectedChild = player_howto}" fontSize="13"/>
 			<mx:LinkButton x="4" y="82" label="Challenge a player to play a game &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = challenge_howto}"/>
+			<mx:LinkButton x="4" y="107" label="Create a New Free Game &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = free_howto}"/>
+			<mx:LinkButton x="6" y="132" label="Join a Free Game &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = join_howto}"/>
+			<mx:LinkButton x="6" y="179" label="Create a New Room &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = newRoom_howto}"/>
+			<mx:LinkButton x="8" y="207" label="Join a Room &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild = joinRoom_howto}"/>
+			<mx:LinkButton x="6" y="155" label="View a Game &gt;&gt;" fontSize="13" click="{howto_viewStack.selectedChild =viewGame_howto}"/>
 		</s:NavigatorContent>
 		<s:NavigatorContent label="How To 1" width="100%" height="100%" id="player_howto" showEffect="fadeIn" hideEffect="fadeOut">
 			<mx:Image x="7" y="2" source="@Embed(source='artwork/howto1.png')"/>
@@ -288,8 +293,32 @@
 		</s:NavigatorContent>
 		<s:NavigatorContent label="challenge how To" width="100%" height="100%" id="challenge_howto" showEffect="fadeIn" hideEffect="fadeOut">
 			<mx:Image x="6" y="6" source="@Embed(source='artwork/howto2.png')"/>
-			<mx:LinkButton x="10" y="438" label="Next: Create a new free game &gt;&gt;" fontSize="12"/>
+			<mx:LinkButton x="10" y="438" label="Next: Create a new free game &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = free_howto}"/>
 			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="free game how to" width="100%" height="100%" id="free_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:Image x="10" y="10" source="@Embed(source = 'artwork/howto3.png')"/>
+			<mx:LinkButton x="10" y="438" label="Next: Join a free game &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = join_howto}"/>
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="join how to" width="100%" height="100%" id="join_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+			<mx:LinkButton x="10" y="438" label="Next: View a Game &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild =  viewGame_howto}"/>
+			<mx:Image x="10" y="10" source="@Embed(source = 'artwork/howto7.png')"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="view game how to" width="100%" height="100%" id="viewGame_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+			<mx:LinkButton x="10" y="438" label="Next: Create a New Room &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = newRoom_howto}"/>
+			<mx:Image x="10" y="10" source="@Embed(source = 'artwork/howto6.png')"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="new room how to" width="100%" height="100%" id="newRoom_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+			<mx:LinkButton x="10" y="438" label="Next: Join a Room &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = joinRoom_howto}"/>
+			<mx:Image x="10" y="10" source="@Embed(source = 'artwork/howto4.png')"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent label="join Room how to" width="100%" height="100%" id="joinRoom_howto" showEffect="fadeIn" hideEffect="fadeOut">
+			<mx:LinkButton x="10" y="460" label="Back to Index &gt;&gt;" fontSize="12" click="{howto_viewStack.selectedChild = index}"/>
+			<mx:Image x="6" y="6" source="@Embed('artwork/howto5.png')"/>
 		</s:NavigatorContent>
 	</mx:ViewStack>
 	
