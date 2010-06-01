@@ -25,6 +25,8 @@ def setDefaults(session):
     for role in roles:
         if role.name == 'privileged-client':
             privileged_client_role = role
+        if role.name == 'player':
+            player_role = role
 
     # ---
     for username in ['admin','player','other']:
@@ -58,6 +60,16 @@ def setDefaults(session):
     session.add(privileged_user2)
     
     # ---    
+    
+    gnugo = user.User('GNUGo',
+                      hashlib.sha256('GNUGo').hexdigest(),
+                      'La maquina')
+
+    gnugo.role = player_role
+
+    session.add(gnugo)
+    
+    # ---
 
     session.commit()
     
