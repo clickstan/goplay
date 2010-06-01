@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				panel1.visible = !panel1.visible;
+				heo.apply(NaN, [1,2,3]);
+			}
+			
+			public function heo(...args):void {
+				trace(args);
+			}
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button x="116" y="64" label="Button" click="button1_clickHandler(event)"/>
+	<s:Panel x="350" y="55" width="250" height="200" id="panel1">
+	</s:Panel>
+	<s:HGroup x="64" y="128" width="200" height="200" requestedColumnCount="2" variableColumnWidth="true">
+		<s:Button label="Button"/>
+		<s:Button label="Button"/>
+	</s:HGroup>
+</s:Application>

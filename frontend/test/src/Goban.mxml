@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="650" height="650">
+	<fx:Script>
+		<![CDATA[
+			public function init(size:uint):void {
+				board_img.graphics.lineStyle(3, 0x0000FF);
+				board_img.graphics.drawRect(10, 10, 600, 600);
+				board_img.graphics.lineTo(300, 300);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:Image x="0" y="0" width="650" height="650" id="board_img" source="../artwork/board.gif" alpha="0.3"/>
+</s:Group>
