@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" creationComplete="init()" xmlns:notify="notify.*" width.mainRoom="100%" height.mainRoom="100%">
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  xmlns:ns1="*" width="100%" height="100%" creationComplete="init()" xmlns:notify="notify.*" width.mainRoom="100%" height.mainRoom="100%" pageTitle="GoPlay.com">
 	<fx:Style source="Main.css"/>
 	<fx:Script>
 		<![CDATA[
@@ -282,9 +282,8 @@
 		<s:State name = "gameRoom"/>
 	</s:states>
 	
-	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom,mainRoom" x.mainRoom="12" y.mainRoom="56">
-		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15" includeIn="gameRoom"/>
-		<mx:LinkButton x="22" y="42" label="Sign Out" fontSize="15" id="signOut_btn" click="userLogOut()"/>
+	<s:Panel x="13" y="145" width="125" height="244" id="ctrl_panel" title="Control Panel" textAlign="center" enabled="true" includeIn="gameRoom">
+		<mx:LinkButton x="10" y="10" label="Edit Account" id="chat_link" fontSize="15"/>
 	</s:Panel>
 
 	<mx:TabNavigator width="950" height="543" id="chatRoomNavigator" includeIn="mainRoom" creationComplete="tabNavigatorCreated()" x="145" y="42">
@@ -327,7 +326,7 @@
 	<s:Label includeIn="welcomeScreen" x="237" y="347" text="Connecting..." width="171" height="31" fontSize="25" id="connStatusLabel"/>
 
 	<s:Label includeIn="gameRoom,mainRoom" x="10" y="10" width="371" height="28" fontSize="31" fontWeight="bold" fontStyle="italic" id="userWelcome_lbl" x.mainRoom="10" y.mainRoom="10"/>
-	<mx:DataGrid id="roomsGrid" x="10" y="308" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()" toolTip="here you can see the list of rooms currently active. If you want to join a room, double click on the name in the list. If you want to Create a new room, click the button below.">
+	<mx:DataGrid id="roomsGrid" x="10" y="50" includeIn="mainRoom" height="238" width="128" itemDoubleClick="openRoom()" itemClick="openRoom()" toolTip="here you can see the list of rooms currently active. If you want to join a room, double click on the name in the list. If you want to Create a new room, click the button below.">
 		<mx:columns >
 			<mx:DataGridColumn headerText="Rooms" dataField="col1" />
 		</mx:columns>
@@ -336,13 +335,14 @@
 		<s:NavigatorContent label="Game 1" width="100%" height="100%">
 		</s:NavigatorContent>
 	</mx:TabNavigator>
-	<s:Button includeIn="mainRoom" x="10" y="549" label="Create" id="createRoomB"  click="createRoomBtn()" toolTip="Click this button if you want to create a new room."/>
-	<s:TextInput includeIn="mainRoom" x="10" y="575" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128"/>
+	<s:Button includeIn="mainRoom" x="10" y="296" label="Create" id="createRoomB"  click="createRoomBtn()" toolTip="Click this button if you want to create a new room."/>
+	<s:TextInput includeIn="mainRoom" x="9" y="326" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128" />
 	<notify:Notify includeIn="mainRoom" id="notify_control" width="202" height="304" right="20" bottom="20">
 	</notify:Notify>
 	<s:Button x="319" y="167" label="admin" id="adminlogin" click="adminlogin_clickHandler(event)" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen"/>
 	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
 	<s:Button x="505" y="170" label="other" id="otherlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
+	<mx:LinkButton label="Sign Out" id="signOut_btn" click="userLogOut()" x="393" y="11" fontSize="18" fontStyle="italic" includeIn="mainRoom"/>
 	
 					<!--Transitions for the components on each state-->
 	<s:transitions>
@@ -375,7 +375,7 @@
 		<s:Transition toState="mainRoom" autoReverse="true">    
 			<s:Sequence>  
 				<s:Fade alphaFrom="0.0" alphaTo="1.0" duration="1000" 
-						targets="{[ctrl_panel, userWelcome_lbl, chatRoomNavigator]}"/>                
+						targets="{[signOut_btn, userWelcome_lbl, chatRoomNavigator]}"/>                
 				
 			</s:Sequence>
 		</s:Transition> 
