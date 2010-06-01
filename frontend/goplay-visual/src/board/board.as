@@ -105,6 +105,17 @@ public function init(game_id:int, chat_id:int,
 	StoneData.black_source = black_source.source;
 	StoneData.white_source = white_source.source;
 	StoneData.transparent_source = transparent_source.source;
+	
+	for (var i:int=0; i<moves_all.length; i++) {
+		var color:String = "white";
+		
+		if (color == "white")
+			color = "black";
+		else
+			color = "white";
+		
+		makeMove(color, moves_all[i]);
+	}
 }
 
 public static function xyToGoNotation(x:int, y:int):String {

@@ -1,1 +1,7 @@
-ClientProtocol handler apply doesnt work
+PASS y RESIGN
+
+LLENAR TABLERO "moves_all"
+
+board.as: init(): establecer player info, resigned, score, etc
+
+no sale "waiting"
