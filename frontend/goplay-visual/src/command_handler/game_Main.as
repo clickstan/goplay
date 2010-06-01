@@ -50,7 +50,6 @@ public static function gameCHandler_play(conn:Conn, trans:int, game_id:int, colo
 }
 
 public static function gameCHandler_finalScore(conn:Conn, trans:int, game_id:int, score:String):void {
-	
-	trace("gameCHandler_finalScore", "game_id=", game_id, "score=",score);
-	Main.games[game_id].playersInfo.finalScore.text = score;
+	Main.games[game_id].score = score;
+	Main.games[game_id].playersInfo.finalScore.text = score;	
 }

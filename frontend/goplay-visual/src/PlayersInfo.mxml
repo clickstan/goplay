@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="194" height="406">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="194" height="482">
 	<fx:Script>
 		<![CDATA[
 			import comm.protocol.server.Game;
@@ -16,6 +16,8 @@
 				blackp.text = parentDocument.black;
 				komi.text = parentDocument.komi;
 				
+				if (parentDocument.score != null)
+					finalScore.text = parentDocument.score;
 			}
 
 
@@ -31,6 +33,20 @@
 				var msg:Object = Game.resign(parentDocument.game_id);
 				Main.conn.send(msg);
 			}
+			
+			public function displayClear():void {
+				message.text = "";
+			}
+			
+			public function displayError(msg:String):void {
+				message.setStyle("color", 0x990000);
+				message.text = msg;
+			}
+			
+			public function displayNotice(msg:String):void {
+				message.setStyle("color", 0x0E2674);
+				message.text = msg;
+			}
 
 		]]>
 	</fx:Script>
@@ -38,11 +54,11 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Panel x="1" y="-2" width="194" height="408" id="playersInfo" creationComplete="playersInfo_creationCompleteHandler(event)">
+	<s:Panel x="1" y="-2" width="194" height="484" id="playersInfo" creationComplete="playersInfo_creationCompleteHandler(event)">
 	<s:Label x="69" y="146" id="blackp" text="black player" fontSize="20"/>
 	<s:Label x="59" y="54" id="whitep" text="white player" fontSize="20" height="23"/>
-	<s:Button x="10" y="342" label="Pass" id="pass_btn" click="pass_btn_clickHandler(event)"/>
-	<s:Button x="120" y="330" label="Resign" id="resign_btn" click="resign_btn_clickHandler(event)"/>
+	<s:Button x="10" y="418" label="Pass" id="pass_btn" click="pass_btn_clickHandler(event)"/>
+	<s:Button x="120" y="418" label="Resign" id="resign_btn" click="resign_btn_clickHandler(event)"/>
 	<mx:Image x="10" y="41" width="41" height="36" id="white_source"  source="@Embed(source='/artwork/white_stone19.png')"/>
 	<mx:Image x="8" y="127" id="black_source" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
 	<mx:Image x="10" y="192" id="black_source0" source="@Embed(source='/artwork/black_stone13.png')"  width="41" height="38"/>
@@ -54,6 +70,7 @@
 	<s:Label x="110" y="104" text="0" id="komi"/>
 	<s:Label x="59" y="211" text="Turn" fontSize="20"/>
 	<s:Label x="19" y="260" id="finalScore" height="62" width="156" fontSize="20"/>
+	<s:Label x="19" y="342" id="message" height="62" width="156"/>
 	<s:Label x="7" y="3" text="Player Information" fontSize="22"/>
 	
 	</s:Panel>
