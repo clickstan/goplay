@@ -91,7 +91,7 @@
 						playerQueueColor.visible = false;
 						playerQueueSize.visible = false;
 						playButton.label = "play";
-						var obj:Object = User.start_game(player.toString(), playerQueueColor.selectedItem, roomname, playerQueueSize.selectedItem);
+						var obj:Object = User.start_game(player.toString(), playerQueueColor.selectedItem, roomname, 9);
 						Main.conn.addResponseHandler(playRequestResponse,obj.trans);
 						Main.conn.send(obj);
 						game_requests[obj.trans] = obj.username;
@@ -132,19 +132,19 @@
 			{
 				trace("Request a public game");
 				if(queueSize.selectedItem != 0) {
-					var obj:Object = Room.request_public_game(roomname,queueColor.selectedItem,queueSize.selectedItem);
+					var obj:Object = Room.request_public_game(roomname,queueColor.selectedItem,9);
 					Main.conn.send(obj);
 				}
 			}
 			
 			protected function new_public_game_request(conn:Conn,trans:int, white_plyr_a:String,black_plyr_a:String,size_a:int,status_a:String, gameid_a:int):void {
 				trace("new_public_game_requested");
-				currentGames.dataProvider.addItem({
+				currentGames.dataProvider.addItemAt({
 					white_plyr:white_plyr_a,
 					black_plyr:black_plyr_a,
 					size:size_a,
 					status:status_a,
-					gameid:gameid_a})
+					gameid:gameid_a},0);
 			}
 
 			protected function fillGamesGrid(obj:Object):void {
