@@ -47,9 +47,7 @@ package board
 		}
 		
 		public function capture():Boolean {
-			trace("StoneData - capture()", this);
 			if (group != null) {
-				trace("StoneData - capture() - group != null", this);
 				image.source = transparent_source;
 				group = null;
 				return true;
