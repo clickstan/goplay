@@ -13,7 +13,7 @@ package board
 		}
 		
 		public function add(sd:StoneData):void {
-			if (!(sd in stones)) {
+			if (stones.indexOf(sd) == -1) {
 				stones.push(sd);
 			}
 		}
@@ -25,6 +25,10 @@ package board
 		private static var _groupid:int = 0;
 		private static function nextGroupId():int {
 			return _groupid++;
+		}
+		
+		public function toString():String {
+			return stones.toString();
 		}
 	}
 }

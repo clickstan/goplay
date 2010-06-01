@@ -35,7 +35,7 @@ package board
 				var sd:StoneData = sds[i_sd];
 				for (var j_sd:int=0; j_sd<sd.group.size(); j_sd++) {
 					var _sd:StoneData = sd.group.stones[j_sd];
-					if (_sd in proccesed) continue outerloop;
+					if (proccesed.indexOf(_sd) >= 0) continue outerloop;
 					proccesed.push(_sd);
 					addToGroup(_sd);
 				}

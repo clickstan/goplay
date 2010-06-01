@@ -127,7 +127,7 @@ public function makeMove(color:String, move:String):void {
 		friends_surrounding[0].addToGroup(sd);
 	else {
 		// join groups
-		trace("makeMove -  join groups:", friends_surrounding);
+		trace("makeMove - join groups:", friends_surrounding);
 		sd.joinGroups(friends_surrounding);
 	}
 	
