@@ -353,9 +353,9 @@
 	<s:TextInput includeIn="mainRoom" x="9" y="326" id="createRoomTxt" text="new room" enabled="true" visible="false" height="21" width="128" />
 	<notify:Notify includeIn="mainRoom" id="notify_control" width="202" height="304" right="20" bottom="20">
 	</notify:Notify>
-	<s:Button x="319" y="167" label="admin" id="adminlogin" click="adminlogin_clickHandler(event)" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen"/>
-	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
-	<s:Button x="505" y="170" label="other" id="otherlogin" visible="true" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
+	<s:Button x="319" y="167" label="admin" id="adminlogin" click="adminlogin_clickHandler(event)" visible="false" includeInLayout="true" emphasized="true" includeIn="loginScreen"/>
+	<s:Button x="650" y="166" label="plyaerlogin" id="playerlogin" visible="false" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="playerlogin_clickHandler(event)"/>
+	<s:Button x="505" y="170" label="other" id="otherlogin" visible="false" includeInLayout="true" emphasized="true" includeIn="loginScreen" click="otherlogin_clickHandler(event)"/>
 	<mx:LinkButton label="Sign Out" id="signOut_btn" click="userLogOut()" x="393" y="11" fontSize="18" fontStyle="italic" includeIn="mainRoom"/>
 	
 					<!--Transitions for the components on each state-->
